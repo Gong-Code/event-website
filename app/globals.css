@@ -3,6 +3,8 @@
 /*=============================================
 =                FÖR ATT ANVÄNDA            =
 
+Använda en färgvariabel med tailwind: text-error
+
 Skapa vanlig knapp: <button>
 Skapa sekundär knapp: <button className="secondary">
 
