@@ -14,8 +14,10 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
       <body className={inter.className}>
-        {children}
-        </body>
+        <main className="w-full">
+          {children}
+        </main>
+      </body>
       </html>
     </ClerkProvider>
     
