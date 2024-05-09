@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { Event } from './(root)/_components/event';
 import Navbar from './(root)/_components/navbar';
+import { placeholder } from '../public/assets/placeholder.jpg'
 
 const LandingPage = () => {
-    const img =
-        'https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg';
+    const img = placeholder;
     const list = [
         {
             name: 'International Soup day',
