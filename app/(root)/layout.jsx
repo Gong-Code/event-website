@@ -1,10 +1,10 @@
 
 
 //Lägg navbar, footer osv här
-const RootLayout = () => {
+const RootLayout = ({ children }) => {
     
     return (
-        <div>RootLayout</div>
+        <div>{children}</div>
     )
 }
 
