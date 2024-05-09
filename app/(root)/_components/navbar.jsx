@@ -1,6 +1,6 @@
 "use client"
 
-import { SignInButton, SignOutButton, useAuth } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, SignUpButton, useAuth } from "@clerk/nextjs";
 
 
 
@@ -8,16 +8,14 @@ const Navbar = () => {
 
   const { sessionId } = useAuth();
 
-  if (!sessionId) {
-    return (
-      <div>
-        <SignInButton />
-      </div>
-    );
-  }
-
   return (
-    <SignOutButton signOutOptions={{ sessionId }} />
+    <div className="flex gap-1">
+      {!sessionId && <SignInButton />}
+      {sessionId &&  <SignOutButton signOutOptions={{ sessionId }} />}
+      <SignUpButton />
+    </div>
+
+    
   )
 }
 export default Navbar

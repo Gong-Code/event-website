@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
 import Footer from "./(root)/_components/footer";
+import AuthLayout from "./(auth)/layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,14 +14,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
+      
       <html lang="en">
       <body className={inter.className}>
         <main>
+        <AuthLayout>
           {children}
+        </AuthLayout>
         </main>
         <Footer/>
         </body>
       </html>
+      
     </ClerkProvider>
     
   );
