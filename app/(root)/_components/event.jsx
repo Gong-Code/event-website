@@ -1,10 +1,11 @@
+import Image from 'next/image'
 import React from 'react'
 
-export const EventComponent = ({name, img}) => {
+export const Event = ({name, img}) => {
   return (
     <div className='border p-2 rounded border-green-400'>
         {name}
-        <img src={img} />
+        <Image src={img} alt="" />
     </div>
   )
 }
