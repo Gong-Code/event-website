@@ -20,6 +20,9 @@ const LandingPage = () => {
           })}
         </div>
       </div>
+
+
+      
   )
 }
 
