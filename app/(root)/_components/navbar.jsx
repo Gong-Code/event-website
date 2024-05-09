@@ -3,7 +3,6 @@
 import { SignInButton, SignOutButton, SignUpButton, useAuth } from "@clerk/nextjs";
 
 
-
 const Navbar = () => {
 
   const { sessionId } = useAuth();
