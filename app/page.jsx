@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import { Event } from './(root)/_components/event';
 import Navbar from './(root)/_components/navbar';
-import { placeholder } from '../public/assets/placeholder.jpg'
 
 const LandingPage = () => {
-    const img = placeholder;
+    const img = '/assets/placeholder.jpg';
     const list = [
         {
             name: 'International Soup day',
@@ -27,8 +26,7 @@ const LandingPage = () => {
                 <h1>Welcome to (insert name here)</h1>
                 <p>
                     We display all the current events happening around
-                    Stockholm. See anything interesting? Don`&apos`t forget to
-                    sign up for the event in time!
+                    Stockholm. See anything interesting? Do not forget to sign up for the event in time!
                 </p>
                 <div className='flex justify-center items center'>
                     <Image
@@ -47,8 +45,8 @@ const LandingPage = () => {
                     return (
                         <Event
                             name={item.name}
-                            img={item.img}
                             key={i}
+                            img={img}
                         />
                     );
                 })}
