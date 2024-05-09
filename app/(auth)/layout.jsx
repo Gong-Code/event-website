@@ -12,6 +12,8 @@ export default function AuthLayout({ children }) {
     useEffect(() => {
         if (!isLoading && user) {
             router.push('/admin');
+        } else {
+            router.push('/');
         }
     }, [user, isLoading, router]);
 
