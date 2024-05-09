@@ -1,4 +1,5 @@
 import { EventComponent } from "./(root)/_components/eventComponent"
+import Navbar from "./(root)/_components/navbar"
 
 const LandingPage = () => {
   const img = "https://static.vecteezy.com/system/resources/thumbnails/004/141/669/small/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg"
@@ -6,6 +7,7 @@ const LandingPage = () => {
 
   return (
       <div className="flex justify-center flex-col items-center w-full p-2 mt-8">
+        <Navbar />
         <div className="">
           <h1>Welcome to (insert name here)</h1>
           <p>We display all the current events happening around Stockholm. See anything interesting? Don't forget to sign up for the event in time!</p>
