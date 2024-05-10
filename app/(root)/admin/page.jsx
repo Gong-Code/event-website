@@ -3,11 +3,9 @@
 import Navbar from '../_components/navbar';
 import { EventsList } from './_components/EventsList';
 
-
+import { FaPlus } from "react-icons/fa";
 
 const AdminPage = () => {
-    
-
     return (
         <>
             <Navbar />
@@ -19,11 +17,15 @@ const AdminPage = () => {
                 </div>
             </header>
             <main className='my-10 flex flex-col justify-center'>
-              <h2 className="flex max-w-7xl px-4 py-6 sm:px-6 lg:px-8">All events</h2>
+                <div className='flex justify-between px-8 py-6 lg:px-36'>
+                    <h2>
+                        All events
+                    </h2>
+                    <button className="flex items-center gap-2"><span>Add new</span><FaPlus /></button>
+                </div>
                 <EventsList />
             </main>
         </>
     );
 };
 export default AdminPage;
-
