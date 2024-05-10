@@ -10,17 +10,12 @@ export default function AuthLayout({ children }) {
     const router = useRouter();
 
     useEffect(() => {
-        if (!isLoading && user) {
-            router.push('/admin');
-        } else {
+        if (isLoading && !user) {
             router.push('/');
-        }
+        } 
     }, [user, isLoading, router]);
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
-
+  
     return (
         <div>
             {children}
