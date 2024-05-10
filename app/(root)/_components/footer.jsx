@@ -32,7 +32,7 @@ const Footer = () => {
 
     return (
         <>
-            <div className='bg-secondary-muted shadow h-auto overflow-hidden'>
+            <div className='bg-secondary-muted shadow h-auto overflow-hidden relative bottom-0'>
                 <div className='flex max-w-7xl items-center justify-evenly flex-col md:flex-row'>
                     <div className="mt-7 md:mt-8 md:mb-16">
                         <Image
