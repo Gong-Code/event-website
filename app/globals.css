@@ -24,8 +24,10 @@ Skapa disabled-knapp: <button className="disabled">
 
         --primary: #f3f5e1;
 
-        --secondary: #ed6033;
-        --secondary-muted: #a15238;
+        --secondary: #36484e;
+
+        --tertiary: #ed6033;
+        --tertiary-muted: #a15238;
 
         --error: #ce0606;
         --error-muted: #d23939;
@@ -74,18 +76,19 @@ button {
     padding-bottom: 0.5rem;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     border-radius: 0.375rem;
     line-height: 1.25rem;
-    font-weight: 400;
+    letter-spacing: 0.2px;
+    font-weight: 600;
     background: var(--secondary);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.80);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease-in;
 }
 
 button:hover {
-    background: var(--secondary-muted);
+    transform: translateY(2px);
 }
 
 button.secondary {
@@ -93,14 +96,8 @@ button.secondary {
     border: 1px solid #d1d5db;
 }
 
-button.secondary:hover {
-    color: var(--primary);
-    opacity: 0.7;
-}
-
 button.error {
     background-color: var(--error);
-    border: 1px solid #d1d5db;
 }
 
 button.error:hover {
@@ -110,4 +107,8 @@ button.error:hover {
 button.disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+button.disabled:hover {
+    transform: none;
 }
