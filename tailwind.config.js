@@ -12,6 +12,7 @@ module.exports = {
         "primary": "var(--primary)",
         "secondary": "var(--secondary)",
         "secondary-muted": "var(--secondary-muted)",
+        "tertiary": "var(--tertiary)",
         "error": "var(--error)",
         "error-muted": "var(--error-muted)",
       }
