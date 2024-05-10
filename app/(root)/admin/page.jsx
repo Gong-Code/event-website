@@ -3,6 +3,7 @@
 import { EventsList } from './_components/EventsList';
 import { useClerk } from '@clerk/clerk-react';
 
+
 const AdminPage = () => {
     const { signOut } = useClerk();
 
@@ -27,3 +28,4 @@ const AdminPage = () => {
     );
 };
 export default AdminPage;
+
