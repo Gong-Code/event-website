@@ -22,7 +22,7 @@ Skapa disabled-knapp: <button className="disabled">
     :root {
         --background: #002a39;
 
-        --primary: #f3f5e1;
+        --primary: #e8e8e8;
 
         --secondary: #253c43;
         --secondary-muted: #36484e;
@@ -60,13 +60,14 @@ p {
 }
 
 h1 {
-    font-size: 2rem;
-    font-weight: 200;
+    font-weight: 700;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
 }
 
 h2 {
-    font-size: 1.8rem;
-    font-weight: 200;
+    font-size: 1.575rem;
+    font-weight: 550;
 }
 
 /*=====  Styling buttons  ======*/
