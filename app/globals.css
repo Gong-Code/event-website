@@ -97,6 +97,17 @@ button.secondary {
     border: 1px solid #d1d5db;
 }
 
+button.readmore {
+    background: var(--tertiary);
+    font-weight: 550;
+    color: white;
+    border: 1px solid var(--primary);
+}
+
+button.readmore:hover {
+    transform: translateX(4px);
+}
+
 button.error {
     background-color: var(--error);
 }
