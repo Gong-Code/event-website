@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { GoArrowRight } from "react-icons/go";
 
 const events = [
     {
@@ -42,7 +43,7 @@ export const EventsList = () => {
                                 height={500}
                             />
                             <div className='min-w-0 flex-auto'>
-                                <p className='text-sm font-semibold text-gray-900'>
+                                <p className='text-sm font-bold text-gray-900 border-b-2 border-b-tertiary'>
                                     {event.name}
                                 </p>
                                 <div className='flex gap-2 items-center my-3'>
@@ -56,7 +57,7 @@ export const EventsList = () => {
                             </div>
                         </div>
                         <div className='shrink-0 flex flex-col items-end'>
-                            <button>Read more</button>
+                            <button className="readmore flex items-center gap-2"><span>Read more</span><GoArrowRight className="size-4 font-semibold"/></button>
                         </div>
                     </li>
                 ))}
