@@ -24,10 +24,10 @@ Skapa disabled-knapp: <button className="disabled">
 
         --primary: #f3f5e1;
 
-        --secondary: #36484e;
+        --secondary: #253c43;
+        --secondary-muted: #36484e;
 
         --tertiary: #ed6033;
-        --tertiary-muted: #a15238;
 
         --error: #ce0606;
         --error-muted: #d23939;
