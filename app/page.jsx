@@ -4,18 +4,33 @@ import Navbar from './(root)/_components/navbar';
 
 const LandingPage = () => {
     const img = '/assets/placeholder.jpg';
-    const list = [
+    const eventList = [
         {
             name: 'International Soup day',
             img,
+            address: 'Earth',
+            date: '24-05-22 17.00',
+            numberOfPlaces: 5,
+            users: ['dinomon'],
+            id: 'abc'
         },
         {
             name: 'Opera in Hagaparken',
             img,
+            address: 'Earth',
+            date: '24-06-23 17.00',
+            numberOfPlaces: 5,
+            users: ['dinomon'],
+            id: 'def'
         },
         {
             name: 'Våffeldagen',
             img,
+            address: 'Earth',
+            date: '24-07-25 17.00',
+            numberOfPlaces: 5,
+            users: ['dinomon'],
+            id: 'ghi'
         },
     ];
 
@@ -41,12 +56,17 @@ const LandingPage = () => {
                 </p>
             </div>
             <div className='border p-2 rounded border-green-400 flex gap-4 mt-5'>
-                {list.map((item, i) => {
+                {eventList.map((item, i) => {
                     return (
                         <Event
                             name={item.name}
                             key={i}
                             img={img}
+                            address={item.address}
+                            date={item.date}
+                            numberOfPlaces={item.numberOfPlaces}
+                            users={item.users}
+                            id={item.id}
                         />
                     );
                 })}
