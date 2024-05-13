@@ -58,7 +58,7 @@ useEffect(() => {
                     </li>
                 )) : (
                     <div className='flex justify-center items-center my-2'>
-                        <p className='text-secondary font-semibold'>No events found! Get started by <Link href="/admin/new" className='decoration-[var(--tertiary)] hover:decoration-[var(--secondary-muted)]'>creating an event.</Link></p>
+                        <p className='text-secondary font-semibold'>No events found! Get started by <Link href="/admin/new" className='underline underline-offset-4 decoration-2 decoration-[var(--tertiary)] hover:decoration-[var(--secondary-muted)]'>creating an event.</Link></p>
                     </div>
                 )}
             </ul>
