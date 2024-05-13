@@ -34,8 +34,9 @@ const LandingPage = () => {
     ];
 
     return (
-        <div className='flex justify-center flex-col items-center w-full p-2 mt-8'>
-            <div className=''>
+        // Alva la till py-32 för att anpassa sidan till navbaren.
+        <div className='flex py-32 justify-center flex-col items-center w-full p-2 mt-8'>
+            <div>
                 <h1>Welcome to (insert name here)</h1>
                 <p>
                     We display all the current events happening around

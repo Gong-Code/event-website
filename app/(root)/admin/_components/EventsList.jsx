@@ -21,12 +21,14 @@ useEffect(() => {
     fetchEvents();
 }, []);
 
+console.log(events)
+
     return (
         <div className='relative bg-primary py-2 rounded-3xl px-8 mx-4'>
             <ul
                 role='list'
                 className='divide-y divide-gray-300 mx-auto'>
-                {events ? events.map((event) => (
+                {events && events.length ? events.map((event) => (
                     <li
                         key={event.date}
                         className='flex mx-auto justify-between max-w-7xl items-center'>
