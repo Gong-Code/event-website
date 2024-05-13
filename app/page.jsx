@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { Event } from './(root)/_components/event';
-import Navbar from './(root)/_components/navbar';
 
 const LandingPage = () => {
     const img = '/assets/placeholder.jpg';
