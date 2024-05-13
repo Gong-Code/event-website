@@ -1,17 +1,27 @@
 'use client'
 
 import { auth } from "@/firebase.config"
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
-import { createContext, useContext, useState } from "react"
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { createContext, useContext, useEffect, useState } from "react"
 
 export const AuthContext = createContext()
 
 const AuthContextProvider = ({ children }) => {
+  
+  const [user, setUser] = useState(null)
+  const [authLoaded, setAuthLoaded] = useState(false)
 
-  const [isLoading, setIsLoading] = useState(false)
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, _user => {
+      setUser(_user)
+      setAuthLoaded(true)
+    })
+
+    return () => unsub()
+  }, [])
 
   const register = async (values) => {
-    setIsLoading(true)
+    setAuthLoaded(true)
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password)
 
@@ -28,16 +38,32 @@ const AuthContextProvider = ({ children }) => {
       console.log('Account created successfully!')
 
     } catch (error) {
-      console.log('Error creating account: ', error)
+      console.log('Error creating account: ', error.message)
     } finally {
-      setIsLoading(false)
+      setAuthLoaded(false)
     }
 
   }
-  console.log(isLoading);
+  const login = async (values) => {
+    setAuthLoaded(true) 
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password)
+
+      if(!userCredential.user) {
+        throw new Error('Something went wrong!. Please try again.')
+      }
+      console.log(userCredential);
+      console.log('Logged in successfully!')
+    } catch (error) {
+      console.log('Error creating account: ', error.message)
+    } 
+  }
+
   const value = {
+    user,
+    authLoaded,
     register,
-    isLoading
+    login
   }
 
   return(
