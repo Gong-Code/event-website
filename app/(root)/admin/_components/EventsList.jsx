@@ -1,36 +1,32 @@
+'use client'
+
+import { getAllEvents } from '@/app/api/events/route';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { GoArrowRight } from "react-icons/go";
 
-const events = [
-    {
-        name: 'Launchpad Premiere',
-        date: 'June 1st',
-        imageUrl: '/assets/placeholder.jpg'
-    },
-    {
-        name: 'Skill Share Sessions',
-        date: 'June 13th',
-        imageUrl: '/assets/placeholder.jpg'
-    },
-    {
-        name: 'Unity Escape',
-        date: 'July 23rd',
-        imageUrl: '/assets/placeholder.jpg'
-    },
-    {
-        name: 'Team Thrive Retreat',
-        date: 'August 12th',
-        imageUrl: '/assets/placeholder.jpg'
-    },
-];
-
 export const EventsList = () => {
+
+const [events, setEvents] = useState([])
+
+// FETCH EVENTS
+const fetchEvents = async () => {
+    const fetchedEvents = await getAllEvents();
+    setEvents(fetchedEvents);
+};
+
+// DISPLAY EVENTS
+useEffect(() => {
+    fetchEvents();
+}, []);
+
     return (
         <div className='relative bg-primary py-2 rounded-3xl px-8 mx-4'>
             <ul
                 role='list'
                 className='divide-y divide-gray-300 mx-auto'>
-                {events.map((event) => (
+                {events ? events.map((event) => (
                     <li
                         key={event.date}
                         className='flex mx-auto justify-between max-w-7xl items-center'>
@@ -60,7 +56,11 @@ export const EventsList = () => {
                             <button className="readmore flex items-center gap-2"><span>Read more</span><GoArrowRight className="size-4 font-semibold"/></button>
                         </div>
                     </li>
-                ))}
+                )) : (
+                    <div className='flex justify-center items-center my-2'>
+                        <p className='text-secondary font-semibold'>No events found! Get started by <Link href="/admin/new" className='decoration-[var(--tertiary)] hover:decoration-[var(--secondary-muted)]'>creating an event.</Link></p>
+                    </div>
+                )}
             </ul>
         </div>
     );

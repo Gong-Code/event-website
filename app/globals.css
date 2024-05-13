@@ -44,12 +44,14 @@ body {
 /*=====  Styling text  ======*/
 
 a {
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
     transition: all 0.3s ease;
 }
 
 a:hover {
-    text-decoration: none;
+    opacity: 0.6;
 }
 
 p {
