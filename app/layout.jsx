@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
+import Navbar from "./(root)/_components/navbar";
 import Footer from "./(root)/_components/footer";
 import AuthLayout from "./(auth)/layout";
 import AuthContextProvider from "./(root)/admin/_components/auth-provider";
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
       <ClerkProvider>
         <html lang="en">
           <body className={inter.className}>
+          <Navbar />
             <main>
             <AuthLayout>
               {children}
