@@ -6,4 +6,17 @@ export const fetchDataByID = (collection, id) => {
 }
 
 //PATCH by ID
+
+
 //DELETE BY ID
+export const deleteById = (collection, id) => {
+    const removedEvent = db.collection(collection).doc(id)
+    removedEvent.delete().then(() => {
+        console.log('Successfully deleted the event')
+    }).catch((err) => {
+        console.log('Something went wrong', err)
+    })
+}
+
+
+
