@@ -44,9 +44,7 @@ body {
 /*=====  Styling text  ======*/
 
 a {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1.5px;
+    text-decoration: none;
     transition: all 0.3s ease;
 }
 
