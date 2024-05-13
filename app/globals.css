@@ -1,5 +1,3 @@
-
-
 /*=============================================
 =                FÖR ATT ANVÄNDA            =
 
@@ -12,7 +10,6 @@ Skapa error-knapp: <button className="error">
 Skapa disabled-knapp: <button className="disabled">
 
 =============================================*/
-
 
 @tailwind base;
 @tailwind components;
@@ -32,13 +29,20 @@ Skapa disabled-knapp: <button className="disabled">
         --error: #ce0606;
         --error-muted: #d23939;
 
-        font-feature-settings: "cv02","cv03","cv04","cv11";
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     }
 }
 
 body {
     background: var(--background);
     color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
 }
 
 /*=====  Styling text  ======*/
@@ -83,7 +87,7 @@ button {
     letter-spacing: 0.2px;
     font-weight: 600;
     background: var(--secondary);
-    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.80);
+    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.8);
     cursor: pointer;
     transition: all 0.1s ease-in;
 }
