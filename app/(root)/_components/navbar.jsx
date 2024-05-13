@@ -10,7 +10,7 @@ const Navbar = () => {
   const { user } = useUser()
 
   return (
-    <div className="fixed top-0 flex justify-between w-full px-10 py-4 bg-secondary-muted text-tertiary border-b border-tertiary">
+    <div className="flex justify-between w-full px-10 py-4 bg-secondary-muted text-tertiary border-b border-tertiary">
         <Image src="/assets/logo.webp" alt="logo" width={50} height={50} className="sticky w-14 h-14 rounded-full" />
       <a href="/"  className="rounded">
         <button className="py-2 mt-7">Home</button>
