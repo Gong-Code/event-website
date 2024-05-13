@@ -5,6 +5,7 @@ import Navbar from "./(root)/_components/navbar";
 import Footer from "./(root)/_components/footer";
 import AuthLayout from "./(auth)/layout";
 import AuthContextProvider from "./(root)/admin/_components/auth-provider";
+import { Toaster } from "react-hot-toast";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
           <Navbar />
             <main>
             <AuthLayout>
+              <Toaster />
               {children}
             </AuthLayout>
             </main>

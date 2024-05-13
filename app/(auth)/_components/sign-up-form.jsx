@@ -3,6 +3,7 @@
 import { useAuth } from "@/app/(root)/admin/_components/auth-provider"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import { z } from "zod"
  
 
@@ -38,7 +39,6 @@ const SignUpForm = () => {
  
   
   function onSubmit(values) {
-    
     console.log(values)
     register(values)
    

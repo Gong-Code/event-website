@@ -1,17 +1,30 @@
 'use client'
 
 import { auth } from "@/firebase.config"
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
-import { createContext, useContext, useState } from "react"
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { createContext, useContext, useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 export const AuthContext = createContext()
 
 const AuthContextProvider = ({ children }) => {
+  
+  const [user, setUser] = useState(null)
+  const [authLoaded, setAuthLoaded] = useState(false)
 
-  const [isLoading, setIsLoading] = useState(false)
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, _user => {
+      setUser(_user)
+      setAuthLoaded(true)
+    })
+
+    return () => unsub()
+  }, [])
 
   const register = async (values) => {
-    setIsLoading(true)
+    const toastId = toast.loading('Creating account...')
+
+    setAuthLoaded(true)
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password)
 
@@ -25,19 +38,42 @@ const AuthContextProvider = ({ children }) => {
       }) 
       
 
-      console.log('Account created successfully!')
+      toast.success('Account created successfully',  { id: toastId })
 
     } catch (error) {
-      console.log('Error creating account: ', error)
-    } finally {
-      setIsLoading(false)
-    }
+      console.log(error.message);
+      console.log(error.code);
+      const message = error.code.split('/')[1].replace(/-/g, ' ')
+      toast.error(message || error.message, { id: toastId })
+    } 
 
   }
-  console.log(isLoading);
+
+  
+  const login = async (values) => {
+    const toastId = toast.loading('Signing in...')
+    
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password)
+
+      if(!userCredential.user) {
+        throw new Error('Something went wrong!. Please try again.')
+      }
+      
+      toast.success('Logged in successfully',  { id: toastId })
+
+    } catch (error) {
+      console.log(error.message);
+      const message = error.code.split('/')[1].replace(/-/g, ' ')
+      toast.error(message || error.message, { id: toastId })
+    } 
+  }
+
   const value = {
+    user,
+    authLoaded,
     register,
-    isLoading
+    login
   }
 
   return(
