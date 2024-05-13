@@ -1,19 +1,20 @@
 'use client'
 
-import { useUser } from "@clerk/clerk-react";
+
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useAuth } from "../(root)/admin/_components/auth-provider";
 
 
 export default function AuthLayout({ children }) {
-    const { user, isLoading } = useUser();
+    const { user, authLoaded } = useAuth;
     const router = useRouter();
 
     useEffect(() => {
-        if (isLoading && !user) {
+        if (authLoaded && !user) {
             router.push('/');
         } 
-    }, [user, isLoading, router]);
+    }, [user, authLoaded, router]);
 
   
     return (

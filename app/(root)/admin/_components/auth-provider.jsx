@@ -3,6 +3,7 @@
 import { auth } from "@/firebase.config"
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { createContext, useContext, useEffect, useState } from "react"
+import toast from "react-hot-toast"
 
 export const AuthContext = createContext()
 
@@ -21,6 +22,8 @@ const AuthContextProvider = ({ children }) => {
   }, [])
 
   const register = async (values) => {
+    const toastId = toast.loading('Creating account...')
+
     setAuthLoaded(true)
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password)
@@ -35,27 +38,34 @@ const AuthContextProvider = ({ children }) => {
       }) 
       
 
-      console.log('Account created successfully!')
+      toast.success('Account created successfully',  { id: toastId })
 
     } catch (error) {
-      console.log('Error creating account: ', error.message)
-    } finally {
-      setAuthLoaded(false)
-    }
+      console.log(error.message);
+      console.log(error.code);
+      const message = error.code.split('/')[1].replace(/-/g, ' ')
+      toast.error(message || error.message, { id: toastId })
+    } 
 
   }
+
+  
   const login = async (values) => {
-    setAuthLoaded(true) 
+    const toastId = toast.loading('Signing in...')
+    
     try {
       const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password)
 
       if(!userCredential.user) {
         throw new Error('Something went wrong!. Please try again.')
       }
-      console.log(userCredential);
-      console.log('Logged in successfully!')
+      
+      toast.success('Logged in successfully',  { id: toastId })
+
     } catch (error) {
-      console.log('Error creating account: ', error.message)
+      console.log(error.message);
+      const message = error.code.split('/')[1].replace(/-/g, ' ')
+      toast.error(message || error.message, { id: toastId })
     } 
   }
 
