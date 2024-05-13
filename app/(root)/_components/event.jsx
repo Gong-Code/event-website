@@ -22,8 +22,8 @@ export const Event = ({ name, img, address, date, numberOfPlaces, users, id }) =
             <p>{address}</p>
             <p>{date}</p>
             <p>{numberOfPlaces}</p>
-            <p>{users.map((item) => {
-                return <p>{item}</p>
+            <p>{users.map((item, i) => {
+                return <span key={i}>{item}</span>
             })}</p>
         </div>
     );
