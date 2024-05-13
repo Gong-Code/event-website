@@ -3,6 +3,8 @@ import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
 import Footer from "./(root)/_components/footer";
 import AuthLayout from "./(auth)/layout";
+import AuthContextProvider from "./(root)/admin/_components/auth-provider";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,17 +15,19 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <main>
-          <AuthLayout>
-            {children}
-          </AuthLayout>
-          </main>
-          <Footer/>
-        </body>
-      </html>
-    </ClerkProvider>
+    <AuthContextProvider>
+      <ClerkProvider>
+        <html lang="en">
+          <body className={inter.className}>
+            <main>
+            <AuthLayout>
+              {children}
+            </AuthLayout>
+            </main>
+            <Footer/>
+          </body>
+        </html>
+      </ClerkProvider>
+    </AuthContextProvider>
   );
 }
