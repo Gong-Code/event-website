@@ -9,18 +9,20 @@ const LandingPage = () => {
             img,
             address: 'Earth',
             date: '24-05-22 17.00',
-            numberOfPlaces: 5,
+            numberOfPlaces: 15,
             users: ['dinomon'],
-            id: 'abc'
+            id: 'abc',
+            maxUsers: 15
         },
         {
             name: 'Opera in Hagaparken',
             img,
             address: 'Earth',
             date: '24-06-23 17.00',
-            numberOfPlaces: 5,
+            numberOfPlaces: 15,
             users: ['dinomon'],
-            id: 'def'
+            id: 'def',
+            maxUsers: 30
         },
         {
             name: 'Våffeldagen',
@@ -29,7 +31,8 @@ const LandingPage = () => {
             date: '24-07-25 17.00',
             numberOfPlaces: 5,
             users: ['dinomon'],
-            id: 'ghi'
+            id: 'ghi',
+            maxUsers: 25
         },
     ];
 
@@ -66,6 +69,7 @@ const LandingPage = () => {
                             numberOfPlaces={item.numberOfPlaces}
                             users={item.users}
                             id={item.id}
+                            maxUsers={item.maxUsers}
                         />
                     );
                 })}
