@@ -21,6 +21,7 @@ const AdminPage = () => {
         } 
             
     }, [user, router]);
+    
     return (
         <>
             <header className='bg-primary shadow'>
