@@ -77,15 +77,15 @@ const LandingPage = () => {
                         alt='Placeholder image'
                     />
                 </div>
-                <p className='flex text-xl mt-20 justify-center items-center'>
-                    Check out the current events!
-                </p>
             </div>
-            <div className='flex'>
+            <div className='flex mt-20 space-x-5'>
                 <button onClick={onSort}>{inc ? 'inc' : 'dec'}</button>
-                <input type="text" value={searchValue} onChange={onSearch} className='text-black' placeholder='Search for an event...' />
+                <input type="text" value={searchValue} onChange={onSearch} className='text-black ' placeholder='Search for an event...' />
             </div>
-            <div className='p-2 flex gap-4 mt-5'>
+            <p className='flex text-lg mt-8 justify-center items-center'>
+                Check out the current events!
+            </p>
+            <div className='p-2 flex gap-4 mt-2'>
                 {eventList.map((item, i) => {
                     return (
                         <Event
