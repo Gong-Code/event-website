@@ -1,10 +1,26 @@
 'use client';
 
+
 import { EventsList } from './_components/EventsList';
 
 import { FaPlus } from "react-icons/fa";
+import { useAuth } from './_components/auth-provider';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
+
 
 const AdminPage = () => {
+
+    const { user } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!user) {
+            router.push('/sign-in');     
+        } 
+            
+    }, [user, router]);
     return (
         <>
             <header className='bg-primary shadow'>
