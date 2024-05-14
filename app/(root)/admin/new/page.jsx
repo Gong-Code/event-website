@@ -85,7 +85,8 @@ const CreateNewEventPage = () => {
                                             aria-label='attendees'
                                             type='number'
                                             className='block flex-1 border-0 bg-white py-1.5 pl-3 text-gray-900 focus:ring-2 sm:text-sm sm:leading-6 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-secondary'
-                                            value='100'
+                                            placeholder='100'
+                                            min={1}
                                         />
                                     </div>
                                 </div>
