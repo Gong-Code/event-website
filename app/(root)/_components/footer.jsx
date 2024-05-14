@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 const Footer = () => {
     const footerLinks = [
@@ -34,15 +33,6 @@ const Footer = () => {
         <>
             <div className='bg-secondary-muted shadow h-auto overflow-hidden relative bottom-0'>
                 <div className='flex max-w-7xl items-center justify-evenly flex-col md:flex-row'>
-                    <div className="mt-7 md:mt-8 md:mb-16">
-                        <Image
-                            className='size-10 rounded-full'
-                            src='/assets/placeholder.jpg'
-                            alt='Your Company'
-                            width={32}
-                            height={32}
-                        />
-                    </div>
                     <div className='flex gap-14 mt-8 mb-16'>
                         {footerLinks.map((link) => (
                             <div key={link.name}>
