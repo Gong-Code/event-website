@@ -2,7 +2,7 @@
 
 import { auth } from "@/firebase.config"
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
-// import { useRouter } from "next/navigation"
+
 import { createContext, useContext, useEffect, useState } from "react"
 import toast from "react-hot-toast"
 
@@ -12,15 +12,6 @@ const AuthContextProvider = ({ children }) => {
   
   const [user, setUser] = useState(null)
   const [authLoaded, setAuthLoaded] = useState(false)
-
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //     if (!user) {
-  //         router.push('/');     
-  //     } 
-          
-  // }, [user, router]);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, _user => {
