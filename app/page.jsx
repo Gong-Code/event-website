@@ -45,7 +45,7 @@ const LandingPage = () => {
                     We display all the current events happening around
                     Stockholm. See anything interesting? Do not forget to sign up for the event in time!
                 </p>
-                <div className='flex justify-center items center'>
+                <div className='flex justify-center items-center'>
                     <Image
                         src={img}
                         width={500}
