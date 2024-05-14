@@ -41,6 +41,7 @@ const list = [
 const LandingPage = () => {
     const [searchValue, setSearchValue] = useState('')
     const [eventList, setEventList] = useState(list)
+    const [inc, setInc] = useState(true)
 
     const onSearch = (e) => {
         setSearchValue(e.target.value)
@@ -48,11 +49,22 @@ const LandingPage = () => {
         setEventList(newList)
     }
 
+    const onSort = () => {
+        if(inc) {
+            const newList = list.sort((a, b) => a.numberOfPlaces - b.numberOfPlaces)
+            setEventList(newList)
+            setInc(false)
+        } else {
+            const newList = list.sort((a, b) => b.numberOfPlaces - a.numberOfPlaces)
+            setEventList(newList)
+            setInc(true)
+        }
+    }
+
     return (
-        // Alva la till py-32 för att anpassa sidan till navbaren.
         <div className='flex py-32 justify-center flex-col items-center w-full p-2 mt-8'>
             <div>
-                <h1 className='text-tertiary'>Welcome to (insert name here)</h1>
+                <h1 className='text-tertiary'>Welcome to Vibe Events</h1>
                 <p className='text-base'>
                     We display all the current events happening around
                     Stockholm. See anything interesting? Do not forget to sign up for the event in time!
@@ -69,7 +81,10 @@ const LandingPage = () => {
                     Check out the current events!
                 </p>
             </div>
-            <input type="text" value={searchValue} onChange={onSearch} className='text-black' placeholder='Search for an event...' />
+            <div className='flex'>
+                <button onClick={onSort}>{inc ? 'inc' : 'dec'}</button>
+                <input type="text" value={searchValue} onChange={onSearch} className='text-black' placeholder='Search for an event...' />
+            </div>
             <div className='p-2 flex gap-4 mt-5'>
                 {eventList.map((item, i) => {
                     return (
