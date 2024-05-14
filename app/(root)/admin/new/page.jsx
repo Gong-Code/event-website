@@ -54,7 +54,7 @@ const CreateNewEventPage = () => {
                         </div>
 
                         <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
-                            <div className='sm:col-span-4'>
+                            <div className='sm:col-span-3'>
                                 <label
                                     htmlFor='dateandtime'
                                     className='block text-sm font-medium leading-6 text-gray-900'>
@@ -67,6 +67,25 @@ const CreateNewEventPage = () => {
                                             aria-label='Date and time'
                                             type='datetime-local'
                                             className='block flex-1 border-0 bg-white py-1.5 pl-3 text-gray-900 focus:ring-2 sm:text-sm sm:leading-6 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-secondary'
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='sm:col-span-3'>
+                            <label
+                                    htmlFor='attendees'
+                                    className='block text-sm font-medium leading-6 text-gray-900'>
+                                    Maximum number of attendees
+                                </label>
+                                <div className='mt-2'>
+                                    <div className='flex sm:max-w-md'>
+                                        <input
+                                            id='attendees'
+                                            aria-label='attendees'
+                                            type='number'
+                                            className='block flex-1 border-0 bg-white py-1.5 pl-3 text-gray-900 focus:ring-2 sm:text-sm sm:leading-6 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-secondary'
+                                            value='100'
                                         />
                                     </div>
                                 </div>
