@@ -1,11 +1,25 @@
 'use client';
 
-import Link from 'next/link';
 import { EventsList } from './_components/EventsList';
 import { UsersList } from './_components/UsersList';
-import { FaPlus } from 'react-icons/fa';
+import Link from 'next/link';
+import { FaPlus } from "react-icons/fa";
+import { useAuth } from './_components/auth-provider';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const AdminPage = () => {
+
+    const { user } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!user) {
+            router.push('/sign-in');     
+        } 
+            
+    }, [user, router]);
+    
     return (
         <>
             <header>
