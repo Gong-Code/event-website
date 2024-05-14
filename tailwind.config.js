@@ -15,7 +15,7 @@ module.exports = {
                 'secondary-muted': 'var(--secondary-muted)',
                 tertiary: 'var(--tertiary)',
                 error: 'var(--error)',
-                'error-muted': 'var(--error-muted)',
+                admin: 'var-(--admin)',
             },
         },
     },

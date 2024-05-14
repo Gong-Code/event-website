@@ -23,7 +23,7 @@ const AdminPage = () => {
     return (
         <>
             <header>
-                <div className='mx-auto max-w-7xl px-4 mt-10 sm:px-6 lg:px-8 flex justify-between'>
+                <div className='max-w-7xl mt-10 px-6 md:px-16 lg:px-36 flex justify-between'>
                         <h1 className='mb-2 text-3xl font-bold tracking-tight text-primary underline underline-offset-8 decoration-2 decoration-[var(--tertiary)]'>
                             Dashboard
                         </h1>

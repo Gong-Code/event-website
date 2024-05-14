@@ -28,7 +28,8 @@ Skapa disabled-knapp: <button className="disabled">
         --tertiary: #ed6033;
 
         --error: #ce0606;
-        --error-muted: #d23939;
+
+        --admin: #b3421c;
 
         font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     }
@@ -123,7 +124,15 @@ button.error {
 }
 
 button.error:hover {
-    background-color: var(--error-muted);
+    background-color: var(--error);
+}
+
+button.admin {
+    background-color: var(--admin);
+}
+
+button.admin:hover {
+    background-color: var(--admin);
 }
 
 button.disabled {
