@@ -20,6 +20,7 @@ Skapa disabled-knapp: <button className="disabled">
         --background: #002a39;
 
         --primary: #e8e8e8;
+        --primary-muted: #cfcfcf;
 
         --secondary: #253c43;
         --secondary-muted: #36484e;
@@ -72,6 +73,11 @@ h1 {
 h2 {
     font-size: 1.575rem;
     font-weight: 550;
+}
+
+h3 {
+    font-size: 1.375rem;
+    font-weight: 500;
 }
 
 /*=====  Styling buttons  ======*/
