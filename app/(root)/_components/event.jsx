@@ -11,17 +11,17 @@ export const Event = ({ name, img, address, date, numberOfPlaces, users, id, max
    }
 
     return (
-        <div onClick={goToEvent} className='border p-2 rounded border-green-400'>
-            <p>{name}</p>
+        <div onClick={goToEvent} className='border p-10 rounded border-tertiary'>
+            <p className='text-xl font-bold'>{name}</p>
             <Image
                 src={img}
                 width={200}
                 height={500}
                 alt='Placeholder image'
             />
-            <p>{address}</p>
-            <p>{date}</p>
-            <p>{numberOfPlaces}/{maxUsers}</p>
+            <p className='text-base'>{address}</p>
+            <p className='text-base'>{date}</p>
+            <p className=''>{numberOfPlaces}/{maxUsers}</p>
         </div>
     );
 };
