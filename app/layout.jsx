@@ -3,7 +3,6 @@ import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
 import Navbar from "./(root)/_components/navbar";
 import Footer from "./(root)/_components/footer";
-import AuthLayout from "./(auth)/layout";
 import AuthContextProvider from "./(root)/admin/_components/auth-provider";
 import { Toaster } from "react-hot-toast";
 
@@ -23,10 +22,8 @@ export default function RootLayout({ children }) {
           <body className={inter.className}>
           <Navbar />
             <main>
-            <AuthLayout>
               <Toaster />
               {children}
-            </AuthLayout>
             </main>
             <Footer/>
           </body>
