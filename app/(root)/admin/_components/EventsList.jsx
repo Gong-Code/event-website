@@ -49,7 +49,7 @@ export const EventsList = () => {
                             <tr
                                 key={event.name}
                                 className='border-b border-gray-900/10 last:border-0'>
-                                <td className='invisible md:visible md:px-6 py-3'>
+                                <td className='w-[60px] invisible md:visible px-3 py-3'>
                                     <Image
                                         className='h-10 w-10 rounded-full bg-gray-50'
                                         src={
@@ -57,20 +57,20 @@ export const EventsList = () => {
                                             '/assets/placeholder.jpg'
                                         }
                                         alt='event image'
-                                        width={500}
-                                        height={500}
+                                        width={40}
+                                        height={40}
                                     />
                                 </td>
-                                <td className='px-4 py-2 text-left text-sm font-medium'>
+                                <td className='px-4 py-2 text-left text-sm font-medium text-ellipsis overflow-hidden'>
                                     {event.name}
                                 </td>
-                                <td className='px-4 py-2 text-left text-sm'>
+                                <td className='px-4 py-2 text-left text-sm text-ellipsis overflow-hidden'>
                                     {event.location}
                                 </td>
-                                <td className='px-4 py-2 text-left text-sm'>
+                                <td className='px-4 py-2 text-left text-sm text-ellipsis overflow-hidden'>
                                     {event.date}
                                 </td>
-                                <td className='px-4 py-2 text-right text-sm'>
+                                <td className='px-4 py-2 text-right text-sm text-ellipsis overflow-hidden'>
                                     {event.numberOfSpots}
                                 </td>
                                 <td className='px-4'>

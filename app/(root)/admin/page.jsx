@@ -30,7 +30,7 @@ const AdminPage = () => {
                 </div>
             </header>
             <main className='my-10 flex flex-col justify-center mx-4 md:mx-14 lg:mx-32 gap-y-10'>
-                <div className='grid grid-cols-2 gap-10'>
+                <div className='grid md:grid-cols-2 gap-10'>
                     <div className='p-6 rounded-3xl border-dashed border-slate-600 border-2'>
                         <div>
                             <h3 className='mb-6'>Manage content</h3>
