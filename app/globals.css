@@ -84,17 +84,21 @@ h3 {
 /*=====  Styling buttons  ======*/
 
 button {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    display: flex; 
+    justify-content: center;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem; 
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+    width: 100%;
     font-size: 0.85rem;
     border-radius: 0.375rem;
     line-height: 1.25rem;
     letter-spacing: 0.2px;
     font-weight: 600;
     background: var(--secondary);
-    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.8);
+    box-shadow: 0 1px 2px 0 rgba(7, 7, 7, 0.25);
+    border: 1px solid #a9a9a939;
     cursor: pointer;
     transition: all 0.1s ease-in;
 }
