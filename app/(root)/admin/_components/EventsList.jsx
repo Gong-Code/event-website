@@ -74,10 +74,12 @@ export const EventsList = () => {
                                     {event.numberOfSpots}
                                 </td>
                                 <td className='px-4'>
-                                    <button className='readmore flex whitespace-nowrap items-center gap-2'>
-                                        <span>Read more</span>
-                                        <GoArrowRight className='size-4 font-semibold' />
-                                    </button>
+                                    <Link href={`/event/${event.id}`}>
+                                        <button className='readmore flex whitespace-nowrap items-center gap-2'>
+                                            <span>Read more</span>
+                                            <GoArrowRight className='size-4 font-semibold' />
+                                        </button>
+                                    </Link>
                                 </td>
                             </tr>
                         ))}
