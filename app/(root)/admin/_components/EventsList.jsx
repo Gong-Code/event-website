@@ -8,8 +8,17 @@ import { useEvents } from './events-provider';
 
 export const EventsList = () => {
     const { events } = useEvents();
+  
+    // FETCH EVENTS
+    const fetchEvents = async () => {
+        const fetchedEvents = await getAllEvents();
+        setEvents(fetchedEvents);
+    };
 
-    const router = useRouter();
+    // DISPLAY EVENTS
+    useEffect(() => {
+        fetchEvents();
+    }, []);
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
@@ -63,14 +72,14 @@ export const EventsList = () => {
                                     {event.numberOfSpots}
                                 </td>
                                 <td className='px-4'>
-                                    <button
-                                        className='readmore flex whitespace-nowrap items-center gap-2'
-                                        onClick={() => {
-                                            router.push(`/admin/${event.id}`);
-                                        }}>
-                                        <span>Manage</span>
-                                        <GoArrowRight className='size-4 font-semibold' />
-                                    </button>
+
+                                    <Link href={`/admin/${event.id}`}>
+                                        <button className='readmore flex whitespace-nowrap items-center gap-2'>
+                                            <span>Manage</span>
+                                            <GoArrowRight className='size-4 font-semibold' />
+                                        </button>
+                                    </Link>
+
                                 </td>
                             </tr>
                         ))}

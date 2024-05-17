@@ -1,40 +1,49 @@
-// Lägg event details OCH möjlighet att redigera event här
+'use client'
 
-'use client';
+import { getEventById } from "@/app/api/events/[id]/route";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import Image from 'next/image'
 
-import Image from "next/image";
-import { useEvents } from "../_components/events-provider";
 
 const ManageEventDetailPage = () => {
+  const [event, setEvent] = useState(null);
+  const { id } = useParams()
 
-  const { events } = useEvents()
-  const { name, image, numberOfSpots, location, date } = events;
+  useEffect(() => {
+    const fetchEvent = async () => {
+      const event = await getEventById(id)
+      setEvent(event)
+    }
 
-  return (
-    <div className='flex flex-col p-8 justify-center w-full items-center'>
-            <p className='text-2xl'>{name}</p>
-            <Image
-                src={image}
-                width={500}
-                height={500}
-                alt='event'
-            />
-            <p className='text-lg'>
-                <span className='font-bold'>Where?</span> {location}
-            </p>
-            <p className='text-lg'>
-                <span className='font-bold'>When?</span> {date}
-            </p>
-            {/* <p className='text-lg'>
-                Availability:{' '}
-                <span className='font-bold'>{maxUsers - numberOfSpots}</span>{' '}
-                places left
-            </p>
-            <button
-                className={`text-lg mt-4 ${isMaxUsers ? 'opacity-50' : ''}`}>
-                Book now!
-            </button> */}
+    fetchEvent()
+  }, [id])
+
+    return (
+        <div className='flex flex-col p-8 justify-center w-full items-center'>
+            {event && (
+                <div key={event.id}>
+                  <p className='text-2xl'>{event.name}</p>
+                  <Image
+                    src={
+                      event.image ||
+                      '/assets/placeholder.jpg'
+                    }
+                            width={60}
+                            height={60}
+                            alt='event'
+                        />
+                        <p className='text-lg'>
+                            <span className='font-bold'>Where?</span>{' '}
+                            {event.location}
+                        </p>
+                        <p className='text-lg'>
+                            <span className='font-bold'>When?</span>{' '}
+                            {event.date}
+                        </p>
+                    </div>
+                )}
         </div>
-  )
-}
-export default ManageEventDetailPage
+    );
+};
+export default ManageEventDetailPage;
