@@ -16,7 +16,6 @@ export const getAllEvents = async () => {
             events.push(doc.data());
         });
         
-        console.log(events)
         return events;
     } catch (error) {
         console.log('Could not fetch collection:', error.message);
