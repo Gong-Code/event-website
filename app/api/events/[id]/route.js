@@ -1,9 +1,19 @@
+import { getDoc, doc } from "firebase/firestore";
+
 const { db } = require("@/firebase.config")
 
 //GET BY ID, hämta en event via ID 
-export const fetchDataByID = (collection, id) => {
-    return db.collection(collection).doc(id).get()
-}
+export const getEventById = async (id) => {
+    const docRef = doc(db, 'events', id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return { id: docSnap.id, ...docSnap.data() };
+    } else {
+        console.log('No such document!');
+        return null;
+    }
+};
 
 //PATCH by ID
 

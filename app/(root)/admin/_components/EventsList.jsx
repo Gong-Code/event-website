@@ -20,7 +20,6 @@ export const EventsList = () => {
         fetchEvents();
     }, []);
 
-    console.log(events);
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
@@ -74,7 +73,7 @@ export const EventsList = () => {
                                     {event.numberOfSpots}
                                 </td>
                                 <td className='px-4'>
-                                    <Link href={`/event/${event.id}`}>
+                                    <Link href={`/admin/${event.id}`}>
                                         <button className='readmore flex whitespace-nowrap items-center gap-2'>
                                             <span>Read more</span>
                                             <GoArrowRight className='size-4 font-semibold' />

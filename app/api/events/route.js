@@ -13,7 +13,8 @@ export const getAllEvents = async () => {
         const querySnapshot = await getDocs(collection(db, 'events'));
         
         querySnapshot.forEach((doc) => {
-            events.push(doc.data());
+    
+            events.push({ id: doc.id, ...doc.data() });
         });
         
         console.log(events)
@@ -22,3 +23,4 @@ export const getAllEvents = async () => {
         console.log('Could not fetch collection:', error.message);
     }
 };
+
