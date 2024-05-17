@@ -21,7 +21,8 @@ const EventsContextProvider = ({ children }) => {
     }, []);
 
     const value = {
-        events
+        events,
+        setEvents
     };
 
     return (
