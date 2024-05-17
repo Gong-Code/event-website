@@ -68,7 +68,7 @@ export const EventsList = () => {
                                         onClick={() => {
                                             router.push(`/admin/${event.id}`);
                                         }}>
-                                        <span>Read more</span>
+                                        <span>Manage</span>
                                         <GoArrowRight className='size-4 font-semibold' />
                                     </button>
                                 </td>
