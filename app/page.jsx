@@ -2,45 +2,14 @@
 
 import Image from 'next/image';
 import { Event } from './(root)/_components/event';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getAllEvents } from '@/app/api/events/route';
 
 const img = '/assets/placeholder.jpg';
-const list = [
-    {
-        name: 'International Soup day',
-        img,
-        address: 'Earth',
-        date: '24-05-22 17.00',
-        numberOfPlaces: 15,
-        users: ['dinomon'],
-        id: 'abc',
-        maxUsers: 15
-    },
-    {
-        name: 'Opera in Hagaparken',
-        img,
-        address: 'Earth',
-        date: '24-06-23 17.00',
-        numberOfPlaces: 15,
-        users: ['dinomon'],
-        id: 'def',
-        maxUsers: 30
-    },
-    {
-        name: 'Våffeldagen',
-        img,
-        address: 'Earth',
-        date: '24-07-25 17.00',
-        numberOfPlaces: 5,
-        users: ['dinomon'],
-        id: 'ghi',
-        maxUsers: 25
-    },
-];
 
 const LandingPage = () => {
     const [searchValue, setSearchValue] = useState('')
-    const [eventList, setEventList] = useState(list)
+    const [eventList, setEventList] = useState([])
     const [inc, setInc] = useState(true)
 
     const onSearch = (e) => {
@@ -51,15 +20,21 @@ const LandingPage = () => {
 
     const onSort = () => {
         if(inc) {
-            const newList = list.sort((a, b) => a.numberOfPlaces - b.numberOfPlaces)
+            const newList = list.sort((a, b) => a.numberOfSpots - b.numberOfSpots)
             setEventList(newList)
             setInc(false)
         } else {
-            const newList = list.sort((a, b) => b.numberOfPlaces - a.numberOfPlaces)
+            const newList = list.sort((a, b) => b.numberOfSpots - a.numberOfSpots)
             setEventList(newList)
             setInc(true)
         }
     }
+
+    useEffect(() => {
+        getAllEvents().then((res) => {
+            setEventList(res)
+        })
+    }, [])
 
     return (
         <div className='flex py-32 justify-center flex-col items-center w-full p-2 mt-8'>
@@ -91,13 +66,11 @@ const LandingPage = () => {
                         <Event
                             name={item.name}
                             key={i}
-                            img={img}
-                            address={item.address}
+                            image={item.image}
+                            location={item.location}
                             date={item.date}
-                            numberOfPlaces={item.numberOfPlaces}
-                            users={item.users}
-                            id={item.id}
-                            maxUsers={item.maxUsers}
+                            numberOfSpots={item.numberOfSpots}
+                            maxUsers={200}
                         />
                     );
                 })}
