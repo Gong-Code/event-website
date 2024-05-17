@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { GoArrowRight } from 'react-icons/go';
 import { useEvents } from './events-provider';
+import { useEffect } from 'react';
+import { getAllEvents } from '@/app/api/events/route';
 
 export const EventsList = () => {
     const { events, setEvents } = useEvents();
