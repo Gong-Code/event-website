@@ -7,7 +7,7 @@ import { GoArrowRight } from 'react-icons/go';
 import { useEvents } from './events-provider';
 
 export const EventsList = () => {
-    const { events } = useEvents();
+    const { events, setEvents } = useEvents();
   
     // FETCH EVENTS
     const fetchEvents = async () => {
