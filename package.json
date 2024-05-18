@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.0.6",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.1",
     "@heroicons/react": "^2.1.3",
     "@hookform/resolvers": "^3.3.4",
     "firebase": "^10.11.1",

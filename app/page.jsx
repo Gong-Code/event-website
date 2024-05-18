@@ -1,5 +1,7 @@
 'use client'
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import Image from 'next/image';
 import { Event } from './(root)/_components/event';
 import { useState, useEffect } from 'react';
@@ -35,6 +37,7 @@ const LandingPage = () => {
         getAllEvents().then((res) => {
             setEventList(res)
             setEventListOriginal(res)
+            console.log(res)
         })
     }, [])
 
@@ -56,7 +59,9 @@ const LandingPage = () => {
                 </div>
             </div>
             <div className='flex mt-20 space-x-5'>
-                <button onClick={onSort}>{inc ? 'inc' : 'dec'}</button>
+                <button className="flex gap-3 items-center" onClick={onSort}>
+                    {<FontAwesomeIcon icon={inc ? faSortUp : faSortDown} />} Sort by availability
+                </button>
                 <input type="text" value={searchValue} onChange={onSearch} className='text-black ' placeholder='Search for an event...' />
             </div>
             <p className='flex text-lg mt-8 justify-center items-center'>
