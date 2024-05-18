@@ -11,7 +11,7 @@ export const Event = ({ name, image, location, date, numberOfSpots, maxUsers }) 
    }
 
     return (
-        <div onClick={goToEvent} className='p-6 rounded-3xl border-dashed border-2 border-tertiary'>
+        <div onClick={goToEvent} className='p-6 rounded-3xl border-dashed border-2 border-slate-600 transform transition duration-500 hover:scale-110 hover:border-tertiary cursor-pointer m-5'>
             <h1 className='py-4'>{name}</h1>
             <Image
                 src={image}

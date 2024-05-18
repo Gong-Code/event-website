@@ -15,12 +15,12 @@ const EventDetailsPage = () => {
     const isMaxUsers = Number(numberOfSpots) === Number(maxUsers);
 
     return (
-        <div className='flex flex-col p-8 justify-center w-full items-center'>
-            <p className='text-2xl'>{name}</p>
+        <div className='flex flex-col p-10 justify-center w-full items-center gap-2'>
+            <h1 className='my-5'>{name}</h1>
             <Image
                 src={image}
-                width={500}
-                height={500}
+                width={400}
+                height={400}
                 alt='event'
             />
             <p className='text-lg'>

@@ -67,7 +67,7 @@ const LandingPage = () => {
             <p className='flex text-lg mt-8 justify-center items-center'>
                 Check out the current events!
             </p>
-            <div className='p-2 flex gap-4 mt-2 cursor-pointer'>
+            <div className='p-2 flex gap-4 mt-2'>
                 {eventList.map((item, i) => {
                     return (
                         <Event
