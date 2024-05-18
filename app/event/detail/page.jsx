@@ -34,10 +34,12 @@ const EventDetailsPage = () => {
                 <span className='font-bold'>{maxUsers - numberOfSpots}</span>{' '}
                 places left
             </p>
-            <button
-                className={`text-lg mt-4 ${isMaxUsers ? 'opacity-50' : ''}`}>
-                Book now!
-            </button>
+            <div className='w-2/4'>
+                <button
+                    className={`text-lg mt-4 ${isMaxUsers ? 'opacity-50' : ''}`}>
+                    Book now!
+                </button>
+            </div>
         </div>
     );
 };

@@ -11,12 +11,12 @@ export const Event = ({ name, image, location, date, numberOfSpots, maxUsers }) 
    }
 
     return (
-        <div onClick={goToEvent} className='border p-10 rounded border-tertiary'>
-            <p className='text-xl font-bold'>{name}</p>
+        <div onClick={goToEvent} className='p-6 rounded-3xl border-dashed border-2 border-tertiary'>
+            <h1 className='py-4'>{name}</h1>
             <Image
                 src={image}
-                width={200}
-                height={500}
+                width={400}
+                height={400}
                 alt='Placeholder image'
             />
             <p className='text-base'>{location}</p>
