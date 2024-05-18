@@ -7,6 +7,7 @@ import { useAuth } from '../_components/auth-provider';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '@/firebase.config';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import addNewEvent from '@/app/api/events/new/route';
 
 
 
@@ -79,20 +80,8 @@ const CreateNewEventPage = () => {
         setLoading(true)
 
         try {
-            const docRef = await addDoc(collection(db, 'events', 'users', user.uid), {
-                name: formData.name,
-                location: formData.location,
-                date: formData.date,
-                numberOfSpots: formData.numberOfSpots,
-                description: formData.description,
-                image: formData.image
-            })
+            await addNewEvent(user, formData, initialFormData, setFormData);
 
-            await setDoc(docRef, {
-                events: docRef.id
-            }, { merge: true });
-
-            console.log('docRef id', docRef.id);
             toast.success('Event created successfully!');
             setFormData(initialFormData);
             
