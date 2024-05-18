@@ -7,19 +7,22 @@ import { FaPlus } from "react-icons/fa";
 import { useAuth } from './_components/auth-provider';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const AdminPage = () => {
 
-    const { user } = useAuth();
+    const { user, authLoaded } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
+        console.log('Loading status:', authLoaded);
         if (!user) {
             router.push('/sign-in');     
         } 
             
-    }, [user, router]);
-    
+    }, [user, router, authLoaded]);
+
+  
     return (
         <>
             <header>
