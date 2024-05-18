@@ -6,10 +6,13 @@ import Image from 'next/image';
 import { Event } from './(root)/_components/event';
 import { useState, useEffect } from 'react';
 import { getAllEvents } from '@/app/api/events/route';
+import { useAuth } from "./(root)/admin/_components/auth-provider";
+import { set } from "zod";
 
 const img = '/assets/placeholder.jpg';
 
 const LandingPage = () => {
+    const { user, authLoaded } = useAuth()
     const [searchValue, setSearchValue] = useState('')
     const [eventList, setEventList] = useState([])
     const [inc, setInc] = useState(true)
@@ -33,13 +36,42 @@ const LandingPage = () => {
         }
     }
 
+    const fetchEvents = async (userId) => {
+        if (userId) {
+            const fetchedEvents = await getAllEvents(userId);
+            setEventList(fetchedEvents);
+            setEventListOriginal(fetchedEvents);
+        }else {
+            console.log('User is not logged in');
+        }
+
+    }
+
     useEffect(() => {
-        getAllEvents().then((res) => {
-            setEventList(res)
-            setEventListOriginal(res)
-            console.log(res)
-        })
-    }, [])
+        window.onload = () => {
+            if (authLoaded && user) {
+
+                const userId = user?.uid
+                console.log('userId', userId);
+                if (userId) {
+                    fetchEvents(userId);
+                }
+
+           }
+
+        }
+
+    }, [user, authLoaded]);
+
+    useEffect(() => {
+        if (user) {
+            const userId = user.uid;
+            console.log('userId', userId);
+            if (userId) {
+                fetchEvents(userId);
+            }
+        }
+    }, [user]);
 
     return (
         <div className='flex py-32 justify-center flex-col items-center w-full p-2 mt-8'>
@@ -78,6 +110,8 @@ const LandingPage = () => {
                             date={item.date}
                             numberOfSpots={item.numberOfSpots}
                             maxUsers={200}
+                            eventId={item.id}
+                            userId={user?.uid}
                         />
                     );
                 })}

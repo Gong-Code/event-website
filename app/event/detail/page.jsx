@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import bookEvent from '@/app/api/events/bookEvent/route';
 
 const EventDetailsPage = () => {
     const searchParams = useSearchParams();
@@ -11,8 +12,16 @@ const EventDetailsPage = () => {
     const date = searchParams.get('date');
     const numberOfSpots = searchParams.get('numberOfSpots');
     const maxUsers = searchParams.get('maxUsers');
+    const eventId = searchParams.get('eventId');
+    const userId = searchParams.get('userId');
 
     const isMaxUsers = Number(numberOfSpots) === Number(maxUsers);
+
+    const bookEventFunction = () => {
+        bookEvent(userId, eventId).then(() => {
+            console.log('Event booked');
+        })
+    }
 
     return (
         <div className='flex flex-col p-10 justify-center w-full items-center gap-2'>
@@ -35,7 +44,7 @@ const EventDetailsPage = () => {
                 places left
             </p>
             <div className='w-2/4'>
-                <button
+                <button onClick={bookEventFunction}
                     className={`text-lg mt-4 ${isMaxUsers ? 'opacity-50' : ''}`}>
                     Book now!
                 </button>

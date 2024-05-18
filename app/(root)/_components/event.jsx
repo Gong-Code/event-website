@@ -4,10 +4,10 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-export const Event = ({ name, image, location, date, numberOfSpots, maxUsers }) => {
+export const Event = ({ name, image, location, date, eventId, numberOfSpots, maxUsers, userId }) => {
     const router = useRouter()
     const goToEvent = () => {
-        router.push(`/event/detail?name=${name}&image=${image}&location=${location}&date=${date}&numberOfSpots=${numberOfSpots}&maxUsers=${maxUsers}`)
+        router.push(`/event/detail?name=${name}&image=${image}&location=${location}&date=${date}&numberOfSpots=${numberOfSpots}&maxUsers=${maxUsers}&eventId=${eventId}&userId=${userId}`)
    }
 
     return (
@@ -21,7 +21,7 @@ export const Event = ({ name, image, location, date, numberOfSpots, maxUsers }) 
             />
             <p className='text-base'>{location}</p>
             <p className='text-base'>{date}</p>
-            <p className=''>{numberOfSpots}/{maxUsers}</p>
+            <p className=''>{0}/{numberOfSpots}</p>
         </div>
     );
 };
