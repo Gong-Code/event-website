@@ -28,10 +28,15 @@ const CreateNewEventPage = () => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+        let formattedValue = value;
+        if (name === 'date') {
+            let date = new Date(value);
+            formattedValue = date.toLocaleString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', '');
+          }
         
         setFormData(prevFormData => ({
             ...prevFormData,
-            [name]: value
+            [name]: formattedValue
           
 
         }));

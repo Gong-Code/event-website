@@ -32,6 +32,7 @@ export const EventsList = () => {
                 
                 const userId = user?.uid
                 console.log('userId', userId);
+                
                 if (userId) {
                     fetchEvents(userId);
                 }
