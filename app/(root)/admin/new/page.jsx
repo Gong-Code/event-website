@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../_components/auth-provider';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db, storage } from '@/firebase.config';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 
 
 
@@ -18,8 +18,7 @@ const CreateNewEventPage = () => {
         date: '',
         numberOfSpots: 0,
         description: '',
-        coverPhoto: null,
-        imageUrl: ''
+        image: ''
     }
 
     const { user } = useAuth();
@@ -53,14 +52,14 @@ const CreateNewEventPage = () => {
             reader.onload = async () => {
 
                 try {
-                     const fileRef = ref(storage, `users/${user.uid}/events/${file.name}`);
+                     const fileRef = ref(storage, `events/${formData.name}/users/${user.uid}`);
                     await uploadBytes(fileRef, file);
                     const downloadURL = await getDownloadURL(fileRef)
 
                     setFormData(prevFormData => ({
                         ...prevFormData,
                         coverPhoto: file,
-                        imageUrl: downloadURL
+                        image: downloadURL
                     }));
 
                     toast.success('File uploaded successfully!', { id: toastId });
@@ -80,17 +79,23 @@ const CreateNewEventPage = () => {
         setLoading(true)
 
         try {
-            const docRef = await addDoc(collection(db, 'users', user.uid, 'events'), {
+            const docRef = await addDoc(collection(db, 'events', 'users', user.uid), {
                 name: formData.name,
                 location: formData.location,
                 date: formData.date,
                 numberOfSpots: formData.numberOfSpots,
                 description: formData.description,
-                imageUrl: formData.imageUrl
+                image: formData.image
             })
 
+            await setDoc(docRef, {
+                events: docRef.id
+            }, { merge: true });
+
+            console.log('docRef id', docRef.id);
             toast.success('Event created successfully!');
             setFormData(initialFormData);
+            
             
         } catch (error) {
             toast.error('Failed to create event, please try again.');
