@@ -7,20 +7,50 @@ import { GoArrowRight } from 'react-icons/go';
 import { useEvents } from './events-provider';
 import { useEffect } from 'react';
 import { getAllEvents } from '@/app/api/events/route';
+import { useAuth } from './auth-provider';
 
 export const EventsList = () => {
     const { events, setEvents } = useEvents();
+    const { user, authLoaded } = useAuth();
   
     // FETCH EVENTS
-    const fetchEvents = async () => {
-        const fetchedEvents = await getAllEvents();
-        setEvents(fetchedEvents);
+    const fetchEvents = async (userId) => {
+        if (userId) {
+            const fetchedEvents = await getAllEvents(userId);
+            setEvents(fetchedEvents);
+        
+        }else {
+            console.log('User is not logged in');
+        }
+       
     };
 
     // DISPLAY EVENTS
     useEffect(() => {
-        fetchEvents();
-    }, []);
+        window.onload = () => {
+            if (authLoaded && user) {
+                
+                const userId = user?.uid
+                console.log('userId', userId);
+                if (userId) {
+                    fetchEvents(userId);
+                }
+                
+           }
+        
+        }
+        
+    }, [user, authLoaded]);
+
+    useEffect(() => {
+        if (user) {
+            const userId = user.uid;
+            console.log('userId', userId);
+            if (userId) {
+                fetchEvents(userId);
+            }
+        }
+    }, [user]);
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
