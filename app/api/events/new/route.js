@@ -21,10 +21,6 @@ const addNewEvent = async (user, formData, initialFormData, setFormData) => {
             events: docRef.id
         }, { merge: true });
 
-        console.log('docRef id', docRef.id);
-       
-
-      
         setFormData(initialFormData);
         
         

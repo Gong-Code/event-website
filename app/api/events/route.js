@@ -1,6 +1,6 @@
 //GET funktion ska vara här, hämta alla event
 
-import { useAuth } from '@/app/(root)/admin/_components/auth-provider';
+
 import { db } from '@/firebase.config';
 import {
     collection,
@@ -12,10 +12,10 @@ export const getAllEvents = async (userId) => {
 
     if (!userId) {
         
-        console.log('userId is undefined');
+     
         return [];
     }
-    console.log('userId', userId);
+   
     let events = [];
     
     try {
