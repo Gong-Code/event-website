@@ -31,7 +31,6 @@ export const EventsList = () => {
             if (authLoaded && user) {
                 
                 const userId = user?.uid
-                console.log('userId', userId);
                 
                 if (userId) {
                     fetchEvents(userId);
@@ -46,7 +45,7 @@ export const EventsList = () => {
     useEffect(() => {
         if (user) {
             const userId = user.uid;
-            console.log('userId', userId);
+            
             if (userId) {
                 fetchEvents(userId);
             }

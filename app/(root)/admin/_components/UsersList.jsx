@@ -1,21 +1,23 @@
 'use client';
 
+
+import { getAllUsers } from '@/app/api/users/route';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const UsersList = () => {
     const [users, setUsers] = useState(null);
 
     // FETCH EVENTS
-    // const fetchEvents = async () => {
-    //     const fetchedEvents = await getAllEvents();
-    //     setEvents(fetchedEvents);
-    // };
+    const fetchEvents = async () => {
+        const fetchedEvents = await getAllUsers();
+        setUsers(fetchedEvents);
+    };
 
     // DISPLAY EVENTS
-    // useEffect(() => {
-    //     fetchEvents();
-    // }, []);
+    useEffect(() => {
+        fetchEvents();
+    }, []);
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
