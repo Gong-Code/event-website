@@ -1,16 +1,34 @@
 //POST ska vara här, skicka med user ID
 
 import { db } from "@/firebase.config";
-import { setDoc } from "firebase/firestore";
+import { addDoc, collection, setDoc } from "firebase/firestore";
+import toast from "react-hot-toast";
 
-export const addNewEvent = async (inputValue) => {
+
+const addNewEvent = async (user, formData, initialFormData, setFormData) => {
+    
     try {
-        const id = uuid4();
-        await setDoc(doc(db, 'events', id), {
-            id: id,
-            event: inputValue,
-        });
+        const docRef = await addDoc(collection(db, 'events', 'users', user.uid), {
+            name: formData.name,
+            location: formData.location,
+            date: formData.date,
+            numberOfSpots: formData.numberOfSpots,
+            description: formData.description,
+            image: formData.image,
+            user: user.uid
+        })
+
+        await setDoc(docRef, {
+            events: docRef.id,
+            
+        }, { merge: true });
+
+        setFormData(initialFormData);
+        
+        
     } catch (error) {
-        console.log('Error adding event:', error.message);
-    }
-};
+        toast.error('Failed to create event, please try again.');
+    } 
+}
+
+export default addNewEvent;

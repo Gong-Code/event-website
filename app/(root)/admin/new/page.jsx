@@ -1,12 +1,107 @@
 'use client'
 
 import { PhotoIcon } from '@heroicons/react/24/solid';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useAuth } from '../_components/auth-provider';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { db, storage } from '@/firebase.config';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import addNewEvent from '@/app/api/events/new/route';
+
+
 
 const CreateNewEventPage = () => {
 
+    const initialFormData = {
+        name: '',
+        location: '',
+        date: '',
+        numberOfSpots: 0,
+        description: '',
+        image: ''
+    }
+
+    const { user } = useAuth();
+    const [ loading, setLoading ] = useState(false);
+    const [formData, setFormData] = useState(initialFormData);
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        let formattedValue = value;
+        if (name === 'date') {
+            let date = new Date(value);
+            formattedValue = date.toLocaleString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', '');
+          }
+        
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: formattedValue
+          
+
+        }));
+    };
+
+
+    const handleFileChange = async (event) => {
+
+        const file = event.target.files[0];
+        
+        
+        if (file) {
+            const reader = new FileReader();
+            const toastId = toast.loading('Uploading file...');
+           
+            reader.onabort = () => toast.error('File reading was aborted');
+            reader.onerror = () => toast.error('File reading has failed');
+
+            reader.onload = async () => {
+
+                try {
+                     const fileRef = ref(storage, `events/${formData.name}/users/${user.uid}`);
+                    await uploadBytes(fileRef, file);
+                    const downloadURL = await getDownloadURL(fileRef)
+
+                    setFormData(prevFormData => ({
+                        ...prevFormData,
+                        coverPhoto: file,
+                        image: downloadURL
+                    }));
+
+                    toast.success('File uploaded successfully!', { id: toastId });
+                } catch (error) {
+                    toast.error('Failed to upload file, please try again.', { id: toastId });
+                }
+            
+            };
+
+            reader.readAsArrayBuffer(file)
+            
+        }
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        setLoading(true)
+
+        try {
+            await addNewEvent(user, formData, initialFormData, setFormData);
+
+            toast.success('Event created successfully!');
+            setFormData(initialFormData);
+            
+            
+        } catch (error) {
+            toast.error('Failed to create event, please try again.');
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
     return (
         <main className='my-10 flex flex-col justify-center'>
-            <form className='bg-primary rounded-3xl p-12 mx-4 md:mx-20 lg:mx-64'>
+            <form onSubmit={handleSubmit} className='bg-primary rounded-3xl p-12 mx-4 md:mx-20 lg:mx-64'>
                 <div className='space-y-12'>
                     <div className='pb-12'>
                         <h2 className='text-base font-semibold leading-7 text-gray-900'>
@@ -28,8 +123,10 @@ const CreateNewEventPage = () => {
                                     <div className='mt-2'>
                                         <input
                                             type='text'
-                                            name='event-name'
+                                            name='name'
                                             id='event-name'
+                                            value={formData.name}
+                                            onChange={handleChange}
                                             className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6'
                                         />
                                     </div>
@@ -46,6 +143,8 @@ const CreateNewEventPage = () => {
                                             type='text'
                                             name='location'
                                             id='location'
+                                            value={formData.location}
+                                            onChange={handleChange}
                                             className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6'
                                         />
                                     </div>
@@ -64,8 +163,11 @@ const CreateNewEventPage = () => {
                                     <div className='flex sm:max-w-md'>
                                         <input
                                             id='dateandtime'
+                                            name='date'
                                             aria-label='Date and time'
                                             type='datetime-local'
+                                            value={formData.date}
+                                            onChange={handleChange}
                                             className='block flex-1 border-0 bg-white py-1.5 pl-3 text-gray-900 focus:ring-2 sm:text-sm sm:leading-6 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-secondary'
                                         />
                                     </div>
@@ -82,8 +184,11 @@ const CreateNewEventPage = () => {
                                     <div className='flex sm:max-w-md'>
                                         <input
                                             id='attendees'
+                                            name='numberOfSpots'
                                             aria-label='attendees'
                                             type='number'
+                                            value={formData.numberOfSpots}
+                                            onChange={handleChange}
                                             className='block flex-1 border-0 bg-white py-1.5 pl-3 text-gray-900 focus:ring-2 sm:text-sm sm:leading-6 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-secondary'
                                             placeholder='100'
                                             min={1}
@@ -101,10 +206,12 @@ const CreateNewEventPage = () => {
                                 <div className='mt-2'>
                                     <textarea
                                         id='event-description'
-                                        name='event-description'
+                                        name='description'
                                         rows={3}
+                                        value={formData.description}
+                                        onChange={handleChange}
                                         className='block w-full rounded-md bg-white border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6'
-                                        defaultValue={''}
+                                       
                                     />
                                 </div>
                             </div>
@@ -131,6 +238,7 @@ const CreateNewEventPage = () => {
                                                     name='file-upload'
                                                     type='file'
                                                     className='sr-only'
+                                                    onChange={handleFileChange}
                                                 />
                                             </label>
                                             <p className='pl-1'>

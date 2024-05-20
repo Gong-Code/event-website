@@ -25,7 +25,7 @@ const AuthContextProvider = ({ children }) => {
   const register = async (values) => {
     const toastId = toast.loading('Creating account...')
 
-    setAuthLoaded(true)
+    // setAuthLoaded(true)
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password)
 

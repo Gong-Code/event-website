@@ -1,89 +1,209 @@
-"use client"
- 
-import { useAuth } from "@/app/(root)/admin/_components/auth-provider"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
-import { z } from "zod"
- 
+'use client';
 
- 
-const formSchema = z.object({
-  email: z.string().email({message: "You need to enter a valid email"}),
-  firstName: z.string().min(1, { message: 'You need to enter a first name'}),
-  lastName: z.string().min(1, { message: 'You need to enter a last name'}),
-  password: z.string().min(6, { message: 'The password must be at least 6 characters long'}),
-  confirmPassword: z.string(),
-}).refine(values => {
-  return values.password === values.confirmPassword
-}, {
-  message: 'Passwords must match',
-  path: ['confirmPassword']
-})
+import { useAuth } from '@/app/(root)/admin/_components/auth-provider';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { MdErrorOutline } from 'react-icons/md';
+import { z } from 'zod';
 
+const formSchema = z
+    .object({
+        email: z.string().email({ message: 'You need to enter a valid email' }),
+        firstName: z
+            .string()
+            .min(1, { message: 'You need to enter a first name' }),
+        lastName: z
+            .string()
+            .min(1, { message: 'You need to enter a last name' }),
+        password: z.string().min(6, {
+            message: 'The password must be at least 6 characters long',
+        }),
+        confirmPassword: z.string(),
+    })
+    .refine(
+        (values) => {
+            return values.password === values.confirmPassword;
+        },
+        {
+            message: 'Passwords must match',
+            path: ['confirmPassword'],
+        }
+    );
 
 const SignUpForm = () => {
+    const { register } = useAuth();
 
-  const { register } = useAuth()
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: '',
+            firstName: '',
+            lastName: '',
+            password: '',
+            confirmPassword: '',
+        },
+    });
 
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      firstName: "",
-      lastName: "",
-      password: "",
-      confirmPassword: "",
-    },
-  })
- 
-  
-  function onSubmit(values) {
-    console.log(values)
-    register(values)
-   
-  }
- 
+    function onSubmit(values) {
+        console.log(values);
+        register(values);
+    }
 
+    return (
+        <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+            <form
+                className='space-y-6'
+                onSubmit={form.handleSubmit(onSubmit)}>
+                {/* Email input */}
+                <div>
+                    <label
+                        htmlFor='email'
+                        className='block text-sm font-medium leading-6 text-gray-900'>
+                        Email address
+                    </label>
+                    <div className='mt-2'>
+                        <input
+                            id='email'
+                            name='email'
+                            type='email'
+                            {...form.register('email')}
+                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-tertiary sm:text-sm sm:leading-6'
+                        />
+                        {form.formState.errors.email && (
+                            <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                <MdErrorOutline />
+                                <span className='text-xs'>
+                                    {form.formState.errors.email.message}
+                                </span>
+                            </span>
+                        )}
+                    </div>
+                </div>
 
-  return (
-    <div className="space-y-8 p-4 border rounded-md max-w-lg mx-auto my-10">
-      <form  onSubmit={form.handleSubmit(onSubmit)} >
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">Email</label>
-          <input type="email" {...form.register("email")} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-          {form.formState.errors.email && <p className="text-red-500 text-xs italic">{form.formState.errors.email.message}</p>}
+                {/* First name input */}
+                <div>
+                    <div className='flex items-center justify-between'>
+                        <label
+                            htmlFor='first-name'
+                            className='block text-sm font-medium leading-6 text-gray-900'>
+                            First name
+                        </label>
+                    </div>
+                    <div className='mt-2'>
+                        <input
+                            id='first-name'
+                            name='first-name'
+                            type='text'
+                            {...form.register('firstName')}
+                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-tertiary sm:text-sm sm:leading-6'
+                        />
+                        {form.formState.errors.firstName && (
+                            <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                <MdErrorOutline />
+                                <span className='text-xs'>
+                                    {form.formState.errors.email.message}
+                                </span>
+                            </span>
+                        )}
+                    </div>
+                </div>
+
+                {/* Last name input */}
+                <div>
+                    <div className='flex items-center justify-between'>
+                        <label
+                            htmlFor='last-name'
+                            className='block text-sm font-medium leading-6 text-gray-900'>
+                            Last name
+                        </label>
+                    </div>
+                    <div className='mt-2'>
+                        <input
+                            id='last-name'
+                            name='last-name'
+                            type='text'
+                            {...form.register('lastName')}
+                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-tertiary sm:text-sm sm:leading-6'
+                        />
+                        {form.formState.errors.lastName && (
+                            <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                <MdErrorOutline />
+                                <span className='text-xs'>
+                                    {form.formState.errors.lastName.message}
+                                </span>
+                            </span>
+                        )}
+                    </div>
+                </div>
+
+                {/* Password input */}
+                <div>
+                    <div className='flex items-center justify-between'>
+                        <label
+                            htmlFor='password'
+                            className='block text-sm font-medium leading-6 text-gray-900'>
+                            Password
+                        </label>
+                    </div>
+                    <div className='mt-2'>
+                        <input
+                            id='password'
+                            name='password'
+                            type='password'
+                            {...form.register('password')}
+                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-tertiary sm:text-sm sm:leading-6'
+                        />
+                        {form.formState.errors.password && (
+                            <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                <MdErrorOutline />
+                                <span className='text-xs'>
+                                    {form.formState.errors.password.message}
+                                </span>
+                            </span>
+                        )}
+                    </div>
+                </div>
+
+                {/* Confirm password input */}
+                <div>
+                    <div className='flex items-center justify-between'>
+                        <label
+                            htmlFor='confirm-password'
+                            className='block text-sm font-medium leading-6 text-gray-900'>
+                            Confirm password
+                        </label>
+                    </div>
+                    <div className='mt-2'>
+                        <input
+                            id='confirm-password'
+                            name='confirm-password'
+                            type='password'
+                            {...form.register('confirmPassword')}
+                            className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-tertiary sm:text-sm sm:leading-6'
+                        />
+                        {form.formState.errors.confirmPassword && (
+                            <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                <MdErrorOutline />
+                                <span className='text-xs'>
+                                    {
+                                        form.formState.errors.confirmPassword
+                                            .message
+                                    }
+                                </span>
+                            </span>
+                        )}
+                    </div>
+                </div>
+
+                <div>
+                    <button
+                        type='submit'
+                        className='flex w-full justify-center rounded-md bg-tertiary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tertiary'>
+                        Sign in
+                    </button>
+                </div>
+            </form>
         </div>
-
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">First Name</label>
-          <input {...form.register("firstName")} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-          {form.formState.errors.firstName && <p className="text-red-500 text-xs italic">{form.formState.errors.firstName.message}</p>}
-        </div>
-
-        <div className="mb-4">
-          <label className="blocktext-sm font-bold mb-2">Last Name</label>
-          <input {...form.register("lastName")} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-          {form.formState.errors.lastName && <p className="text-red-500 text-xs italic">{form.formState.errors.lastName.message}</p>}
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">Password</label>
-          <input type="password" {...form.register("password")} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-          {form.formState.errors.password && <p className="text-red-500 text-xs italic">{form.formState.errors.password.message}</p>}
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-sm font-bold mb-2">Confirm Password</label>
-          <input type="password" {...form.register("confirmPassword")} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-          {form.formState.errors.confirmPassword && <p className="text-red-500 text-xs italic">{form.formState.errors.confirmPassword.message}</p>}
-        </div>
-
-        <button type="submit" className=" py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Submit
-        </button>
-      </form>
-    </div>
-  )
-}
-export default SignUpForm
+    );
+};
+export default SignUpForm;

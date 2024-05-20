@@ -4,24 +4,24 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-export const Event = ({ name, img, address, date, numberOfPlaces, users, id, maxUsers }) => {
+export const Event = ({ name, image, location, date, eventId, numberOfSpots, maxUsers, userId }) => {
     const router = useRouter()
     const goToEvent = () => {
-        router.push(`/event/${id}?name=${name}&img=${img}&address=${address}&date=${date}&numberOfPlaces=${numberOfPlaces}&users=${users}&maxUsers=${maxUsers}`)
+        router.push(`/event/detail?name=${name}&image=${image}&location=${location}&date=${date}&numberOfSpots=${numberOfSpots}&maxUsers=${maxUsers}&eventId=${eventId}&userId=${userId}`)
    }
 
     return (
-        <div onClick={goToEvent} className='border p-10 rounded border-tertiary'>
-            <p className='text-xl font-bold'>{name}</p>
+        <div onClick={goToEvent} className='p-6 rounded-3xl border-dashed border-2 border-slate-600 transform transition duration-500 hover:scale-110 hover:border-tertiary cursor-pointer m-5'>
+            <h1 className='py-4'>{name}</h1>
             <Image
-                src={img}
-                width={200}
-                height={500}
+                src={image}
+                width={400}
+                height={400}
                 alt='Placeholder image'
             />
-            <p className='text-base'>{address}</p>
+            <p className='text-base'>{location}</p>
             <p className='text-base'>{date}</p>
-            <p className=''>{numberOfPlaces}/{maxUsers}</p>
+            <p className=''>{0}/{numberOfSpots}</p>
         </div>
     );
 };
