@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react';
 import { getAllEvents } from '@/app/api/events/route';
 import { useAuth } from "./(root)/admin/_components/auth-provider";
 import { set } from "zod";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/firebase.config";
 
 const img = '/assets/placeholder.jpg';
 
@@ -36,42 +38,58 @@ const LandingPage = () => {
         }
     }
 
-    const fetchEvents = async (userId) => {
-        if (userId) {
-            const fetchedEvents = await getAllEvents(userId);
-            setEventList(fetchedEvents);
-            setEventListOriginal(fetchedEvents);
-        }else {
-            console.log('User is not logged in');
+    // const fetchEvents = async (userId) => {
+    //     if (userId) {
+    //         const fetchedEvents = await getAllEvents(userId);
+    //         setEventList(fetchedEvents);
+    //         setEventListOriginal(fetchedEvents);
+    //     }else {
+    //         console.log('User is not logged in');
+    //     }
+
+    // }
+
+    // useEffect(() => {
+    //     window.onload = () => {
+    //         if (authLoaded && user) {
+
+    //             const userId = user?.uid
+    //             console.log('userId', userId);
+    //             if (userId) {
+    //                 fetchEvents(userId);
+    //             }
+
+    //        }
+
+    //     }
+
+    // }, [user, authLoaded]);
+
+    const fetchEvents = async () => {
+        let events = [];
+
+    try {
+        const querySnapshot = await getDocs(collection(db, 'events'));
+
+        for (let docSnapshot of querySnapshot.docs) {
+            let event = { id: docSnapshot.id, ...docSnapshot.data() };
+            console.log(event)
+            events.push(event);
         }
+
+        
+        setEventList(events);
+        console.log(events)
+    } catch (error) {
+        console.error('Could not fetch collection:', error.message);
+        return [];
+    }
 
     }
 
     useEffect(() => {
-        window.onload = () => {
-            if (authLoaded && user) {
-
-                const userId = user?.uid
-                console.log('userId', userId);
-                if (userId) {
-                    fetchEvents(userId);
-                }
-
-           }
-
-        }
-
-    }, [user, authLoaded]);
-
-    useEffect(() => {
-        if (user) {
-            const userId = user.uid;
-            console.log('userId', userId);
-            if (userId) {
-                fetchEvents(userId);
-            }
-        }
-    }, [user]);
+        fetchEvents();
+    }, []);
 
     return (
         <div className='flex py-32 justify-center flex-col items-center w-full p-2 mt-8'>

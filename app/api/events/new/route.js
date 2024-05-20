@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 const addNewEvent = async (user, formData, initialFormData, setFormData) => {
     
     try {
-        const docRef = await addDoc(collection(db, 'events', 'users', user.uid), {
+        const docRef = await addDoc(collection(db, 'events'), {
             name: formData.name,
             location: formData.location,
             date: formData.date,
