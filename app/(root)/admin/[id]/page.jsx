@@ -20,7 +20,7 @@ const ManageEventDetailPage = () => {
     }, [id]);
 
     return (
-        <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 py-24 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
+        <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 mt-10 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
             {event && (
                 <>
                     <div>
@@ -29,11 +29,46 @@ const ManageEventDetailPage = () => {
                                 <h2 className='text-3xl font-bold tracking-tight text-primary sm:text-4xl'>
                                     {event.name}
                                 </h2>
-                                <p className='mt-4 text-primary-muted'>
+                                <p className='my-6 text-primary-muted leading-6'>
                                     {event.description}
                                 </p>
                             </div>
-                            <div className='flex gap-4'>
+                        </div>
+                        <dl className='divide-y divide-gray-100/10 outline-gray-100/20 outline outline-1 p-6'>
+                            <div className='p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                                <dt className='text-sm font-semibold leading-6 text-primary-muted'>
+                                    Location
+                                </dt>
+                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
+                                    {event.location}
+                                </dd>
+                            </div>
+                            <div className='p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                                <dt className='text-sm font-semibold leading-6 text-primary-muted'>
+                                    Date
+                                </dt>
+                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
+                                    {event.date}
+                                </dd>
+                            </div>
+                            <div className='p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                                <dt className='text-sm font-semibold leading-6 text-primary-muted'>
+                                    Number of available spots
+                                </dt>
+                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
+                                    {event.numberOfSpots}
+                                </dd>
+                            </div>
+                            <div className='p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                                <dt className='text-sm font-semibold leading-6 text-primary-muted'>
+                                    Attending users
+                                </dt>
+                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
+                                    LOREM IPSUM
+                                </dd>
+                            </div>
+                        </dl>
+                        <div className='flex gap-4 mt-6'>
                             <Link href={`/`}>
                                 <button className='secondary flex whitespace-nowrap items-center gap-2'>
                                     <span>Update</span>
@@ -46,42 +81,7 @@ const ManageEventDetailPage = () => {
                                     {/* <GoArrowRight className='size-4 font-semibold' /> */}
                                 </button>
                             </Link>
-                            </div>
                         </div>
-                        <dl className='divide-y divide-gray-100/10'>
-                            <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                                <dt className='text-sm font-medium leading-6 text-primary-muted'>
-                                    Location
-                                </dt>
-                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
-                                    {event.location}
-                                </dd>
-                            </div>
-                            <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                                <dt className='text-sm font-medium leading-6 text-primary-muted'>
-                                    Date
-                                </dt>
-                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
-                                    {event.date}
-                                </dd>
-                            </div>
-                            <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                                <dt className='text-sm font-medium leading-6 text-primary-muted'>
-                                    Number of available spots
-                                </dt>
-                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
-                                    {event.numberOfSpots}
-                                </dd>
-                            </div>
-                            <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                                <dt className='text-sm font-medium leading-6 text-primary-muted'>
-                                    Attending users
-                                </dt>
-                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
-                                    LOREM IPSUM
-                                </dd>
-                            </div>
-                        </dl>
                     </div>
                     <div>
                         <Image
