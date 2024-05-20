@@ -2,16 +2,11 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
-import Image from 'next/image';
 import { Event } from './(root)/_components/event';
 import { useState, useEffect } from 'react';
-import { getAllEvents } from '@/app/api/events/route';
 import { useAuth } from './(root)/admin/_components/auth-provider';
-import { set } from 'zod';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/firebase.config';
-
-const img = '/assets/placeholder.jpg';
 
 const LandingPage = () => {
     const { user, authLoaded } = useAuth();
