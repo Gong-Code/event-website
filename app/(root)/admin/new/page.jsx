@@ -58,7 +58,7 @@ const CreateNewEventPage = () => {
             reader.onload = async () => {
 
                 try {
-                     const fileRef = ref(storage, `events/${formData.name}/users/${user.uid}`);
+                     const fileRef = ref(storage, `events/${formData.name}`);
                     await uploadBytes(fileRef, file);
                     const downloadURL = await getDownloadURL(fileRef)
 
