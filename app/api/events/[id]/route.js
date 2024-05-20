@@ -9,7 +9,7 @@ export const fetchDataByID = (collection, id) => {
 
 
 //DELETE BY ID
-export const deleteById = (collection, id) => {
+export const deleteByID = (collection, id) => {
     const removedEvent = db.collection(collection).doc(id)
     removedEvent.delete().then(() => {
         console.log('Successfully deleted the event')
