@@ -20,7 +20,7 @@ export const EventsList = () => {
 
     useEffect(() => {
         fetchEvents();
-    }, [events]);
+    }, []);
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
