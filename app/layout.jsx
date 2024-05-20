@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ClerkProvider } from '@clerk/nextjs';
 import { Toaster } from 'react-hot-toast';
 import Navbar from './(root)/_components/navbar';
 import Footer from './(root)/_components/footer';
@@ -17,8 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <AuthContextProvider>
-            <EventsContextProvider>
-                <ClerkProvider>
+            <EventsContextProvider>              
                     <html lang='en'>
                         <body className={inter.className}>
                             <Navbar />
@@ -29,7 +27,6 @@ export default function RootLayout({ children }) {
                             <Footer />
                         </body>
                     </html>
-                </ClerkProvider>
             </EventsContextProvider>
         </AuthContextProvider>
     );
