@@ -4,9 +4,12 @@
 import { getAllUsers } from '@/app/api/users/route';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+
 import { useAuth } from './auth-provider';
 import { useEvents } from './events-provider';
 import { getAllEvents } from '@/app/api/events/route';
+
+
 
 export const UsersList = () => {
     const { user, authLoaded } = useAuth();
@@ -17,6 +20,7 @@ export const UsersList = () => {
         const fetchedEvents = await getAllEvents(userId);
         setEvents(fetchedEvents);
     };
+
 
      // DISPLAY USERS
      useEffect(() => {
@@ -44,6 +48,8 @@ export const UsersList = () => {
             }
         }
     }, [user]);
+
+   
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>

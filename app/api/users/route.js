@@ -1,5 +1,6 @@
 //GET, hämta all users
 
+
 //GET, hämta all users
 
 export const getAllUsers = async (userId) => {
@@ -7,7 +8,6 @@ export const getAllUsers = async (userId) => {
 
     if (!userId) {
         
-       
         return [];
     }
     console.log('userId', userId);

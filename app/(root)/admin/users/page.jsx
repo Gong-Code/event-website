@@ -1,9 +1,13 @@
 'use client'
 
 
+
 import { useEffect, useState } from "react";
 import { UsersList } from "../_components/UsersList";
 import { getAllUsers } from "@/app/api/users/route";
+
+import { useState } from "react";
+
 
 const UsersPage = () => {
 
@@ -11,6 +15,7 @@ const UsersPage = () => {
 
   
     // FETCH USERS
+
     const fetchUsers = async () => {
       
           const fetchedUsers = await getAllUsers();

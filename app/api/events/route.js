@@ -10,6 +10,7 @@ import {
 
 export const getAllEvents = async () => {
     
+  
     let events = [];
     
     try {
