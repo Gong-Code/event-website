@@ -14,11 +14,13 @@ const addNewEvent = async (user, formData, initialFormData, setFormData) => {
             date: formData.date,
             numberOfSpots: formData.numberOfSpots,
             description: formData.description,
-            image: formData.image
+            image: formData.image,
+            user: user.uid
         })
 
         await setDoc(docRef, {
-            events: docRef.id
+            events: docRef.id,
+            
         }, { merge: true });
 
         setFormData(initialFormData);

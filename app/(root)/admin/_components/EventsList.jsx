@@ -10,18 +10,16 @@ import { getAllEvents } from '@/app/api/events/route';
 import { useAuth } from './auth-provider';
 
 export const EventsList = () => {
-    const { events, setEvents } = useEvents();
     const { user, authLoaded } = useAuth();
+    const { events, setEvents } = useEvents();
+    
   
     // FETCH EVENTS
     const fetchEvents = async (userId) => {
-        if (userId) {
-            const fetchedEvents = await getAllEvents(userId);
-            setEvents(fetchedEvents);
         
-        }else {
-            console.log('User is not logged in');
-        }
+        const fetchedEvents = await getAllEvents(userId);
+        setEvents(fetchedEvents);
+      
        
     };
 
