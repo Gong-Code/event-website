@@ -11,17 +11,17 @@ export const Event = ({ name, image, location, date, eventId, numberOfSpots, max
    }
 
     return (
-        <div onClick={goToEvent} className='p-6 rounded-3xl border-dashed border-2 border-slate-600 transform transition duration-500 hover:scale-110 hover:border-tertiary cursor-pointer m-5'>
-            <h1 className='py-4'>{name}</h1>
+        <div onClick={goToEvent} className='p-6 rounded-3xl border-dashed border-2 border-slate-600 transform transition duration-500 hover:scale-110 hover:border-tertiary cursor-pointer m-5 max-w-96 w-[150px}'>
+            <h3 className='py-4'>{name}</h3>
             <Image
-                src={image}
-                width={400}
-                height={400}
-                alt='Placeholder image'
+                src={`${image}` || '/assets/placeholder.jpg'}
+                width={200}
+                height={200}
+                alt='Event image'
             />
-            <p className='text-base'>{location}</p>
-            <p className='text-base'>{date}</p>
-            <p className=''>{0}/{numberOfSpots}</p>
+            <p>{date}</p>
+            <p>{location}</p>
+            <p>{0}/{numberOfSpots}</p>
         </div>
     );
 };
