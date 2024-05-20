@@ -1,7 +1,9 @@
 'use client'
 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { UsersList } from "../_components/UsersList";
+import { getAllUsers } from "@/app/api/users/route";
 
 const UsersPage = () => {
 
@@ -9,36 +11,23 @@ const UsersPage = () => {
 
   
     // FETCH USERS
-    const fetchUsers = async (userId) => {
-      if (userId) {
-          const fetchedUsers = await getAllUsers(userId);
-          setEvents(fetchedUsers);
+    const fetchUsers = async () => {
       
-      }else {
-          console.log('User is not logged in');
-      }
-     
+          const fetchedUsers = await getAllUsers();
+          setUsers(fetchedUsers);
   };
+
+  useEffect(() => {
+    fetchUsers(); 
+  }, []);
 
 
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user, index) => (
-          <tr key={index}>
-            <td>{user.name}</td>
-            <td>{user.email}</td>
-          </tr>
-        ))}
-        </tbody>
-    </table>
+    <div className="flex flex-col justify-center text-center mt-20 gap-10">
+      <h1>Users</h1>
+      <UsersList users={users} />
+    </div>
   );
   
 }

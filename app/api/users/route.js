@@ -1,11 +1,13 @@
 //GET, hämta all users
 
+//GET, hämta all users
+
 export const getAllUsers = async (userId) => {
     
 
     if (!userId) {
         
-        // console.log('userId is undefined');
+       
         return [];
     }
     console.log('userId', userId);

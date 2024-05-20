@@ -2,24 +2,26 @@
 
 
 import { db } from '@/firebase.config';
+import { getAuth } from 'firebase/auth';
 import {
     collection,
     getDocs,
 } from 'firebase/firestore';
 
-export const getAllEvents = async (userId) => {
+export const getAllEvents = async () => {
     
-
-    if (!userId) {
-        
-     
-        return [];
-    }
-   
     let events = [];
     
     try {
-        const querySnapshot = await getDocs(collection(db, 'events','users', userId));
+
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        if (!user) {
+            throw new Error('User is not logged in');
+        }
+
+        const querySnapshot = await getDocs(collection(db, 'events', 'users', user.uid));
         
         querySnapshot.forEach((doc) => {
     
