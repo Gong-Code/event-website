@@ -5,11 +5,10 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../_components/auth-provider';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { db, storage } from '@/firebase.config';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
-import addNewEvent from '@/app/api/events/new/route';
+import { storage } from '@/firebase.config';
 
-
+import addNewEvent from '@/app/lib/event.db';
+import { useRouter } from 'next/navigation';
 
 const CreateNewEventPage = () => {
 
@@ -21,10 +20,12 @@ const CreateNewEventPage = () => {
         description: '',
         image: ''
     }
+    
 
     const { user } = useAuth();
     const [ loading, setLoading ] = useState(false);
     const [formData, setFormData] = useState(initialFormData);
+    const router = useRouter();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -32,12 +33,12 @@ const CreateNewEventPage = () => {
         if (name === 'date') {
             let date = new Date(value);
             formattedValue = date.toLocaleString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', '');
-          }
+        }
         
         setFormData(prevFormData => ({
             ...prevFormData,
             [name]: formattedValue
-          
+        
 
         }));
     };
@@ -51,14 +52,14 @@ const CreateNewEventPage = () => {
         if (file) {
             const reader = new FileReader();
             const toastId = toast.loading('Uploading file...');
-           
+
             reader.onabort = () => toast.error('File reading was aborted');
             reader.onerror = () => toast.error('File reading has failed');
 
             reader.onload = async () => {
 
                 try {
-                     const fileRef = ref(storage, `events/${formData.name}`);
+                    const fileRef = ref(storage, `events/${formData.name}`);
                     await uploadBytes(fileRef, file);
                     const downloadURL = await getDownloadURL(fileRef)
 
@@ -90,6 +91,7 @@ const CreateNewEventPage = () => {
             toast.success('Event created successfully!');
             setFormData(initialFormData);
             
+            router.push('/admin')
             
         } catch (error) {
             toast.error('Failed to create event, please try again.');

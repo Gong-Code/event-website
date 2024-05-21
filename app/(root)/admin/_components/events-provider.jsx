@@ -1,6 +1,7 @@
 'use client';
 
-import { getAllEvents } from '@/app/lib/getAllEvents';
+
+import { getAllEvents } from '@/app/lib/event.db';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 

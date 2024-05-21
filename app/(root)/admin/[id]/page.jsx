@@ -1,10 +1,11 @@
 'use client';
 
-import { getEventById } from '@/app/api/events/[id]/route';
+
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getEventById } from '@/app/lib/event.db';
 
 const ManageEventDetailPage = () => {
     const [event, setEvent] = useState(null);
