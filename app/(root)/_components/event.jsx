@@ -11,13 +11,16 @@ export const Event = ({
     date,
     eventId,
     numberOfSpots,
-    maxUsers,
     userId,
+    bookedUsers
 }) => {
     const router = useRouter();
+    
+    const numberOfBookedUsers = bookedUsers ? bookedUsers.length : 0;
+
     const goToEvent = () => {
         router.push(
-            `/event/detail?name=${name}&image=${image}&location=${location}&date=${date}&numberOfSpots=${numberOfSpots}&maxUsers=${maxUsers}&eventId=${eventId}&userId=${userId}`
+            `/event/detail?name=${name}&image=${image}&location=${location}&date=${date}&numberOfSpots=${numberOfSpots}&eventId=${eventId}&userId=${userId}&numberOfBookedUsers=${numberOfBookedUsers}`
         );
     };
 
@@ -35,7 +38,7 @@ export const Event = ({
             <p>{date}</p>
             <p>{location}</p>
             <p>
-                {0}/{numberOfSpots}
+                {numberOfBookedUsers}/{numberOfSpots}
             </p>
         </div>
     );

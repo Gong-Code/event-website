@@ -6,6 +6,7 @@ import { Event } from './(root)/_components/event';
 import { useState, useEffect } from 'react';
 import { useAuth } from './(root)/admin/_components/auth-provider';
 import { getAllEvents } from './lib/event.db';
+import { set } from 'zod';
 
 
 const LandingPage = () => {
@@ -22,6 +23,7 @@ const LandingPage = () => {
             try {
                 const events = await getAllEvents();
                 setEventList(events);
+                setEventListOriginal(events);
                 console.log(events);
             } catch (error) {
                 console.error('Could not fetch events:', error.message);
@@ -101,9 +103,9 @@ const LandingPage = () => {
                             location={item.location}
                             date={item.date}
                             numberOfSpots={item.numberOfSpots}
-                            maxUsers={200}
                             eventId={item.id}
                             userId={user?.uid}
+                            bookedUsers={item.bookedUsers}
                         />
                     );
                 })}
