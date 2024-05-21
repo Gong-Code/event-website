@@ -9,6 +9,7 @@ import {
     TransitionChild,
 } from '@headlessui/react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
+import { updateEventById } from '@/app/lib/database';
 import toast from 'react-hot-toast';
 import { useParams } from 'next/navigation';
 
@@ -25,9 +26,7 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
     const cancelButtonRef = useRef(null);
     const { id } = useParams();
 
-    
     const handleSubmit = async (e) => {
-        console.log(handleSubmit)
         e.preventDefault();
     
         console.log(formData); // Check if formData is being updated correctly
