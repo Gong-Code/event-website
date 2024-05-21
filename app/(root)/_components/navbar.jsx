@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { IoCog } from "react-icons/io5";
 
 const Navbar = () => {
-    const { user } = useAuth();
+    const { user, isAdmin } = useAuth();
 
     return (
         <div className='flex justify-between items-center w-full px-6 md:px-16 lg:px-36 py-4 bg-secondary-muted border-b border-tertiary shadow'>
@@ -39,7 +39,7 @@ const Navbar = () => {
                     height={40}
                     className='hidden w-10 mx-3 h-10 rounded-full'
                 />
-                {user && (
+                {isAdmin && (
                     <Link href='/admin'>
                         <button className='admin flex items-center gap-1'><IoCog className='size-4'/><span>Admin</span>
 </button>
