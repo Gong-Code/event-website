@@ -15,7 +15,7 @@ const addNewEvent = async (user, formData, initialFormData, setFormData) => {
             numberOfSpots: formData.numberOfSpots,
             description: formData.description,
             image: formData.image,
-            user: user.uid
+            createdByUser: user.uid
         })
 
         await setDoc(docRef, {
