@@ -103,9 +103,9 @@ const LandingPage = () => {
                             location={item.location}
                             date={item.date}
                             numberOfSpots={item.numberOfSpots}
-                            maxUsers={200}
                             eventId={item.id}
                             userId={user?.uid}
+                            bookedUsers={item.bookedUsers}
                         />
                     );
                 })}
