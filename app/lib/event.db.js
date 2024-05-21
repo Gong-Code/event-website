@@ -79,14 +79,15 @@ export const updateEventById = async (id, update) => {
 
 export const bookEvent = async (userId, eventId) => {
     
+    const docRef = doc(db, 'events', eventId);
+    const currentlyBookedUsers = docRef.bookedUsers ? docRef.bookedUsers : [];
+
+    const userIdArray = [userId]
+
     try {
-        const docRef = await addDoc(collection(db, 'bookedEvents', 'usersBookedEvents', userId), {
-            eventId: eventId
-        })
-        
-        await setDoc(docRef);
-        
-        console.log('docRef id', docRef.id);        
+        await updateDoc(docRef, {
+            bookedUsers: [...currentlyBookedUsers, ...userIdArray]
+        });
         
     } catch (error) {
         toast.error('Failed to book event, please try again.');

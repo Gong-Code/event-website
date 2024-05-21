@@ -1,8 +1,8 @@
 'use client';
 
+import { bookEvent } from '@/app/lib/event.db';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import bookEvent from '@/app/api/events/booked/route';
 
 const EventDetailsPage = () => {
     const searchParams = useSearchParams();
