@@ -4,8 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { GoArrowRight } from 'react-icons/go';
 import { useEvents } from './events-provider';
-import { useEffect } from 'react';
-import { getAllEvents } from '@/app/lib/database';
 
 export const EventsList = () => {
     

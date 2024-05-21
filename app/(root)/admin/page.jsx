@@ -38,7 +38,7 @@ const AdminPage = () => {
                                 </button>
                             </Link>
                         </div>
-                        <UsersList />
+                        <UsersList user={user} />
                     </div>
                 </div>
 
