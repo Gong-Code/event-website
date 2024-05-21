@@ -9,9 +9,11 @@ import {
     TransitionChild,
 } from '@headlessui/react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
-import { updateEventById } from '@/app/lib/database';
 import toast from 'react-hot-toast';
 import { useParams } from 'next/navigation';
+import { updateEventById } from '@/app/lib/event.db';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { storage } from '@/firebase.config';
 
 export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
     const initialFormData = {
@@ -20,25 +22,23 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
         date: event.date,
         numberOfSpots: event.numberOfSpots,
         description: event.description,
-        image: event.image
-    }
+        image: event.image,
+    };
     const [formData, setFormData] = useState(initialFormData);
     const cancelButtonRef = useRef(null);
     const { id } = useParams();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        console.log(formData); // Check if formData is being updated correctly
-    
+
         try {
             await updateEventById(id, formData);
-            console.log(id, formData); // Check if updateEventById is being called correctly
-    
+            console.log(id, formData);
+
             toast.success('Event updated successfully!');
             onClose();
         } catch (error) {
-            console.error(error); // Log any errors
+            console.error(error);
             toast.error('Failed to update event, please try again.');
         }
     };
@@ -63,6 +63,50 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
             ...prevFormData,
             [name]: formattedValue,
         }));
+    };
+
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            const toastId = toast.loading('Uploading file...');
+
+            reader.onabort = () => toast.error('File reading was aborted');
+            reader.onerror = () => toast.error('File reading has failed');
+
+            reader.onload = async () => {
+                try {
+                    const fileRef = ref(storage, `events/${formData.name}`);
+                    await uploadBytes(fileRef, file);
+                    const downloadURL = await getDownloadURL(fileRef);
+
+                    setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        coverPhoto: file,
+                        image: downloadURL,
+                    }));
+
+                    toast.success('File uploaded successfully!', {
+                        id: toastId,
+                    });
+                } catch (error) {
+                    let errorMessage = 'Failed to upload file, please try again.';
+
+                    if (error.code === 'storage/unauthorized') {
+                        errorMessage = 'You do not have permission to upload this file.';
+                    } else if (error.code === 'storage/canceled') {
+                        errorMessage = 'File upload was canceled.';
+                    }
+            
+                    toast.error(errorMessage, {
+                        id: toastId,
+                    });
+                }
+            };
+
+            reader.readAsArrayBuffer(file);
+        }
     };
 
     return (
@@ -120,9 +164,6 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
                                                                         type='text'
                                                                         name='name'
                                                                         id='event-name'
-                                                                        // placeholder={
-                                                                        //     event.name
-                                                                        // }
                                                                         value={
                                                                             formData.name
                                                                         }
@@ -146,9 +187,6 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
                                                                         type='text'
                                                                         name='location'
                                                                         id='location'
-                                                                        // placeholder={
-                                                                        //     event.location
-                                                                        // }
                                                                         value={
                                                                             formData.location
                                                                         }
@@ -176,9 +214,6 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
                                                                             name='date'
                                                                             aria-label='Date and time'
                                                                             type='datetime-local'
-                                                                            // placeholder={
-                                                                            //     event.date
-                                                                            // }
                                                                             value={
                                                                                 formData.date
                                                                             }
@@ -206,9 +241,6 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
                                                                             name='numberOfSpots'
                                                                             aria-label='attendees'
                                                                             type='number'
-                                                                            // placeholder={
-                                                                            //     event.numberOfSpots
-                                                                            // }
                                                                             value={
                                                                                 formData.numberOfSpots
                                                                             }
@@ -236,9 +268,6 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
                                                                         id='event-description'
                                                                         name='description'
                                                                         rows={3}
-                                                                        // placeholder={
-                                                                        //     event.description
-                                                                        // }
                                                                         value={
                                                                             formData.description
                                                                         }
@@ -277,9 +306,9 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
                                                                                     name='file-upload'
                                                                                     type='file'
                                                                                     className='sr-only'
-                                                                                    // onChange={
-                                                                                    //     handleFileChange
-                                                                                    // }
+                                                                                    onChange={
+                                                                                        handleFileChange
+                                                                                    }
                                                                                 />
                                                                             </label>
                                                                             <p className='pl-1'>
@@ -303,23 +332,23 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div className='bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6'>
+                                                    <button
+                                                        type='submit'
+                                                        className='w-full justify-center px-3 py-2 sm:ml-3 sm:w-auto'>
+                                                        Update
+                                                    </button>
+                                                    <button
+                                                        type='button'
+                                                        className='mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto'
+                                                        onClick={onClose}
+                                                        ref={cancelButtonRef}>
+                                                        Cancel
+                                                    </button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6'>
-                                    <button
-                                        type='submit'
-                                        className='w-full justify-center px-3 py-2 sm:ml-3 sm:w-auto'>
-                                        Update
-                                    </button>
-                                    <button
-                                        type='button'
-                                        className='mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto'
-                                        onClick={onClose}
-                                        ref={cancelButtonRef}>
-                                        Cancel
-                                    </button>
                                 </div>
                             </DialogPanel>
                         </TransitionChild>

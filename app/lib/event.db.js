@@ -5,7 +5,8 @@ import {
     getDocs,
     doc, 
     addDoc,
-    setDoc
+    setDoc,
+    updateDoc
 } from 'firebase/firestore';
 import toast from "react-hot-toast";
 
@@ -64,6 +65,17 @@ export const addNewEvent = async (user, formData, initialFormData, setFormData) 
         toast.error('Failed to create event, please try again.');
     } 
 }
+
+export const updateEventById = async (id, update) => {
+    const docRef = doc(db, 'events', id);
+
+    try {
+        await updateDoc(docRef, update);
+        console.log(`Event with ID ${id} has been updated.`);
+    } catch (error) {
+        console.error("Error updating event: ", error);
+    }
+};
 
 export const bookEvent = async (userId, eventId) => {
     

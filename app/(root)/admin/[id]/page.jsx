@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { UpdateEventDialog } from '../_components/UpdateEventDialog';
-import { getAllEvents } from '@/app/lib/event.db';
+import { getEventById } from '@/app/lib/event.db';
 
 
 const ManageEventDetailPage = () => {
@@ -15,12 +15,13 @@ const ManageEventDetailPage = () => {
 
     useEffect(() => {
         const fetchEvent = async () => {
-            const event = await getAllEvents(id);
+            const event = await getEventById(id);
             setEvent(event);
         };
-
+        
         fetchEvent();
     }, [id]);
+    
 
     return (
         <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 mt-10 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
@@ -91,7 +92,7 @@ const ManageEventDetailPage = () => {
                     </div>
                     <div>
                         <Image
-                            src={`${event.image}` || '/assets/placeholder.jpg'}
+                            src={event.image || '/assets/placeholder.jpg'}
                             width={400}
                             height={400}
                             alt='event'
