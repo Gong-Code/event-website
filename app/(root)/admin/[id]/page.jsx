@@ -1,18 +1,21 @@
 'use client';
 
+
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { getEventById } from '@/app/lib/database';
+import { UpdateEventDialog } from '../_components/UpdateEventDialog';
+import { getAllEvents } from '@/app/lib/event.db';
+
 
 const ManageEventDetailPage = () => {
     const [event, setEvent] = useState(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { id } = useParams();
 
     useEffect(() => {
         const fetchEvent = async () => {
-            const event = await getEventById(id);
+            const event = await getAllEvents(id);
             setEvent(event);
         };
 
@@ -69,18 +72,21 @@ const ManageEventDetailPage = () => {
                             </div>
                         </dl>
                         <div className='flex gap-4 mt-6'>
-                            <Link href={`/`}>
-                                <button className='secondary flex whitespace-nowrap items-center gap-2'>
-                                    <span>Update</span>
-                                    {/* <GoArrowRight className='size-4 font-semibold' /> */}
-                                </button>
-                            </Link>
-                            <Link href={`/`}>
-                                <button className='error flex whitespace-nowrap items-center gap-2'>
-                                    <span>Delete</span>
-                                    {/* <GoArrowRight className='size-4 font-semibold' /> */}
-                                </button>
-                            </Link>
+                            <button
+                                className='secondary flex whitespace-nowrap items-center gap-2'
+                                onClick={() => setIsDialogOpen(true)}>
+                                <span>Update</span>
+                            </button>
+                            {isDialogOpen && (
+                                <UpdateEventDialog
+                                    isOpen={isDialogOpen}
+                                    event={event}
+                                    onClose={() => setIsDialogOpen(false)}
+                                />
+                            )}
+                            <button className='error flex whitespace-nowrap items-center gap-2'>
+                                <span>Delete</span>
+                            </button>
                         </div>
                     </div>
                     <div>
