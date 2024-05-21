@@ -43,7 +43,7 @@ const EventDetailsPage = () => {
             <p className='text-lg'>
                 Availability:{' '}
                 <span className='font-bold'>{numberOfSpots - numberOfBookedUsers}</span>{' '}
-                places left
+                spots left
             </p>
             <div className='w-2/4'>
                 <button onClick={bookEventFunction}
