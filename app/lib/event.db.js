@@ -65,26 +65,15 @@ export const addNewEvent = async (user, formData, initialFormData, setFormData) 
     } 
 }
 
-export default addNewEvent;
-
-export const deleteByID = (collection, id) => {
-    const removedEvent = db.collection(collection).doc(id)
-    removedEvent.delete().then(() => {
-        console.log('Successfully deleted the event')
-    }).catch((err) => {
-        console.log('Something went wrong', err)
-    })
-}
-
 export const bookEvent = async (userId, eventId) => {
     
     try {
         const docRef = await addDoc(collection(db, 'bookedEvents', 'usersBookedEvents', userId), {
             eventId: eventId
         })
-
+        
         await setDoc(docRef);
-
+        
         console.log('docRef id', docRef.id);        
         
     } catch (error) {
@@ -92,3 +81,11 @@ export const bookEvent = async (userId, eventId) => {
     } 
 }
 
+export const deleteEventById = (collection, id) => {
+    const removedEvent = db.collection(collection).doc(id)
+    removedEvent.delete().then(() => {
+        console.log('Successfully deleted the event')
+    }).catch((err) => {
+        console.log('Something went wrong', err)
+    })
+}
