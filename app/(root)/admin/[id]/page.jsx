@@ -1,12 +1,10 @@
 'use client';
 
-
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { UpdateEventDialog } from '../_components/UpdateEventDialog';
-import { getEventById } from '@/app/lib/event.db';
-
+import { deleteEventById, getEventById } from '@/app/lib/event.db';
 
 const ManageEventDetailPage = () => {
     const [event, setEvent] = useState(null);
@@ -21,10 +19,9 @@ const ManageEventDetailPage = () => {
         
         fetchEvent();
     }, [id]);
-    
 
     return (
-        <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-16 px-4 mt-10 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
+        <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-12 px-4 sm:px-6 py-12 md:py-26 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
             {event && (
                 <>
                     <div>
@@ -85,7 +82,9 @@ const ManageEventDetailPage = () => {
                                     onClose={() => setIsDialogOpen(false)}
                                 />
                             )}
-                            <button className='error flex whitespace-nowrap items-center gap-2'>
+                            <button
+                                onClick={() => {deleteEventById('events', id)}}
+                                className='error flex whitespace-nowrap items-center gap-2'>
                                 <span>Delete</span>
                             </button>
                         </div>

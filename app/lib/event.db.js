@@ -3,12 +3,13 @@ import {
     collection,
     getDoc,
     getDocs,
-    doc, 
+    doc,
     addDoc,
     setDoc,
-    updateDoc
+    updateDoc,
+    deleteDoc,
 } from 'firebase/firestore';
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast';
 
 export const getAllEvents = async () => {
     let events = [];
@@ -40,8 +41,12 @@ export const getEventById = async (id) => {
     }
 };
 
-export const addNewEvent = async (user, formData, initialFormData, setFormData) => {
-    
+export const addNewEvent = async (
+    user,
+    formData,
+    initialFormData,
+    setFormData
+) => {
     try {
         const docRef = await addDoc(collection(db, 'events'), {
             name: formData.name,
@@ -50,21 +55,22 @@ export const addNewEvent = async (user, formData, initialFormData, setFormData) 
             numberOfSpots: formData.numberOfSpots,
             description: formData.description,
             image: formData.image,
-            createdByUser: user.uid
-        })
+            createdByUser: user.uid,
+        });
 
-        await setDoc(docRef, {
-            events: docRef.id,
-            
-        }, { merge: true });
+        await setDoc(
+            docRef,
+            {
+                events: docRef.id,
+            },
+            { merge: true }
+        );
 
         setFormData(initialFormData);
-        
-        
     } catch (error) {
         toast.error('Failed to create event, please try again.');
-    } 
-}
+    }
+};
 
 export const updateEventById = async (id, update) => {
     const docRef = doc(db, 'events', id);
@@ -73,32 +79,32 @@ export const updateEventById = async (id, update) => {
         await updateDoc(docRef, update);
         console.log(`Event with ID ${id} has been updated.`);
     } catch (error) {
-        console.error("Error updating event: ", error);
+        console.error('Error updating event: ', error);
     }
 };
 
 export const bookEvent = async (userId, eventId) => {
-    
     const docRef = doc(db, 'events', eventId);
     const currentlyBookedUsers = docRef.bookedUsers ? docRef.bookedUsers : [];
 
-    const userIdArray = [userId]
+    const userIdArray = [userId];
 
     try {
         await updateDoc(docRef, {
-            bookedUsers: [...currentlyBookedUsers, ...userIdArray]
+            bookedUsers: [...currentlyBookedUsers, ...userIdArray],
         });
-        
     } catch (error) {
         toast.error('Failed to book event, please try again.');
-    } 
-}
+    }
+};
 
-export const deleteEventById = (collection, id) => {
-    const removedEvent = db.collection(collection).doc(id)
-    removedEvent.delete().then(() => {
-        console.log('Successfully deleted the event')
-    }).catch((err) => {
-        console.log('Something went wrong', err)
-    })
-}
+export const deleteEventById = async (collection, id) => {
+    const docRef = doc(db, collection, id);
+
+    try {
+        await deleteDoc(docRef);
+        console.log('Successfully deleted the event');
+    } catch (err) {
+        console.error('Something went wrong', err);
+    }
+};
