@@ -5,8 +5,8 @@ import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
 import { Event } from './(root)/_components/event';
 import { useState, useEffect } from 'react';
 import { useAuth } from './(root)/admin/_components/auth-provider';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/firebase.config';
+import { getAllEvents } from './lib/event.db';
+
 
 const LandingPage = () => {
     const { user, authLoaded } = useAuth();
@@ -14,6 +14,24 @@ const LandingPage = () => {
     const [eventList, setEventList] = useState([]);
     const [inc, setInc] = useState(true);
     const [eventListOriginal, setEventListOriginal] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            setLoading(true);
+            try {
+                const events = await getAllEvents();
+                setEventList(events);
+                console.log(events);
+            } catch (error) {
+                console.error('Could not fetch events:', error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchEvents();
+    }, []);
 
     const onSearch = (e) => {
         setSearchValue(e.target.value);
@@ -38,30 +56,10 @@ const LandingPage = () => {
             setInc(true);
         }
     };
-
-    const fetchEvents = async () => {
-        let events = [];
-
-        try {
-            const querySnapshot = await getDocs(collection(db, 'events'));
-
-            for (let docSnapshot of querySnapshot.docs) {
-                let event = { id: docSnapshot.id, ...docSnapshot.data() };
-                console.log(event);
-                events.push(event);
-            }
-
-            setEventList(events);
-            console.log(events);
-        } catch (error) {
-            console.error('Could not fetch collection:', error.message);
-            return [];
-        }
-    };
-
-    useEffect(() => {
-        fetchEvents();
-    }, []);
+    
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className='flex flex-col py-32 justify-center items-center p-2 mt-8'>

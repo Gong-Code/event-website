@@ -38,6 +38,7 @@ const AuthContextProvider = ({ children }) => {
         displayName: `${values.firstName} ${values.lastName}`
       }) 
       
+      setUser(userCredential.user)
 
       toast.success('Account created successfully',  { id: toastId })
 

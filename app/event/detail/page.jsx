@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import bookEvent from '@/app/api/events/bookEvent/route';
+import bookEvent from '@/app/api/events/booked/route';
 
 const EventDetailsPage = () => {
     const searchParams = useSearchParams();

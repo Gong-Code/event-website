@@ -1,10 +1,12 @@
 'use client';
 
+
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { getEventById } from '@/app/lib/database';
 import { UpdateEventDialog } from '../_components/UpdateEventDialog';
+import { getAllEvents } from '@/app/lib/event.db';
+
 
 const ManageEventDetailPage = () => {
     const [event, setEvent] = useState(null);
@@ -13,7 +15,7 @@ const ManageEventDetailPage = () => {
 
     useEffect(() => {
         const fetchEvent = async () => {
-            const event = await getEventById(id);
+            const event = await getAllEvents(id);
             setEvent(event);
         };
 
