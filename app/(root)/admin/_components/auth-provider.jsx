@@ -29,9 +29,12 @@ const AuthContextProvider = ({ children }) => {
    useEffect(() => {
     if (user) {
       const fetchUser = async () => {
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists()) {
-          setIsAdmin(userDoc.data().isAdmin);
+        const adminDoc = await getDoc(doc(db, "admins", user.uid));
+        if (adminDoc.exists()) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+          console.log('user.uid', user.uid);
         }
       };
       fetchUser();
