@@ -1,10 +1,16 @@
 'use client';
 
-import { bookEvent } from '@/app/lib/event.db';
+import { bookEvent, getEventById } from '@/app/lib/event.db';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const EventDetailsPage = () => {
+    const [event, setEvent] = useState({
+        bookedUsers: []
+    
+    })
+    
     const searchParams = useSearchParams();
     const name = searchParams.get('name');
     const image = searchParams.get('image');
@@ -17,17 +23,28 @@ const EventDetailsPage = () => {
 
     const isMaxUsers = Number(numberOfBookedUsers) === Number(numberOfSpots);
 
+    
+    useEffect(() => {
+        getEventById(eventId)
+            .then(event => {
+                setEvent(event)
+            })
+    }, [])
+
     const bookEventFunction = () => {
 
-        if (isMaxUsers) return;
+        if (isMaxUsers || event && event.bookedUsers && event.bookedUsers.includes(userId)) return;
         bookEvent(userId, eventId).then(() => {
-            console.log('Event booked');
+            setEvent(prevState => ({
+                ...prevState,
+                bookedUsers: [...prevState.bookedUsers, userId]
+            }))
         })
     }
 
     return (
         <div className='flex flex-col p-10 justify-center w-full items-center gap-2'>
-            <h1 className='my-5'>{name}</h1>
+            <h1 className='my-5'>{event && event.name}</h1>
             <Image
                 src={image}
                 width={400}
@@ -43,7 +60,7 @@ const EventDetailsPage = () => {
             <p className='text-lg'>
                 Availability:{' '}
                 <span className='font-bold'>{numberOfSpots - numberOfBookedUsers}</span>{' '}
-                places left
+                spots left
             </p>
             <div className='w-2/4'>
                 <button onClick={bookEventFunction}
