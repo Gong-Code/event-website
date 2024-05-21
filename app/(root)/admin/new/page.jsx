@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
@@ -6,25 +6,25 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../_components/auth-provider';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '@/firebase.config';
+import { FaCheckCircle } from 'react-icons/fa';
 
-import addNewEvent from '@/app/lib/event.db';
+import { addNewEvent } from '@/app/lib/event.db';
 import { useRouter } from 'next/navigation';
 
 const CreateNewEventPage = () => {
-
     const initialFormData = {
         name: '',
         location: '',
         date: '',
         numberOfSpots: 0,
         description: '',
-        image: ''
-    }
-    
+        image: '',
+    };
 
     const { user } = useAuth();
-    const [ loading, setLoading ] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState(initialFormData);
+    const [image, setImage] = useState(null);
     const router = useRouter();
 
     const handleChange = (event) => {
@@ -32,23 +32,26 @@ const CreateNewEventPage = () => {
         let formattedValue = value;
         if (name === 'date') {
             let date = new Date(value);
-            formattedValue = date.toLocaleString('sv-SE', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).replace(',', '');
+            formattedValue = date
+                .toLocaleString('sv-SE', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                })
+                .replace(',', '');
         }
-        
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [name]: formattedValue
-        
 
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: formattedValue,
         }));
     };
 
-
     const handleFileChange = async (event) => {
-
         const file = event.target.files[0];
-        
-        
+
         if (file) {
             const reader = new FileReader();
             const toastId = toast.loading('Uploading file...');
@@ -57,53 +60,60 @@ const CreateNewEventPage = () => {
             reader.onerror = () => toast.error('File reading has failed');
 
             reader.onload = async () => {
-
                 try {
+                    if (reader.readyState === 2) {
+                        setImage(file);
+                    } else {
+                        setImage(null);
+                    }
+
                     const fileRef = ref(storage, `events/${formData.name}`);
                     await uploadBytes(fileRef, file);
-                    const downloadURL = await getDownloadURL(fileRef)
+                    const downloadURL = await getDownloadURL(fileRef);
 
-                    setFormData(prevFormData => ({
+                    setFormData((prevFormData) => ({
                         ...prevFormData,
                         coverPhoto: file,
-                        image: downloadURL
+                        image: downloadURL,
                     }));
 
-                    toast.success('File uploaded successfully!', { id: toastId });
+                    toast.success('File uploaded successfully!', {
+                        id: toastId,
+                    });
                 } catch (error) {
-                    toast.error('Failed to upload file, please try again.', { id: toastId });
+                    toast.error('Failed to upload file, please try again.', {
+                        id: toastId,
+                    });
                 }
-            
             };
 
-            reader.readAsArrayBuffer(file)
-            
+            reader.readAsArrayBuffer(file);
         }
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault()
-        setLoading(true)
+        event.preventDefault();
+        setLoading(true);
 
         try {
             await addNewEvent(user, formData, initialFormData, setFormData);
 
             toast.success('Event created successfully!');
             setFormData(initialFormData);
-            
-            router.push('/admin')
-            
+
+            router.push('/admin');
         } catch (error) {
             toast.error('Failed to create event, please try again.');
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
-
+    };
 
     return (
         <main className='my-10 flex flex-col justify-center'>
-            <form onSubmit={handleSubmit} className='bg-primary rounded-3xl p-12 mx-4 md:mx-20 lg:mx-64'>
+            <form
+                onSubmit={handleSubmit}
+                className='bg-primary rounded-3xl p-12 mx-4 md:mx-20 lg:mx-64'>
                 <div className='space-y-12'>
                     <div className='pb-12'>
                         <h2 className='text-base font-semibold leading-7 text-gray-900'>
@@ -177,7 +187,7 @@ const CreateNewEventPage = () => {
                             </div>
 
                             <div className='sm:col-span-3'>
-                            <label
+                                <label
                                     htmlFor='attendees'
                                     className='block text-sm font-medium leading-6 text-gray-900'>
                                     Maximum number of attendees
@@ -213,7 +223,6 @@ const CreateNewEventPage = () => {
                                         value={formData.description}
                                         onChange={handleChange}
                                         className='block w-full rounded-md bg-white border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-secondary sm:text-sm sm:leading-6'
-                                       
                                     />
                                 </div>
                             </div>
@@ -224,7 +233,10 @@ const CreateNewEventPage = () => {
                                     className='block text-sm font-medium leading-6 text-gray-900'>
                                     Event cover photo
                                 </label>
-                                <div className='mt-2 flex justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10'>
+                                <div
+                                    className={`mt-2 flex justify-center rounded-lg border-2 border-dashed border-gray-900/25 px-6 py-10 ${
+                                        image && 'hidden'
+                                    }`}>
                                     <div className='text-center'>
                                         <PhotoIcon
                                             className='mx-auto h-12 w-12 text-gray-300 transition duration-550 hover:text-gray-500'
@@ -252,20 +264,25 @@ const CreateNewEventPage = () => {
                                         </p>
                                     </div>
                                 </div>
+                                {image && (
+                                    <div className='mt-2 flex items-center gap-2 text-green-900 font-semibold'>
+                                        <span>
+                                            <FaCheckCircle />
+                                        </span>
+                                        <p>Image uploaded!</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div className='mt-6 flex items-center justify-end gap-x-6'>
-                    <button
-                        type='submit'>
-                        Create event
-                    </button>
+                    <button type='submit'>Create event</button>
                 </div>
             </form>
         </main>
     );
-}
+};
 
 export default CreateNewEventPage;
