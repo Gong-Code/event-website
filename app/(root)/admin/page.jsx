@@ -16,7 +16,7 @@ const AdminPage = () => {
         if (!isAdmin) {
             router.push('/');
         }
-    }, [user, router, isAdmin, authLoaded]);
+    }, [router, isAdmin, authLoaded]);
 
     return (
         <>
