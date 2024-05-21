@@ -9,17 +9,7 @@ import { getAllEvents } from '@/app/lib/database';
 
 export const EventsList = () => {
     
-    const { events, setEvents } = useEvents();
-
-    // FETCH EVENTS
-    const fetchEvents = async () => {
-        const fetchedEvents = await getAllEvents();
-        setEvents(fetchedEvents);
-    };
-
-    useEffect(() => {
-        fetchEvents();
-    }, []);
+    const { events } = useEvents();
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
