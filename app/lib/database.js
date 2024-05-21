@@ -1,10 +1,36 @@
 import { db } from '@/firebase.config';
-import { collection, getDocs, getDoc, addDoc, setDoc } from 'firebase/firestore';
+import {
+    collection,
+    getDocs,
+    getDoc,
+    addDoc,
+    setDoc,
+    doc,
+} from 'firebase/firestore';
 import toast from 'react-hot-toast';
 
 /*=====  HANDLE EVENTS  ======*/
 
 //GET
+
+// export async function GET(req, res) {
+//     try {
+//         const querySnapshot = await getDocs(collection(db, 'events'));
+//         const events = querySnapshot.docs.map((doc) => ({
+//             id: doc.id,
+//             ...doc.data(),
+//         }));
+//         return new Response(JSON.stringify(events), { status: 200 });
+//     } catch (error) {
+//         return new Response(
+//             JSON.stringify({ error: 'Failed to fetch events' }),
+//             {
+//                 status: 500,
+//             }
+//         );
+//     }
+// }
+
 export const getAllEvents = async () => {
     let events = [];
 
@@ -98,11 +124,10 @@ export const deleteByID = (collection, id) => {
         .catch((err) => {
             console.log('Something went wrong', err);
         });
-    };
+};
 
+/*=====  HANDLE USERS  ======*/
 
-    /*=====  HANDLE USERS  ======*/
-    
 //GET, hämta all users
 export const getAllUsers = async (userId) => {
     if (!userId) {
