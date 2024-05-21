@@ -1,7 +1,7 @@
 'use client';
 
 import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 
 export const UsersList = () => {

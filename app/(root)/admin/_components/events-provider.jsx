@@ -4,7 +4,6 @@
 import { getAllEvents } from '@/app/lib/event.db';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-
 export const EventsContext = createContext();
 
 const EventsContextProvider = ({ children }) => {
@@ -20,10 +19,12 @@ const EventsContextProvider = ({ children }) => {
         };
         fetchEvents();
 
+
         return () => {
             isMounted = false;
         }
     }, []);    
+
 
     const value = {
         events,
