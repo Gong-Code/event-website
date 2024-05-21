@@ -45,7 +45,7 @@ export const UsersList = () => {
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
-            {users && users.length ? (
+            {/* {users && users.length ? (
                 <table className='text-slate-900 w-full table-auto'>
                     <thead className='border-b border-gray-900/10 pb-12'>
                         <tr>
@@ -72,7 +72,7 @@ export const UsersList = () => {
                         No users found!
                     </p>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
