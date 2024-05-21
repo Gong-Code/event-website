@@ -2,53 +2,25 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { GoArrowRight } from 'react-icons/go';
 import { useEvents } from './events-provider';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllEvents } from '@/app/api/events/route';
 import { useAuth } from './auth-provider';
 
 export const EventsList = () => {
-    const { user, authLoaded } = useAuth();
-    const { events, setEvents } = useEvents();
     
-  
+    const { events, setEvents } = useEvents();
+
     // FETCH EVENTS
-    const fetchEvents = async (userId) => {
-        
-        const fetchedEvents = await getAllEvents(userId);
+    const fetchEvents = async () => {
+        const fetchedEvents = await getAllEvents();
         setEvents(fetchedEvents);
-      
-       
     };
 
-    // DISPLAY EVENTS
     useEffect(() => {
-        window.onload = () => {
-            if (authLoaded && user) {
-                
-                const userId = user?.uid
-                
-                if (userId) {
-                    fetchEvents(userId);
-                }
-                
-           }
-        
-        }
-        
-    }, [user, authLoaded]);
-
-    useEffect(() => {
-        if (user) {
-            const userId = user.uid;
-            
-            if (userId) {
-                fetchEvents(userId);
-            }
-        }
-    }, [user]);
+        fetchEvents();
+    }, []);
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
@@ -102,14 +74,12 @@ export const EventsList = () => {
                                     {event.numberOfSpots}
                                 </td>
                                 <td className='px-4'>
-
                                     <Link href={`/admin/${event.id}`}>
                                         <button className='readmore flex whitespace-nowrap items-center gap-2'>
                                             <span>Manage</span>
                                             <GoArrowRight className='size-4 font-semibold' />
                                         </button>
                                     </Link>
-
                                 </td>
                             </tr>
                         ))}

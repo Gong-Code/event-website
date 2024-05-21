@@ -16,9 +16,9 @@ const EventsContextProvider = ({ children }) => {
     };
 
     // DISPLAY EVENTS
-    useEffect(() => {
-        fetchEvents();
-    }, []);
+    // useEffect(() => {
+    //     fetchEvents();
+    // }, []);
 
     const value = {
         events,
