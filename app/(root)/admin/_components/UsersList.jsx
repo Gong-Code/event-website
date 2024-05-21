@@ -1,51 +1,29 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAuth } from './auth-provider';
 import { useEvents } from './events-provider';
-import { getAllEvents } from '@/app/api/events/route';
+import { getAllUsers } from '@/app/lib/database';
 
 export const UsersList = () => {
-    const { user, authLoaded } = useAuth();
-    const { events, setEvents } = useEvents();
+    const { user } = useAuth();
+    const [users, setUsers] = useState([]);
 
     // FETCH USERS
-    const fetchEvents = async (userId) => {
-        const fetchedEvents = await getAllEvents(userId);
-        setEvents(fetchedEvents);
+    const fetchUsers = async (userId) => {
+        const fetchedUsers = await getAllUsers(userId);
+        setUsers(fetchedUsers);
     };
 
-    //  // DISPLAY USERS
-    //  useEffect(() => {
-    //     window.onload = () => {
-    //         if (authLoaded && user) {
-
-    //             const userId = user?.uid
-
-    //             if (userId) {
-    //                 fetchEvents(userId);
-    //             }
-
-    //        }
-
-    //     }
-
-    // }, [user, authLoaded]);
-
-    // useEffect(() => {
-    //     if (user) {
-    //         const userId = user.uid;
-
-    //         if (userId) {
-    //             fetchEvents(userId);
-    //         }
-    //     }
-    // }, [user]);
+    // DISPLAY USERS
+    useEffect(() => {
+        fetchUsers();
+    }, [user]);
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
-            {/* {users && users.length ? (
+            {users && users.length ? (
                 <table className='text-slate-900 w-full table-auto'>
                     <thead className='border-b border-gray-900/10 pb-12'>
                         <tr>
@@ -72,7 +50,7 @@ export const UsersList = () => {
                         No users found!
                     </p>
                 </div>
-            )} */}
+            )}
         </div>
     );
 };

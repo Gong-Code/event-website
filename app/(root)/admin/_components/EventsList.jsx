@@ -4,23 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { GoArrowRight } from 'react-icons/go';
 import { useEvents } from './events-provider';
-import { useEffect, useState } from 'react';
-import { getAllEvents } from '@/app/api/events/route';
-import { useAuth } from './auth-provider';
+import { useEffect } from 'react';
+import { getAllEvents } from '@/app/lib/database';
 
 export const EventsList = () => {
     
-    const { events, setEvents } = useEvents();
-
-    // FETCH EVENTS
-    const fetchEvents = async () => {
-        const fetchedEvents = await getAllEvents();
-        setEvents(fetchedEvents);
-    };
-
-    useEffect(() => {
-        fetchEvents();
-    }, []);
+    const { events } = useEvents();
 
     return (
         <div className='bg-primary rounded-xl border-b border-gray-900/10 shadow-sm overflow-x-auto'>
