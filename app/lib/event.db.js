@@ -8,6 +8,7 @@ import {
     setDoc,
     updateDoc,
     deleteDoc,
+    arrayUnion,
 } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 
@@ -85,13 +86,19 @@ export const updateEventById = async (id, update) => {
 
 export const bookEvent = async (userId, eventId) => {
     const docRef = doc(db, 'events', eventId);
-    const currentlyBookedUsers = docRef.bookedUsers ? docRef.bookedUsers : [];
-
-    const userIdArray = [userId];
+    const docSnap = await getDoc(docRef)
+        .then((doc) => {
+            if (doc.exists()) {
+                return doc.data();
+            } else {
+                console.log('No such document!');
+            } 
+        })
+    const currentlyBookedUsers = docSnap.bookedUsers ? docSnap.bookedUsers : [];
 
     try {
         await updateDoc(docRef, {
-            bookedUsers: [...currentlyBookedUsers, ...userIdArray],
+            bookedUsers: currentlyBookedUsers.concat([userId])
         });
     } catch (error) {
         toast.error('Failed to book event, please try again.');
