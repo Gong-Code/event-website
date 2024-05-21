@@ -1,7 +1,7 @@
 'use client';
 
+import { getAllEvents } from '@/app/lib/database';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { getAllEvents } from '@/app/api/events/route';
 
 export const EventsContext = createContext();
 
@@ -15,10 +15,10 @@ const EventsContextProvider = ({ children }) => {
         setEvents(fetchedEvents);
     };
 
-    // DISPLAY EVENTS
-    // useEffect(() => {
-    //     fetchEvents();
-    // }, []);
+    //DISPLAY EVENTS
+    useEffect(() => {
+        fetchEvents();
+    }, []);
 
     const value = {
         events,
