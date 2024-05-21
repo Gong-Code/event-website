@@ -1,7 +1,8 @@
 'use client'
 
-import { auth } from "@/firebase.config"
+import { auth, db } from "@/firebase.config"
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { doc, getDoc } from "firebase/firestore"
 
 import { createContext, useContext, useEffect, useState } from "react"
 import toast from "react-hot-toast"
@@ -11,8 +12,10 @@ export const AuthContext = createContext()
 const AuthContextProvider = ({ children }) => {
   
   const [user, setUser] = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false);
   const [authLoaded, setAuthLoaded] = useState(false)
-
+  
+   // Check if there is a logged in user
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, _user => {
       setUser(_user)
@@ -22,10 +25,23 @@ const AuthContextProvider = ({ children }) => {
     return () => unsub()
   }, [])
 
+   // Check if the logged in user is an admin
+   useEffect(() => {
+    if (user) {
+      const fetchUser = async () => {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          setIsAdmin(userDoc.data().isAdmin);
+        }
+      };
+      fetchUser();
+    }
+  }, [user]);
+  
+
   const register = async (values) => {
     const toastId = toast.loading('Creating account...')
 
-    // setAuthLoaded(true)
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password)
 
@@ -74,6 +90,7 @@ const AuthContextProvider = ({ children }) => {
 
   const value = {
     user,
+    isAdmin,
     authLoaded,
     register,
     login

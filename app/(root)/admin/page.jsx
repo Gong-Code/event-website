@@ -9,14 +9,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const AdminPage = () => {
-    const { user, authLoaded } = useAuth();
+    const { user, isAdmin, authLoaded } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        if (!user) {
-            router.push('/sign-in');
+        if (!isAdmin) {
+            router.push('/');
         }
-    }, [user, router, authLoaded]);
+    }, [user, router, isAdmin, authLoaded]);
 
     return (
         <>
