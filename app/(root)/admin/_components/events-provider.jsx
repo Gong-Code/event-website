@@ -1,6 +1,6 @@
 'use client';
 
-import { getAllEvents } from '@/app/lib/database';
+import { getAllEvents } from '@/app/lib/getAllEvents';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 export const EventsContext = createContext();
@@ -9,16 +9,21 @@ const EventsContextProvider = ({ children }) => {
 
     const [events, setEvents] = useState([]);
 
-    // FETCH EVENTS
-    const fetchEvents = async () => {
-        const fetchedEvents = await getAllEvents();
-        setEvents(fetchedEvents);
-    };
-
-    //DISPLAY EVENTS
     useEffect(() => {
+        let isMounted = true
+
+        const fetchEvents = async () => {
+            const fetchedEvents = await getAllEvents();
+            setEvents(fetchedEvents);
+        };
         fetchEvents();
-    }, []);
+
+
+        return () => {
+            isMounted = false;
+        }
+    }, []);    
+
 
     const value = {
         events,
