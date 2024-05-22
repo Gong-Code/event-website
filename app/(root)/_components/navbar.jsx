@@ -47,11 +47,13 @@ const Navbar = () => {
                         </button>
                     </Link>
                 )}
-                <div className='inline-flex justify-center items-center bg-secondary size-12 mx-3 rounded-full shadow-sm outline outline-1 outline-slate-200/10'>
-                    <span className='font-medium tracking-wide'>
-                        {initials}
-                    </span>
-                </div>
+                {user && (
+                    <div className='inline-flex justify-center items-center bg-secondary size-12 mx-3 rounded-full shadow-sm outline outline-1 outline-slate-200/10'>
+                        <span className='font-medium tracking-wide'>
+                            {initials}
+                        </span>
+                    </div>
+                )}
             </div>
         </div>
     );
