@@ -48,7 +48,7 @@ const UsersContextProvider = ({ children }) => {
     const numberOfBookedUsers =
         event && event.bookedUsers ? event.bookedUsers.length : 0;
 
-        const isMaxUsers =
+    const isMaxUsers =
         event && Number(numberOfBookedUsers) === Number(event.numberOfSpots);
 
         const hasBooked = event && event.bookedUsers && event.bookedUsers.includes(user?.uid);
