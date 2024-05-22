@@ -41,6 +41,16 @@ const AuthContextProvider = ({ children }) => {
     }
   }, [user]);
   
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        setIsAdmin(false);
+      }
+    });
+  
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
 
   const register = async (values) => {
     const toastId = toast.loading('Creating account...')
