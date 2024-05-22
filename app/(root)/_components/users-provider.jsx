@@ -5,6 +5,7 @@ import { useEvents } from '../admin/_components/events-provider';
 import { useAuth } from '../admin/_components/auth-provider';
 import { useParams } from 'next/navigation';
 import { bookEvent } from '@/app/lib/event.db';
+import toast from 'react-hot-toast';
 
 export const UsersContext = createContext();
 
@@ -63,6 +64,10 @@ const UsersContextProvider = ({ children }) => {
                 ...prevState,
                 bookedUsers: [...currentlyBookedUsers, user?.uid],
             }));
+            toast.success('Event booked successfully!');
+        })
+        .catch(() => {
+            toast.error('Failed to book event, please try again.');
         });
     };
 
