@@ -5,7 +5,7 @@ import { getEventById } from '@/app/lib/event.db';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { useUsers } from '../(root)/_components/users-provider';
+import { useUsers } from '../_components/users-provider';
 
 const EventDetailsPage = () => {
 
@@ -21,11 +21,6 @@ const EventDetailsPage = () => {
 
         fetchEvent();
     }, [id]);
-
-    // const [event, setEvent] = useState({
-    //     bookedUsers: [],
-    // });
-
 
     return (
         <div className='flex flex-col p-10 justify-center w-full items-center gap-2'>
