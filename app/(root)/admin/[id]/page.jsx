@@ -8,19 +8,39 @@ import { deleteEventById, getEventById } from '@/app/lib/event.db';
 import { useEvents } from '../_components/events-provider';
 
 const ManageEventDetailPage = () => {
-
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    // const [users, setUsers] = useState(null)
     const { id } = useParams();
-    const { event, setEvent } = useEvents()
+    const { event, setEvent } = useEvents();
 
     useEffect(() => {
         const fetchEvent = async () => {
             const event = await getEventById(id);
             setEvent(event);
         };
-        
+
         fetchEvent();
+
+        // const fetchUsers = async () => {
+        //     const users = await getEventById();
+        //     setUsers(users);
+        // };
+
+        // fetchUsers();
     }, [id]);
+
+    // Mockup user data
+
+    const attendingUsers = [
+        {
+            firstName: 'Emma',
+            userID: 123
+        },
+        {
+            firstName: 'Jennie Kim',
+            userID: 456
+        }
+    ]
 
     return (
         <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-12 px-4 sm:px-6 py-12 md:py-26 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
@@ -37,37 +57,42 @@ const ManageEventDetailPage = () => {
                                 </p>
                             </div>
                         </div>
-                        <dl className='divide-y divide-gray-100/10 outline-gray-100/20 outline outline-1 p-6'>
-                            <div className='p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                                <dt className='text-sm font-semibold leading-6 text-primary-muted'>
+                        <dl className='bg-primary-muted divide-y divide-gray-800/10 rounded-md border-2 border-gray-200 shadow-md text-gray-800'>
+                            <div className='py-4 flex justify-center items-center flex-col sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 grid-flow-col'>
+                                <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
                                     Location
                                 </dt>
-                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
+                                <dd className='mt-2 text-sm leading-6 sm:mt-0'>
                                     {event.location}
                                 </dd>
                             </div>
-                            <div className='p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                                <dt className='text-sm font-semibold leading-6 text-primary-muted'>
-                                    Date
+                            <div className='py-4 flex justify-center items-center flex-col sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 grid-flow-col'>
+                                <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
+                                    Date and time
                                 </dt>
-                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
+                                <dd className='mt-2 text-sm leading-6 sm:mt-0'>
                                     {event.date}
                                 </dd>
                             </div>
-                            <div className='p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                                <dt className='text-sm font-semibold leading-6 text-primary-muted'>
+                            <div className='py-4 flex justify-center items-center flex-col sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 grid-flow-col'>
+                                <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
                                     Number of available spots
                                 </dt>
-                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
+                                <dd className='mt-2 text-sm leading-6 sm:mt-0'>
                                     {event.numberOfSpots}
                                 </dd>
                             </div>
-                            <div className='p-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
-                                <dt className='text-sm font-semibold leading-6 text-primary-muted'>
+                            <div className='py-4 flex justify-center items-center sm:items-start flex-col sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 grid-flow-col'>
+                                <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
                                     Attending users
                                 </dt>
-                                <dd className='mt-1 text-sm leading-6 text-gray-300 sm:col-span-2 sm:mt-0'>
-                                    LOREM IPSUM
+                                <dd className='mt-2 flex flex-col text-sm gap-y-2 leading-6 sm:mt-0'>
+                                    {attendingUsers && attendingUsers.map(user => (
+                                        <div key={user.userID} className='items-center sm:items-start min-w-0 flex-auto flex flex-col'>
+                                            <span className='text-sm font-medium leading-6 text-gray-900'>{user.firstName}</span>
+                                            <span className='truncate text-xs leading-5 text-gray-500'>ID: {user.userID}</span>
+                                        </div>
+                                    ))}
                                 </dd>
                             </div>
                         </dl>
@@ -85,7 +110,9 @@ const ManageEventDetailPage = () => {
                                 />
                             )}
                             <button
-                                onClick={() => {deleteEventById('events', id)}}
+                                onClick={() => {
+                                    deleteEventById('events', id);
+                                }}
                                 className='error flex whitespace-nowrap items-center gap-2'>
                                 <span>Delete</span>
                             </button>
@@ -97,7 +124,7 @@ const ManageEventDetailPage = () => {
                             width={400}
                             height={400}
                             alt='event'
-                            className='rounded-lg'
+                            className='rounded-lg mx-auto'
                         />
                     </div>
                 </>
