@@ -45,7 +45,7 @@ const UsersContextProvider = ({ children }) => {
     const numberOfBookedUsers =
         event && event.bookedUsers ? event.bookedUsers.length : 0;
 
-        const isMaxUsers =
+    const isMaxUsers =
         event && Number(numberOfBookedUsers) === Number(event.numberOfSpots);
 
     const bookEventFunction = () => {
@@ -59,7 +59,7 @@ const UsersContextProvider = ({ children }) => {
         bookEvent(user?.uid, id).then(() => {
             setEvent((prevState) => ({
                 ...prevState,
-                bookedUsers: [...prevState.bookedUsers, user?.uid],
+                bookedUsers: [...(prevState.bookedUsers || []), user?.uid],
             }));
         });
     };
@@ -74,7 +74,7 @@ const UsersContextProvider = ({ children }) => {
         setEventListOriginal,
         bookEventFunction,
         isMaxUsers,
-        numberOfBookedUsers
+        numberOfBookedUsers,
     };
 
     return (
