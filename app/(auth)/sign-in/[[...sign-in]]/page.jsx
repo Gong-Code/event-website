@@ -11,12 +11,12 @@ export default function SignInPage() {
     const router = useRouter();
 
     useEffect(() => {
-        if (user && isAdmin) {
-            console.log('isAdmin:', isAdmin);
-            router.push('/admin');
-        } else if (user && !isAdmin) {
-           
+        
+        if (user && !isAdmin) {
+            console.log('is user');
             router.push('/');
+        } else if (isAdmin){
+            console.log('is admin');
         }
     }, [user, isAdmin, router]);
 
@@ -40,3 +40,4 @@ export default function SignInPage() {
         </div>
     );
 }
+

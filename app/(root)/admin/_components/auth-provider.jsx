@@ -31,26 +31,16 @@ const AuthContextProvider = ({ children }) => {
       const fetchUser = async () => {
         const adminDoc = await getDoc(doc(db, "admins", user.uid));
         if (adminDoc.exists()) {
+          console.log("User is an admin");
           setIsAdmin(true);
         } else {
-          setIsAdmin(false);
-          console.log('user.uid', user.uid);
+          console.log("User is not an admin");
         }
       };
       fetchUser();
     }
   }, [user]);
   
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        setIsAdmin(false);
-      }
-    });
-  
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, []);
 
   const register = async (values) => {
     const toastId = toast.loading('Creating account...')
@@ -104,6 +94,7 @@ const AuthContextProvider = ({ children }) => {
   const value = {
     user,
     isAdmin,
+    setIsAdmin,
     authLoaded,
     register,
     login

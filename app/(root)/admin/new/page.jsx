@@ -10,6 +10,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 
 import { addNewEvent } from '@/app/lib/event.db';
 import { useRouter } from 'next/navigation';
+import withAdminAuth from '@/app/hoc/withAdminAuth';
 
 const CreateNewEventPage = () => {
     const initialFormData = {
@@ -285,4 +286,4 @@ const CreateNewEventPage = () => {
     );
 };
 
-export default CreateNewEventPage;
+export default withAdminAuth(CreateNewEventPage);

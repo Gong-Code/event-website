@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { UpdateEventDialog } from '../_components/UpdateEventDialog';
 import { deleteEventById, getEventById } from '@/app/lib/event.db';
+import withAdminAuth from '@/app/hoc/withAdminAuth';
 
 const ManageEventDetailPage = () => {
     const [event, setEvent] = useState(null);
@@ -103,4 +104,4 @@ const ManageEventDetailPage = () => {
         </div>
     );
 };
-export default ManageEventDetailPage;
+export default withAdminAuth(ManageEventDetailPage);
