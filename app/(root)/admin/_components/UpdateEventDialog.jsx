@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef } from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -12,21 +12,14 @@ import { PhotoIcon } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
 import { useParams } from 'next/navigation';
 import { updateEventById } from '@/app/lib/event.db';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage } from '@/firebase.config';
+import { useEvents } from './events-provider';
 
-export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
-    const initialFormData = {
-        name: event.name,
-        location: event.location,
-        date: event.date,
-        numberOfSpots: event.numberOfSpots,
-        description: event.description,
-        image: event.image,
-    };
-    const [formData, setFormData] = useState(initialFormData);
+export const UpdateEventDialog = ({ isOpen, onClose }) => {
+    
     const cancelButtonRef = useRef(null);
     const { id } = useParams();
+
+    const { handleChange, handleFileChange, formData } = useEvents();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,72 +33,6 @@ export const UpdateEventDialog = ({ isOpen, onClose, event }) => {
         } catch (error) {
             console.error(error);
             toast.error('Failed to update event, please try again.');
-        }
-    };
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        let formattedValue = value;
-        if (name === 'date') {
-            let date = new Date(value);
-            formattedValue = date
-                .toLocaleString('sv-SE', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                })
-                .replace(',', '');
-        }
-
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: formattedValue,
-        }));
-    };
-
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-            const toastId = toast.loading('Uploading file...');
-
-            reader.onabort = () => toast.error('File reading was aborted');
-            reader.onerror = () => toast.error('File reading has failed');
-
-            reader.onload = async () => {
-                try {
-                    const fileRef = ref(storage, `events/${formData.name}`);
-                    await uploadBytes(fileRef, file);
-                    const downloadURL = await getDownloadURL(fileRef);
-
-                    setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        coverPhoto: file,
-                        image: downloadURL,
-                    }));
-
-                    toast.success('File uploaded successfully!', {
-                        id: toastId,
-                    });
-                } catch (error) {
-                    let errorMessage = 'Failed to upload file, please try again.';
-
-                    if (error.code === 'storage/unauthorized') {
-                        errorMessage = 'You do not have permission to upload this file.';
-                    } else if (error.code === 'storage/canceled') {
-                        errorMessage = 'File upload was canceled.';
-                    }
-            
-                    toast.error(errorMessage, {
-                        id: toastId,
-                    });
-                }
-            };
-
-            reader.readAsArrayBuffer(file);
         }
     };
 

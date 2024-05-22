@@ -4,93 +4,22 @@ import { PhotoIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAuth } from '../_components/auth-provider';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage } from '@/firebase.config';
+
 import { FaCheckCircle } from 'react-icons/fa';
 
 import { addNewEvent } from '@/app/lib/event.db';
 import { useRouter } from 'next/navigation';
+
 import withAdminAuth from '@/app/hoc/withAdminAuth';
 
 const CreateNewEventPage = () => {
-    const initialFormData = {
-        name: '',
-        location: '',
-        date: '',
-        numberOfSpots: 0,
-        description: '',
-        image: '',
-    };
 
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState(initialFormData);
-    const [image, setImage] = useState(null);
     const router = useRouter();
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        let formattedValue = value;
-        if (name === 'date') {
-            let date = new Date(value);
-            formattedValue = date
-                .toLocaleString('sv-SE', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                })
-                .replace(',', '');
-        }
+    const { formData, initialFormData, setFormData, handleChange, handleFileChange, image } = useEvents()
 
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: formattedValue,
-        }));
-    };
-
-    const handleFileChange = async (event) => {
-        const file = event.target.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-            const toastId = toast.loading('Uploading file...');
-
-            reader.onabort = () => toast.error('File reading was aborted');
-            reader.onerror = () => toast.error('File reading has failed');
-
-            reader.onload = async () => {
-                try {
-                    if (reader.readyState === 2) {
-                        setImage(file);
-                    } else {
-                        setImage(null);
-                    }
-
-                    const fileRef = ref(storage, `events/${formData.name}`);
-                    await uploadBytes(fileRef, file);
-                    const downloadURL = await getDownloadURL(fileRef);
-
-                    setFormData((prevFormData) => ({
-                        ...prevFormData,
-                        coverPhoto: file,
-                        image: downloadURL,
-                    }));
-
-                    toast.success('File uploaded successfully!', {
-                        id: toastId,
-                    });
-                } catch (error) {
-                    toast.error('Failed to upload file, please try again.', {
-                        id: toastId,
-                    });
-                }
-            };
-
-            reader.readAsArrayBuffer(file);
-        }
-    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();

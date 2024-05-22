@@ -2,20 +2,25 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
-import { Event } from './(root)/_components/event';
+import { EventCard } from './(root)/_components/EventCard';
 import { useState, useEffect } from 'react';
 import { useAuth } from './(root)/admin/_components/auth-provider';
 import { getAllEvents } from './lib/event.db';
-import { set } from 'zod';
-
+import { useUsers } from './(root)/_components/users-provider';
 
 const LandingPage = () => {
-    const { user, authLoaded } = useAuth();
-    const [searchValue, setSearchValue] = useState('');
-    const [eventList, setEventList] = useState([]);
-    const [inc, setInc] = useState(true);
-    const [eventListOriginal, setEventListOriginal] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const { user } = useAuth();
+    const {
+        onSort,
+        inc,
+        onSearch,
+        searchValue,
+        eventList,
+        setEventList,
+        setEventListOriginal,
+    } = useUsers();
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -24,7 +29,6 @@ const LandingPage = () => {
                 const events = await getAllEvents();
                 setEventList(events);
                 setEventListOriginal(events);
-                console.log(events);
             } catch (error) {
                 console.error('Could not fetch events:', error.message);
             } finally {
@@ -35,36 +39,12 @@ const LandingPage = () => {
         fetchEvents();
     }, []);
 
-    const onSearch = (e) => {
-        setSearchValue(e.target.value);
-        const newList = eventListOriginal.filter((x) =>
-            x.name.toLowerCase().includes(e.target.value.toLowerCase())
-        );
-        setEventList(newList);
-    };
-
-    const onSort = () => {
-        if (inc) {
-            const newList = eventListOriginal.sort(
-                (a, b) => a.numberOfSpots - b.numberOfSpots
-            );
-            setEventList(newList);
-            setInc(false);
-        } else {
-            const newList = eventListOriginal.sort(
-                (a, b) => b.numberOfSpots - a.numberOfSpots
-            );
-            setEventList(newList);
-            setInc(true);
-        }
-    };
-    
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className='flex flex-col py-32 justify-center items-center p-2 mt-8'>
+        <div className='flex flex-col py-32 justify-center items-center px-8 mt-8'>
             <div className='flex flex-col '>
                 <h1 className='text-tertiary'>Welcome to Vibe Events</h1>
                 <p className='text-base'>
@@ -93,10 +73,10 @@ const LandingPage = () => {
             <h3 className='flex mt-16 justify-center items-center'>
                 Check out the current events!
             </h3>
-            <div className='grid lg:grid-cols-3 p-2 mt-2'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 p-2 mt-2'>
                 {eventList.map((item, i) => {
                     return (
-                        <Event
+                        <EventCard
                             name={item.name}
                             key={i}
                             image={item.image}

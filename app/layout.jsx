@@ -5,6 +5,7 @@ import Navbar from './(root)/_components/navbar';
 import Footer from './(root)/_components/footer';
 import AuthContextProvider from './(root)/admin/_components/auth-provider';
 import EventsContextProvider from './(root)/admin/_components/events-provider';
+import UsersContextProvider from './(root)/_components/users-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
     return (
         <AuthContextProvider>
             <EventsContextProvider>              
+            <UsersContextProvider>
                     <html lang='en'>
                         <body className={inter.className}>
                             <Navbar />
@@ -27,6 +29,7 @@ export default function RootLayout({ children }) {
                             <Footer />
                         </body>
                     </html>
+            </UsersContextProvider>
             </EventsContextProvider>
         </AuthContextProvider>
     );
