@@ -106,30 +106,14 @@ const value = {
   login
 }
 
-return(
-  <AuthContext.Provider value={value}>
-    {children}
-  </AuthContext.Provider>
-)
+  return(
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export default AuthContextProvider
-
-
-  const value = {
-      user,
-      isAdmin,
-      authLoaded,
-      register,
-      login,
-  };
-
-  return (
-      <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-  );
-};
-
-export default AuthContextProvider;
 
 export const useAuth = () => {
     const context = useContext(AuthContext);
