@@ -9,7 +9,6 @@ import { useEvents } from '../_components/events-provider';
 
 const ManageEventDetailPage = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    // const [users, setUsers] = useState(null)
     const { id } = useParams();
     const { event, setEvent } = useEvents();
 
@@ -21,12 +20,6 @@ const ManageEventDetailPage = () => {
 
         fetchEvent();
 
-        // const fetchUsers = async () => {
-        //     const users = await getEventById();
-        //     setUsers(users);
-        // };
-
-        // fetchUsers();
     }, [id]);
 
     // Mockup user data
@@ -76,7 +69,7 @@ const ManageEventDetailPage = () => {
                             </div>
                             <div className='py-4 flex justify-center items-center flex-col sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 grid-flow-col'>
                                 <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
-                                    Number of available spots
+                                    Places for this event
                                 </dt>
                                 <dd className='mt-2 text-sm leading-6 sm:mt-0'>
                                     {event.numberOfSpots}
@@ -87,10 +80,10 @@ const ManageEventDetailPage = () => {
                                     Attending users
                                 </dt>
                                 <dd className='mt-2 flex flex-col text-sm gap-y-2 leading-6 sm:mt-0'>
-                                    {attendingUsers && attendingUsers.map(user => (
-                                        <div key={user.userID} className='items-center sm:items-start min-w-0 flex-auto flex flex-col'>
-                                            <span className='text-sm font-medium leading-6 text-gray-900'>{user.firstName}</span>
-                                            <span className='truncate text-xs leading-5 text-gray-500'>ID: {user.userID}</span>
+                                    {event && event.bookedUsers.map(user => (
+                                        <div key={user} className='items-center sm:items-start min-w-0 flex-auto flex flex-col'>
+                                            <span className='text-sm font-medium leading-6 text-gray-900'>{user}</span>
+                                            <span className='truncate text-xs leading-5 text-gray-500'>ID: {user}</span>
                                         </div>
                                     ))}
                                 </dd>
