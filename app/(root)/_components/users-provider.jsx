@@ -42,6 +42,8 @@ const UsersContextProvider = ({ children }) => {
         }
     };
 
+    const currentlyBookedUsers = event && event.bookedUsers ? event.bookedUsers : [];
+
     const numberOfBookedUsers =
         event && event.bookedUsers ? event.bookedUsers.length : 0;
 
@@ -59,7 +61,7 @@ const UsersContextProvider = ({ children }) => {
         bookEvent(user?.uid, id).then(() => {
             setEvent((prevState) => ({
                 ...prevState,
-                bookedUsers: [...prevState.bookedUsers, user?.uid],
+                bookedUsers: [...currentlyBookedUsers, user?.uid],
             }));
         });
     };
