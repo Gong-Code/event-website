@@ -8,13 +8,19 @@ import { useAuth } from './(root)/admin/_components/auth-provider';
 import { getAllEvents } from './lib/event.db';
 import { useUsers } from './(root)/_components/users-provider';
 
-
 const LandingPage = () => {
-    
     const [loading, setLoading] = useState(false);
-    
+
     const { user } = useAuth();
-    const { onSort, inc, onSearch, searchValue, eventList, setEventList, setEventListOriginal } = useUsers()
+    const {
+        onSort,
+        inc,
+        onSearch,
+        searchValue,
+        eventList,
+        setEventList,
+        setEventListOriginal,
+    } = useUsers();
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -32,13 +38,13 @@ const LandingPage = () => {
 
         fetchEvents();
     }, []);
-    
+
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className='flex flex-col py-32 justify-center items-center p-2 mt-8'>
+        <div className='flex flex-col py-32 justify-center items-center px-8 mt-8'>
             <div className='flex flex-col '>
                 <h1 className='text-tertiary'>Welcome to Vibe Events</h1>
                 <p className='text-base'>
@@ -67,7 +73,7 @@ const LandingPage = () => {
             <h3 className='flex mt-16 justify-center items-center'>
                 Check out the current events!
             </h3>
-            <div className='grid lg:grid-cols-3 p-2 mt-2'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 p-2 mt-2'>
                 {eventList.map((item, i) => {
                     return (
                         <EventCard
