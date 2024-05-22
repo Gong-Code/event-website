@@ -1,19 +1,18 @@
-import * as admin from 'firebase-admin';
+import { db } from '@/firebase.config';
+import { setDoc, doc } from 'firebase/firestore';
 
-admin.initializeApp();
+// POST USER TO DATABASE
+export const addNewUser = async (user, uid) => {
+    try {
+        await setDoc(doc(db, 'users', uid), {
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            id: uid,
+        });
 
-async function listAllUsers(nextPageToken) {
-  // List batch of users, 1000 at a time.
-    const listUsersResult = await admin.auth().listUsers(1000, nextPageToken);
-    const users = listUsersResult.users.map((userRecord) => userRecord.toJSON());
-
-    if (listUsersResult.pageToken) {
-        // List next batch of users.
-        return users.concat(await listAllUsers(listUsersResult.pageToken));
+        console.log('User added with ID: ', uid);
+    } catch (error) {
+        console.error('Failed to add user: ', error);
     }
-
-    return users;
-}
-
-// Start listing users from the beginning, 1000 at a time.
-listAllUsers().then(users => console.log(users));
+};
