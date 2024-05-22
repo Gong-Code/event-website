@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from 'react';
 import { useEvents } from '../admin/_components/events-provider';
 import { useAuth } from '../admin/_components/auth-provider';
 import { useParams } from 'next/navigation';
-import { bookEvent } from '@/app/lib/event.db';
+import { bookEvent, undoBookedEvent } from '@/app/lib/event.db';
 import toast from 'react-hot-toast';
 
 export const UsersContext = createContext();
@@ -51,12 +51,12 @@ const UsersContextProvider = ({ children }) => {
         const isMaxUsers =
         event && Number(numberOfBookedUsers) === Number(event.numberOfSpots);
 
+        const hasBooked = event && event.bookedUsers && event.bookedUsers.includes(user?.uid);
+
     const bookEventFunction = () => {
         if (
             isMaxUsers ||
-            (event &&
-                event.bookedUsers &&
-                event.bookedUsers.includes(user?.uid))
+            hasBooked
         )
             return;
         bookEvent(user?.uid, id).then(() => {
@@ -71,6 +71,21 @@ const UsersContextProvider = ({ children }) => {
         });
     };
 
+    const undoBookedEventFunction = () => {
+        if (!currentlyBookedUsers)
+            return;
+        undoBookedEvent(user?.uid, id).then(() => {
+            setEvent((prevState) => ({
+                ...prevState,
+                bookedUsers: currentlyBookedUsers.filter((x) => x !== user?.uid),
+            }));
+            toast.success('Event booking undone successfully!');
+        })
+        .catch(() => {
+            toast.error('Failed to undo booking, please try again.');
+        });
+    };
+
     const value = {
         onSearch,
         onSort,
@@ -81,7 +96,9 @@ const UsersContextProvider = ({ children }) => {
         setEventListOriginal,
         bookEventFunction,
         isMaxUsers,
-        numberOfBookedUsers
+        numberOfBookedUsers,
+        hasBooked,
+        undoBookedEventFunction
     };
 
     return (

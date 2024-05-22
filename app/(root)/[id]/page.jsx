@@ -11,7 +11,7 @@ const EventDetailsPage = () => {
 
     const { id } = useParams();
     const { event, setEvent } = useEvents();
-    const { bookEventFunction, isMaxUsers, numberOfBookedUsers } = useUsers()
+    const { bookEventFunction, isMaxUsers, numberOfBookedUsers, hasBooked, undoBookedEventFunction } = useUsers()
     
     useEffect(() => {
         const fetchEvent = async () => {
@@ -48,11 +48,11 @@ const EventDetailsPage = () => {
                 </p>
                 <div className='w-2/4'>
                     <button
-                        onClick={bookEventFunction}
+                        onClick={hasBooked ? undoBookedEventFunction : bookEventFunction}
                         className={`text-lg mt-4 ${
                             isMaxUsers ? 'opacity-50' : ''
                         }`}>
-                        Book now!
+                        {hasBooked ? 'Undo booking' : 'Book now!'}
                     </button>
                 </div>
                 </>

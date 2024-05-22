@@ -105,6 +105,27 @@ export const bookEvent = async (userId, eventId) => {
     }
 };
 
+export const undoBookedEvent = async (userId, eventId) => {
+    const docRef = doc(db, 'events', eventId);
+    const docSnap = await getDoc(docRef)
+        .then((doc) => {
+            if (doc.exists()) {
+                return doc.data();
+            } else {
+                console.log('No such document!');
+            } 
+        })
+    const currentlyBookedUsers = docSnap.bookedUsers ? docSnap.bookedUsers : [];
+
+    try {
+        await updateDoc(docRef, {
+            bookedUsers: currentlyBookedUsers.filter((x) => x !== userId)
+        });
+    } catch (error) {
+        toast.error('Failed to undo booking, please try again.');
+    }
+};
+
 export const deleteEventById = async (collection, id) => {
     const docRef = doc(db, collection, id);
 
