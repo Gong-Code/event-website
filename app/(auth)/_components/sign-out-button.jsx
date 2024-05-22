@@ -3,10 +3,13 @@
 import { auth } from "@/firebase.config"
 import { signOut } from "firebase/auth"
 
-function SignOutButton() {
+function SignOutButton({ onSignOut }) {
 
   const handleSignOut = async () => {
     await signOut(auth)
+    if (onSignOut) {
+      onSignOut();
+    }
   }
 
   return (

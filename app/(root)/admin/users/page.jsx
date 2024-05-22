@@ -1,6 +1,7 @@
 'use client'
 
 
+import withAdminAuth from "@/app/hoc/withAdminAuth";
 import { UsersList } from "../_components/UsersList";
 import { useAuth } from "../_components/auth-provider";
 
@@ -18,4 +19,4 @@ const UsersPage = () => {
   );
   
 }
-export default UsersPage
+export default withAdminAuth(UsersPage)

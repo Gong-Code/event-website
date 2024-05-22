@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { IoCog } from "react-icons/io5";
 
 const Navbar = () => {
-    const { user, isAdmin } = useAuth();
+    const { user, isAdmin, setIsAdmin } = useAuth();
 
     return (
         <div className='flex justify-between items-center w-full px-6 md:px-16 lg:px-36 py-4 bg-secondary-muted border-b border-tertiary shadow'>
@@ -22,7 +22,7 @@ const Navbar = () => {
             </Link>
             <div className='flex gap-2 justify-between'>
                 {user ? (
-                    <SignOutButton />
+                    <SignOutButton onSignOut={() => setIsAdmin(false)} />
                 ) : (
                     <Link href='/sign-in'>
                         <button>Sign in</button>

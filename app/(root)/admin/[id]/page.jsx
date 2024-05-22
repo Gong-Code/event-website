@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { UpdateEventDialog } from '../_components/UpdateEventDialog';
 import { deleteEventById, getEventById } from '@/app/lib/event.db';
-import { useEvents } from '../_components/events-provider';
+
+import withAdminAuth from '@/app/hoc/withAdminAuth';
 
 const ManageEventDetailPage = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -125,4 +126,4 @@ const ManageEventDetailPage = () => {
         </div>
     );
 };
-export default ManageEventDetailPage;
+export default withAdminAuth(ManageEventDetailPage);

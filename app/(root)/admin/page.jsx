@@ -5,19 +5,11 @@ import { UsersList } from './_components/UsersList';
 import Link from 'next/link';
 import { FaPlus } from 'react-icons/fa';
 import { useAuth } from './_components/auth-provider';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import withAdminAuth from '@/app/hoc/withAdminAuth';
 
 const AdminPage = () => {
-    const { user, isAdmin, authLoaded } = useAuth();
-    const router = useRouter();
-
-    useEffect(() => {
-        if (!isAdmin) {
-            router.push('/');
-        }
-    }, [router, isAdmin, authLoaded]);
-
+    const { user } = useAuth();
+ 
     return (
         <>
             <header>
@@ -60,4 +52,4 @@ const AdminPage = () => {
         </>
     );
 };
-export default AdminPage;
+export default withAdminAuth(AdminPage);
