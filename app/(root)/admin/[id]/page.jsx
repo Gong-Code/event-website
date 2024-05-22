@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { UpdateEventDialog } from '../_components/UpdateEventDialog';
 import { deleteEventById, getEventById } from '@/app/lib/event.db';
+import { useEvents } from '../_components/events-provider';
 
 const ManageEventDetailPage = () => {
-    const [event, setEvent] = useState(null);
+
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { id } = useParams();
+    const { event, setEvent } = useEvents()
 
     useEffect(() => {
         const fetchEvent = async () => {
