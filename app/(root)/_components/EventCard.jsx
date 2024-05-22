@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-export const Event = ({
+export const EventCard = ({
     name,
     image,
     location,
@@ -20,7 +20,7 @@ export const Event = ({
 
     const goToEvent = () => {
         router.push(
-            `/event/detail?name=${name}&image=${image}&location=${location}&date=${date}&numberOfSpots=${numberOfSpots}&eventId=${eventId}&userId=${userId}&numberOfBookedUsers=${numberOfBookedUsers}`
+            `/${eventId}`
         );
     };
 
