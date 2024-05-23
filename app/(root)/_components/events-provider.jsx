@@ -14,15 +14,16 @@ const EventsContextProvider = ({ children }) => {
 
     // Function for fetching events
 
+    const fetchEvents = async () => {
+        try {
+            const fetchedEvents = await getAllEvents();
+            setEvents(fetchedEvents);
+        } catch (error) {
+            console.error('Could not fetch events:', error.message);
+        }
+    };
+
     useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const fetchedEvents = await getAllEvents();
-                setEvents(fetchedEvents);
-            } catch (error) {
-                console.error('Could not fetch events:', error.message);
-            }
-        };
         fetchEvents();
     }, []);
 
@@ -134,6 +135,7 @@ const EventsContextProvider = ({ children }) => {
         formData,
         setFormData,
         initialFormData,
+        fetchEvents
     };
 
     return (
