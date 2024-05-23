@@ -15,7 +15,7 @@ import withAdminAuth from '@/app/hoc/withAdminAuth';
 const ManageEventDetailPage = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { id } = useParams();
-    const { event, setEvent } = useEvents();
+    const { event, setEvent, fetchEvents } = useEvents();
 
     const router = useRouter();
 
@@ -27,6 +27,16 @@ const ManageEventDetailPage = () => {
 
         fetchEvent();
     }, [id]);
+
+    const handleDelete = () => {
+        try {
+            deleteEventById('events', id);
+            router.push('/admin');
+            fetchEvents();
+        } catch (error) {
+            console.log('Error deleting event! ', error);
+        }
+    };
 
     return (
         <>
@@ -115,10 +125,7 @@ const ManageEventDetailPage = () => {
                                     />
                                 )}
                                 <button
-                                    onClick={() => {
-                                        deleteEventById('events', id);
-                                        router.push('/admin');
-                                    }}
+                                    onClick={handleDelete}
                                     className='error flex whitespace-nowrap items-center gap-2'>
                                     <span>Delete</span>
                                 </button>

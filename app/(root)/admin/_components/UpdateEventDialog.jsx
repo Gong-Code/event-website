@@ -18,7 +18,7 @@ export const UpdateEventDialog = ({ isOpen, onClose }) => {
     const cancelButtonRef = useRef(null);
     const { id } = useParams();
     const router = useRouter();
-    const { handleChange, handleFileChange, formData, setFormData, event } =
+    const { handleChange, handleFileChange, formData, setFormData, event, fetchEvents } =
         useEvents();
 
     const [originalFormData, setOriginalFormData] = useState({});
@@ -37,8 +37,8 @@ export const UpdateEventDialog = ({ isOpen, onClose }) => {
             await updateEventById(id, formData);
             toast.success('Event updated successfully!');
             router.push('/admin');
-
             onClose();
+            fetchEvents()
         } catch (error) {
             console.error(error);
             toast.error('Failed to update event, please try again.');

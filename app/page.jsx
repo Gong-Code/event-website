@@ -36,8 +36,8 @@ const LandingPage = () => {
     }
 
     return (
-        <div className='flex flex-col py-32 justify-center items-center px-8 mt-8'>
-            <div className='flex flex-col '>
+        <div className='flex flex-col py-12 md:py-28 px-6 md:px-16 lg:px-36 justify-center items-center'>
+            <div className='flex flex-col'>
                 <h1 className='text-tertiary'>Welcome to Vibe Events</h1>
                 <p className='text-base'>
                     We display all the current events happening around
@@ -45,7 +45,7 @@ const LandingPage = () => {
                     up for the event in time!
                 </p>
             </div>
-            <div className='flex mt-20 space-x-5'>
+            <div className='flex mt-10 md:mt-20 space-x-5'>
                 <button
                     className='flex gap-3 items-center'
                     onClick={onSort}>
