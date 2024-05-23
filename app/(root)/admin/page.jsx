@@ -7,6 +7,7 @@ import { FaPlus } from 'react-icons/fa';
 import { useAuth } from './_components/auth-provider';
 import withAdminAuth from '@/app/hoc/withAdminAuth';
 import Loading from '../_components/Loading';
+import { useState } from 'react';
 
 const AdminPage = () => {
     const [loading, setLoading] = useState(false);
