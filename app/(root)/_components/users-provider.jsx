@@ -59,6 +59,12 @@ const UsersContextProvider = ({ children }) => {
 
     const bookEventFunction = () => {
         if (isMaxUsers || hasBooked) return;
+
+        if (!user || !user.uid) {
+            toast.error('You need to be logged in to book an event.');
+            return;
+        }
+
         bookEvent(user?.uid, user?.email, id)
             .then(() => {
                 setEvent((prevState) => ({
