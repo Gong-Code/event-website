@@ -68,7 +68,7 @@ const ManageEventDetailPage = () => {
                                     Attending users
                                 </dt>
                                 <dd className='mt-2 flex flex-col text-sm gap-y-2 leading-6 sm:mt-0'>
-                                    {event &&
+                                    {event && event.bookedUsers.length ? (
                                         event.bookedUsers.map((user) => (
                                             <div
                                                 key={user.id}
@@ -80,7 +80,10 @@ const ManageEventDetailPage = () => {
                                                     ID: {user.id}
                                                 </span>
                                             </div>
-                                        ))}
+                                        ))
+                                    ) : (
+                                        <span className='text-sm leading-6 text-gray-500/80'>No attending users yet.</span>
+                                    )}
                                 </dd>
                             </div>
                         </dl>
