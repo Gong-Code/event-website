@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useRef } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -10,25 +10,34 @@ import {
 } from '@headlessui/react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { updateEventById } from '@/app/lib/event.db';
 import { useEvents } from './events-provider';
 
 export const UpdateEventDialog = ({ isOpen, onClose }) => {
-    
     const cancelButtonRef = useRef(null);
     const { id } = useParams();
+    const router = useRouter();
+    const { handleChange, handleFileChange, formData, setFormData, event } =
+        useEvents();
 
-    const { handleChange, handleFileChange, formData } = useEvents();
+    const [originalFormData, setOriginalFormData] = useState({});
+    const hasChanged =
+        JSON.stringify(originalFormData) !== JSON.stringify(formData);
+
+    useEffect(() => {
+        setFormData(event);
+        setOriginalFormData(event);
+    }, [event]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             await updateEventById(id, formData);
-            console.log(id, formData);
-
             toast.success('Event updated successfully!');
+            router.push('/admin');
+
             onClose();
         } catch (error) {
             console.error(error);
@@ -262,6 +271,7 @@ export const UpdateEventDialog = ({ isOpen, onClose }) => {
                                                 <div className='bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6'>
                                                     <button
                                                         type='submit'
+                                                        disabled={!hasChanged}
                                                         className='w-full justify-center px-3 py-2 sm:ml-3 sm:w-auto'>
                                                         Update
                                                     </button>
