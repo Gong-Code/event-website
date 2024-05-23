@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { UpdateEventDialog } from '../_components/UpdateEventDialog';
 import { deleteEventById, getEventById } from '@/app/lib/event.db';
@@ -16,6 +16,8 @@ const ManageEventDetailPage = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { id } = useParams();
     const { event, setEvent } = useEvents();
+
+    const router = useRouter()
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -78,7 +80,7 @@ const ManageEventDetailPage = () => {
                                         Attending users
                                     </dt>
                                     <dd className='mt-2 flex flex-col text-sm gap-y-2 leading-6 sm:mt-0'>
-                                        {event && event.bookedUsers.length ? (
+                                        {event && event.bookedUsers?.length ? (
                                             event.bookedUsers.map((user) => (
                                                 <div
                                                     key={user.id}
@@ -115,6 +117,7 @@ const ManageEventDetailPage = () => {
                                 <button
                                     onClick={() => {
                                         deleteEventById('events', id);
+                                        router.push('/admin');
                                     }}
                                     className='error flex whitespace-nowrap items-center gap-2'>
                                     <span>Delete</span>
