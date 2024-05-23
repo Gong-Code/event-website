@@ -1,7 +1,7 @@
 'use client';
 
 import { EventsList } from './_components/EventsList';
-import { UsersList } from './_components/UsersList';
+import { UsersList } from './users/_components/UsersList';
 import Link from 'next/link';
 import { FaPlus } from 'react-icons/fa';
 import { useAuth } from './_components/auth-provider';
