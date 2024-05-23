@@ -32,7 +32,7 @@ export const EventCard = ({
                 </h3>
                 <div className='w-full h-[150px]'>
                     <Image
-                        src={`${image}` || '/assets/placeholder.jpg'}
+                        src={image || '/assets/placeholder.jpg'}
                         width={200}
                         height={200}
                         alt='Event image'
