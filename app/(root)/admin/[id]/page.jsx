@@ -9,7 +9,7 @@ import { UpdateEventDialog } from '../_components/UpdateEventDialog';
 import { deleteEventById, getEventById } from '@/app/lib/event.db';
 import { FaArrowLeft } from 'react-icons/fa';
 
-import { useEvents } from '../_components/events-provider';
+import { useEvents } from '../../_components/events-provider';
 import withAdminAuth from '@/app/hoc/withAdminAuth';
 
 const ManageEventDetailPage = () => {
@@ -17,7 +17,7 @@ const ManageEventDetailPage = () => {
     const { id } = useParams();
     const { event, setEvent } = useEvents();
 
-    const router = useRouter()
+    const router = useRouter();
 
     useEffect(() => {
         const fetchEvent = async () => {

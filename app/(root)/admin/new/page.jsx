@@ -11,16 +11,21 @@ import { addNewEvent } from '@/app/lib/event.db';
 import { useRouter } from 'next/navigation';
 
 import withAdminAuth from '@/app/hoc/withAdminAuth';
-import { useEvents } from '../_components/events-provider';
+import { useEvents } from '../../_components/events-provider';
 
 const CreateNewEventPage = () => {
-
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const { formData, initialFormData, setFormData, handleChange, handleFileChange, image } = useEvents()
-
+    const {
+        formData,
+        initialFormData,
+        setFormData,
+        handleChange,
+        handleFileChange,
+        image,
+    } = useEvents();
 
     const handleSubmit = async (event) => {
         event.preventDefault();

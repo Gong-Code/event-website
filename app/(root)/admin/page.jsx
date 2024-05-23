@@ -6,10 +6,17 @@ import Link from 'next/link';
 import { FaPlus } from 'react-icons/fa';
 import { useAuth } from './_components/auth-provider';
 import withAdminAuth from '@/app/hoc/withAdminAuth';
+import Loading from '../_components/Loading';
 
 const AdminPage = () => {
+    const [loading, setLoading] = useState(false);
+
     const { user } = useAuth();
- 
+
+    if (loading) {
+        return <Loading />;
+    }
+
     return (
         <>
             <header>

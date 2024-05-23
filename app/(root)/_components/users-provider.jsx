@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState } from 'react';
-import { useEvents } from '../admin/_components/events-provider';
+import { useEvents } from './events-provider';
 import { useAuth } from '../admin/_components/auth-provider';
 import { useParams } from 'next/navigation';
 import { bookEvent, undoBookedEvent } from '@/app/lib/event.db';

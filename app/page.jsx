@@ -7,11 +7,15 @@ import { useState, useEffect } from 'react';
 import { useAuth } from './(root)/admin/_components/auth-provider';
 import { getAllEvents } from './lib/event.db';
 import { useUsers } from './(root)/_components/users-provider';
+import Loading from './(root)/_components/Loading';
+import { useEvents } from './(root)/_components/events-provider';
 
 const LandingPage = () => {
     const [loading, setLoading] = useState(false);
 
     const { user } = useAuth();
+    const { events } = useEvents();
+
     const {
         onSort,
         inc,
@@ -23,24 +27,12 @@ const LandingPage = () => {
     } = useUsers();
 
     useEffect(() => {
-        const fetchEvents = async () => {
-            setLoading(true);
-            try {
-                const events = await getAllEvents();
-                setEventList(events);
-                setEventListOriginal(events);
-            } catch (error) {
-                console.error('Could not fetch events:', error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchEvents();
-    }, []);
+        setEventList(events)
+        setEventListOriginal(events);
+    }, [events]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (
