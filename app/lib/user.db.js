@@ -1,7 +1,6 @@
 import { db } from '@/firebase.config';
 import { setDoc, doc, getDoc, deleteDoc } from 'firebase/firestore';
 import toast from 'react-hot-toast';
-import { setDoc, doc } from 'firebase/firestore';
 import bcrypt from 'bcryptjs';
 
 
