@@ -48,6 +48,7 @@ const SignUpForm = () => {
     const onSubmit = async (values) => {
         try {
             const uid = await register(values);
+            console.log(uid)
             await addNewUser(
                 {
                     name: `${values.firstName} ${values.lastName}`,

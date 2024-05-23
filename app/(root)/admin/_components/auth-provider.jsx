@@ -66,6 +66,8 @@ const register = async (values) => {
     setUser(userCredential.user)
 
     toast.success('Account created successfully',  { id: toastId })
+    
+    return userCredential.user.uid;
 
   } catch (error) {
     console.log(error.message);
