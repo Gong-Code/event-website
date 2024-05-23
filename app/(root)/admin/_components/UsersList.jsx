@@ -97,7 +97,6 @@ export const UsersList = () => {
                         <tr key={user.id}>
                             <td>{user.name}</td>
                             <td>{user.email}</td>
-                            {/* Render user data here */}
                             <td>
                                 <button className="text-slate-200 with:fit-content" onClick={() => 
                                     handleUpgrade(user.id)}>
@@ -126,7 +125,6 @@ export const UsersList = () => {
                         <tr key={admin.id}>                          
                             <td>{admin.name}</td>
                             <td>{admin.email}</td>
-                            {/* Render user data here */}
                             <td>
                                 <button className="text-slate-200" onClick={() => 
                                 handleDemote(admin.id)}>
