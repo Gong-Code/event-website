@@ -76,17 +76,17 @@ export const UpdateEventDialog = ({ isOpen, onClose }) => {
                             leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'>
                             <DialogPanel className='relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg'>
                                 <div className='flex flex-col sm:items-start'>
-                                    <div className='bg-gray-50 px-6 py-4 min-w-[400px] flex'>
+                                    <div className='bg-gray-50 px-6 py-4 min-w-[400px] w-full flex'>
                                         <DialogTitle
                                             as='h3'
                                             className='text-base font-semibold leading-6 text-gray-900'>
                                             Update event details
                                         </DialogTitle>
                                     </div>
-                                    <div className='bg-white px-2'>
-                                        <div className='text-center sm:ml-4 sm:text-left'>
+                                    <div className='bg-white w-full'>
+                                        <div className='text-center sm:text-left'>
                                             <form onSubmit={handleSubmit}>
-                                                <div className='space-y-2'>
+                                                <div className='px-4'>
                                                     <div className='pb-12'>
                                                         <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6'>
                                                             <div className='sm:col-span-3'>
