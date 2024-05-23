@@ -1,40 +1,53 @@
 'use client';
 
-import { getAllEvents, getEventById } from '@/app/lib/event.db';
+import { getAllEvents } from '@/app/lib/event.db';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '@/firebase.config';
 import toast from 'react-hot-toast';
-import { useParams } from 'next/navigation';
 
 export const EventsContext = createContext();
 
 const EventsContextProvider = ({ children }) => {
-    
     const [events, setEvents] = useState([]);
     const [event, setEvent] = useState(null);
 
+    // Function for fetching events
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                const fetchedEvents = await getAllEvents();
+                setEvents(fetchedEvents);
+            } catch (error) {
+                console.error('Could not fetch events:', error.message);
+            }
+        };
+        fetchEvents();
+    }, []);
+
     // If event is null, initialFormData will be an object with all properties set to their default values. If event is not null, initialFormData will be an object with properties set to the values of event properties, or their default values if the event properties are undefined.
 
-    const initialFormData = event ? {
-        name: event.name || '',
-        location: event.location || '',
-        date: event.date || '',
-        numberOfSpots: event.numberOfSpots || 0,
-        description: event.description || '',
-        image: event.image || '',
-    } : {
-        name: '',
-        location: '',
-        date: '',
-        numberOfSpots: 0,
-        description: '',
-        image: '',
-    };
+    const initialFormData = event
+        ? {
+              name: event.name || '',
+              location: event.location || '',
+              date: event.date || '',
+              numberOfSpots: event.numberOfSpots || 0,
+              description: event.description || '',
+              image: event.image || '',
+          }
+        : {
+              name: '',
+              location: '',
+              date: '',
+              numberOfSpots: 0,
+              description: '',
+              image: '',
+          };
 
     const [formData, setFormData] = useState(initialFormData);
     const [image, setImage] = useState(null);
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -109,20 +122,6 @@ const EventsContextProvider = ({ children }) => {
             reader.readAsArrayBuffer(file);
         }
     };
-
-    useEffect(() => {
-        let isMounted = true;
-
-        const fetchEvents = async () => {
-            const fetchedEvents = await getAllEvents();
-            setEvents(fetchedEvents);
-        };
-        fetchEvents();
-
-        return () => {
-            isMounted = false;
-        };
-    }, []);
 
     const value = {
         events,

@@ -1,9 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { GoArrowRight } from 'react-icons/go';
-import { useEvents } from './events-provider';
+import { useEvents } from '../../_components/events-provider';
 
 export const EventsList = () => {
     const { events } = useEvents();
@@ -33,16 +32,16 @@ export const EventsList = () => {
                             <tr
                                 key={event.name}
                                 className='border-b border-gray-900/10 last:border-0'>
-                                <td className='px-4 py-2 text-left text-sm font-medium text-ellipsis overflow-hidden'>
+                                <td className='px-4 md:py-4 text-left text-sm font-medium text-ellipsis overflow-hidden'>
                                     {event.name}
                                 </td>
-                                <td className='px-4 py-2 text-left text-sm text-ellipsis overflow-hidden'>
+                                <td className='px-4 md:py-4 text-left text-sm text-ellipsis overflow-hidden'>
                                     {event.location}
                                 </td>
-                                <td className='px-4 py-2 text-left text-sm text-ellipsis overflow-hidden'>
+                                <td className='px-4 md:py-4 text-left text-sm text-ellipsis overflow-hidden'>
                                     {event.date}
                                 </td>
-                                <td className='px-4 py-2 text-right text-sm text-ellipsis overflow-hidden'>
+                                <td className='px-4 md:py-4 text-right text-sm text-ellipsis overflow-hidden'>
                                     {event.numberOfSpots}
                                 </td>
                                 <td className='px-4'>

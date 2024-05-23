@@ -12,7 +12,7 @@ import { PhotoIcon } from '@heroicons/react/24/solid';
 import toast from 'react-hot-toast';
 import { useParams, useRouter } from 'next/navigation';
 import { updateEventById } from '@/app/lib/event.db';
-import { useEvents } from './events-provider';
+import { useEvents } from '../../_components/events-provider';
 
 export const UpdateEventDialog = ({ isOpen, onClose }) => {
     const cancelButtonRef = useRef(null);
