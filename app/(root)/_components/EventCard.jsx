@@ -25,9 +25,9 @@ export const EventCard = ({
     return (
         <div
             onClick={goToEvent}
-            className='p-6 bg-primary hover:bg-primary-muted hover:scale-105 rounded-md shadow-lg ring-1 ring-gray-900/5 transform transition duration-500 cursor-pointer m-5 max-w-96 w-[370px] h-[340px] text-gray-800 flex flex-col'>
+            className='p-6 bg-primary hover:bg-primary-muted hover:scale-105 rounded-md shadow-lg ring-1 ring-gray-900/5 transform transition duration-500 cursor-pointer mb-8 mr-5 max-w-96 w-full sm:w-[370px] h-[340px] sm:h-auto text-gray-800 flex flex-col'>
             <div className='justify-center text-left'>
-                <h3 className='mb-2 w-fit px-3 bg-tertiary font-semibold text-primary'>
+                <h3 className='mb-2 w-full px-3 bg-tertiary font-semibold text-lg sm:text-base xs:text-sm text-primary'>
                     {name}
                 </h3>
                 <div className='w-full h-[150px]'>
