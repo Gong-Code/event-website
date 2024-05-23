@@ -90,7 +90,7 @@ const login = async (values) => {
     }
     console.log(userCredential);
     const token = await userCredential.user.getIdToken()
-    console.log('Token:', token)
+    console.log('token:', token)
 
     toast.success('Logged in successfully',  { id: toastId })
 
