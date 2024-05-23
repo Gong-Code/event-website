@@ -11,7 +11,7 @@ export const UsersList = () => {
         const db = getFirestore();
         const usersCol = collection(db, "users");
         const userSnapshot = await getDocs(usersCol);
-        const userList = userSnapshot.docs.map(doc => doc.data());
+        const userList = userSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setUsers(userList);
         console.log('userList', userList);
     }
@@ -34,7 +34,7 @@ export const UsersList = () => {
                 </thead>
                 <tbody>
                     {users.map((user) => (
-                        <tr key={user.uid}>
+                        <tr key={user.id}>
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             {/* Render user data here */}
