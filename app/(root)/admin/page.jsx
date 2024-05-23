@@ -1,7 +1,7 @@
 'use client';
 
 import { EventsList } from './_components/EventsList';
-import { UsersList } from './_components/UsersList';
+import { UsersList } from './users/_components/UsersList';
 import Link from 'next/link';
 import { FaPlus } from 'react-icons/fa';
 import { useAuth } from './_components/auth-provider';
@@ -32,11 +32,6 @@ const AdminPage = () => {
                     <div className='p-6 rounded-3xl border-dashed border-slate-600 border-2'>
                         <div className='flex justify-between items-center mb-6'>
                             <h3>All users</h3>
-                            <Link href='/admin/users'>
-                                <button className='secondary flex items-center gap-2'>
-                                    <span>Manage users</span>
-                                </button>
-                            </Link>
                         </div>
                         <UsersList user={user} />
                     </div>
