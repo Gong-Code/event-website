@@ -7,7 +7,7 @@ Skapa vanlig knapp: <button>
 Skapa sekundär knapp: <button className="secondary">
 
 Skapa error-knapp: <button className="error">
-Skapa disabled-knapp: <button className="disabled">
+Skapa disabled-knapp: <button disabled="...">
 
 =============================================*/
 
@@ -139,11 +139,10 @@ button.admin:hover {
     background-color: var(--admin);
 }
 
-button.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+button:disabled {
+    opacity: 0.4;
 }
 
-button.disabled:hover {
+button:disabled:hover {
     transform: none;
 }

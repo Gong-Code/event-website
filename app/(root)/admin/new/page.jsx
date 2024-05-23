@@ -11,6 +11,7 @@ import { addNewEvent } from '@/app/lib/event.db';
 import { useRouter } from 'next/navigation';
 
 import withAdminAuth from '@/app/hoc/withAdminAuth';
+import { useEvents } from '../_components/events-provider';
 
 const CreateNewEventPage = () => {
 
