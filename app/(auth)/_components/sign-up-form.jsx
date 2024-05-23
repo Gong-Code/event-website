@@ -3,6 +3,7 @@
 import { useAuth } from '@/app/(root)/admin/_components/auth-provider';
 import { addNewUser } from '@/app/lib/user.db';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { MdErrorOutline } from 'react-icons/md';
 import { z } from 'zod';
@@ -33,6 +34,7 @@ const formSchema = z
 
 const SignUpForm = () => {
     const { register } = useAuth();
+    const router = useRouter();
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -48,7 +50,6 @@ const SignUpForm = () => {
     const onSubmit = async (values) => {
         try {
             const uid = await register(values);
-            console.log(uid)
             await addNewUser(
                 {
                     name: `${values.firstName} ${values.lastName}`,
@@ -57,6 +58,7 @@ const SignUpForm = () => {
                 },
                 uid
             );
+            router.push('/');
             console.log('User added successfully');
         } catch (error) {
             console.error('Could not add user to database!', error);
