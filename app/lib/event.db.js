@@ -84,21 +84,22 @@ export const updateEventById = async (id, update) => {
     }
 };
 
-export const bookEvent = async (userId, eventId) => {
+export const bookEvent = async (userId, userEmail, eventId) => {
     const docRef = doc(db, 'events', eventId);
-    const docSnap = await getDoc(docRef)
-        .then((doc) => {
-            if (doc.exists()) {
-                return doc.data();
-            } else {
-                console.log('No such document!');
-            } 
-        })
+    const docSnap = await getDoc(docRef).then((doc) => {
+        if (doc.exists()) {
+            return doc.data();
+        } else {
+            console.log('No such document!');
+        }
+    });
     const currentlyBookedUsers = docSnap.bookedUsers ? docSnap.bookedUsers : [];
 
     try {
         await updateDoc(docRef, {
-            bookedUsers: currentlyBookedUsers.concat([userId])
+            bookedUsers: currentlyBookedUsers.concat([
+                { id: userId, email: userEmail },
+            ]),
         });
     } catch (error) {
         toast.error('Failed to book event, please try again.');
@@ -107,19 +108,18 @@ export const bookEvent = async (userId, eventId) => {
 
 export const undoBookedEvent = async (userId, eventId) => {
     const docRef = doc(db, 'events', eventId);
-    const docSnap = await getDoc(docRef)
-        .then((doc) => {
-            if (doc.exists()) {
-                return doc.data();
-            } else {
-                console.log('No such document!');
-            } 
-        })
+    const docSnap = await getDoc(docRef).then((doc) => {
+        if (doc.exists()) {
+            return doc.data();
+        } else {
+            console.log('No such document!');
+        }
+    });
     const currentlyBookedUsers = docSnap.bookedUsers ? docSnap.bookedUsers : [];
 
     try {
         await updateDoc(docRef, {
-            bookedUsers: currentlyBookedUsers.filter((x) => x !== userId)
+            bookedUsers: currentlyBookedUsers.filter((x) => x.id !== userId),
         });
     } catch (error) {
         toast.error('Failed to undo booking, please try again.');

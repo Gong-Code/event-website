@@ -7,6 +7,7 @@ import { UpdateEventDialog } from '../_components/UpdateEventDialog';
 import { deleteEventById, getEventById } from '@/app/lib/event.db';
 
 import withAdminAuth from '@/app/hoc/withAdminAuth';
+import { useEvents } from '../_components/events-provider';
 
 const ManageEventDetailPage = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -20,21 +21,7 @@ const ManageEventDetailPage = () => {
         };
 
         fetchEvent();
-
     }, [id]);
-
-    // Mockup user data
-
-    const attendingUsers = [
-        {
-            firstName: 'Emma',
-            userID: 123
-        },
-        {
-            firstName: 'Jennie Kim',
-            userID: 456
-        }
-    ]
 
     return (
         <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-12 px-4 sm:px-6 py-12 md:py-26 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
@@ -81,12 +68,19 @@ const ManageEventDetailPage = () => {
                                     Attending users
                                 </dt>
                                 <dd className='mt-2 flex flex-col text-sm gap-y-2 leading-6 sm:mt-0'>
-                                    {event && event.bookedUsers.map(user => (
-                                        <div key={user} className='items-center sm:items-start min-w-0 flex-auto flex flex-col'>
-                                            <span className='text-sm font-medium leading-6 text-gray-900'>{user}</span>
-                                            <span className='truncate text-xs leading-5 text-gray-500'>ID: {user}</span>
-                                        </div>
-                                    ))}
+                                    {event &&
+                                        event.bookedUsers.map((user) => (
+                                            <div
+                                                key={user.id}
+                                                className='items-center sm:items-start min-w-0 flex-auto flex flex-col'>
+                                                <span className='text-sm font-medium leading-6 text-gray-900'>
+                                                    {user.email}
+                                                </span>
+                                                <span className='truncate text-xs leading-5 text-gray-500'>
+                                                    ID: {user.id}
+                                                </span>
+                                            </div>
+                                        ))}
                                 </dd>
                             </div>
                         </dl>
