@@ -152,7 +152,7 @@ export const UsersList = () => {
                                 </td>
                                 <td>{admin.email}</td>
                                 <td
-                                    colspan={2}
+                                    colSpan={2}
                                     className='pr-4 flex gap-2 justify-end items-center'>
                                     <button
                                         className='mt-1.5 secondary w-fit text-xs flex items-center gap-1'

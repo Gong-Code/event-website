@@ -46,26 +46,37 @@ const ManageEventDetailPage = () => {
                 <FaArrowLeft className='size-3 text-primary-muted' />
                 <p className='text-sm text-primary-muted'>Back to events</p>
             </Link>
-            <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-12 px-4 sm:px-6 py-12 md:py-26 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
+            <div className='mx-auto grid max-w-2xl grid-cols-1 items-center gap-x-8 gap-y-12 px-4 sm:px-6 py-6 md:py-16 lg:max-w-7xl lg:grid-cols-2 lg:px-8'>
                 {event && (
                     <>
                         <div>
-                            <div className='flex justify-between'>
-                                <div>
-                                    <h2 className='text-3xl font-bold tracking-tight text-primary sm:text-4xl'>
-                                        {event.name}
-                                    </h2>
-                                    <p className='my-6 text-primary-muted leading-6'>
-                                        {event.description}
-                                    </p>
-                                </div>
+                            <div className='mx-7 mb-1'>
+                                <p className='leading-5 tracking-tight text-slate-300'>
+                                    <span className='font-bold'>Event ID:</span> {event.id}
+                                </p>
                             </div>
                             <dl className='bg-primary-muted divide-y divide-gray-800/10 rounded-md border-2 border-gray-200 shadow-md text-gray-800'>
                                 <div className='py-4 flex justify-center items-center flex-col sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 grid-flow-col'>
                                     <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
-                                        Location
+                                        Event name
                                     </dt>
-                                    <dd className='mt-2 text-sm leading-6 sm:mt-0'>
+                                    <dd className='mt-2 mr-7 text-sm leading-6 sm:mt-0'>
+                                        {event.name}
+                                    </dd>
+                                </div>
+                                <div className='py-4 flex justify-center items-center flex-col sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 grid-flow-col'>
+                                    <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
+                                        Event description
+                                    </dt>
+                                    <dd className='mt-2 mr-7 text-sm leading-6 sm:mt-0'>
+                                        {event.description}
+                                    </dd>
+                                </div>
+                                <div className='py-4 flex justify-center items-center flex-col sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0 grid-flow-col'>
+                                    <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
+                                        Event location
+                                    </dt>
+                                    <dd className='mt-2 mr-7 text-sm leading-6 sm:mt-0'>
                                         {event.location}
                                     </dd>
                                 </div>
@@ -73,7 +84,7 @@ const ManageEventDetailPage = () => {
                                     <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
                                         Date and time
                                     </dt>
-                                    <dd className='mt-2 text-sm leading-6 sm:mt-0'>
+                                    <dd className='mt-2 mr-7 text-sm leading-6 sm:mt-0'>
                                         {event.date}
                                     </dd>
                                 </div>
@@ -81,7 +92,7 @@ const ManageEventDetailPage = () => {
                                     <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
                                         Places for this event
                                     </dt>
-                                    <dd className='mt-2 text-sm leading-6 sm:mt-0'>
+                                    <dd className='mt-2 mr-7 text-sm leading-6 sm:mt-0'>
                                         {event.numberOfSpots}
                                     </dd>
                                 </div>
@@ -89,7 +100,7 @@ const ManageEventDetailPage = () => {
                                     <dt className='mx-7 leading-4 text-sm font-semibold border-b-[3px] border-b-tertiary w-fit'>
                                         Attending users
                                     </dt>
-                                    <dd className='mt-2 flex flex-col text-sm gap-y-2 leading-6 sm:mt-0'>
+                                    <dd className='mt-2 mr-7 flex flex-col text-sm gap-y-2 leading-6 sm:mt-0'>
                                         {event && event.bookedUsers?.length ? (
                                             event.bookedUsers.map((user) => (
                                                 <div
