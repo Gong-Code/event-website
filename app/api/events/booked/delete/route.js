@@ -1,19 +1,23 @@
 // DELETE BOOKING
 
-import { db } from "@/firebase.config";
-import { doc, deleteDoc } from "firebase/firestore";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
+import { arrayRemove, updateDoc, doc } from 'firebase/firestore';
+import { db } from '@/firebase.config';
 
 export async function DELETE(request) {
-  try {
-    const { eventId, userEmail, userId } = await request.json();
-    if (!eventId || !userEmail|| !userId ) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    try {
+        const { eventId, email, id } = await request.json();
+        if (!eventId || !email || !id) {
+            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        }
+        const eventRef = doc(db, 'events', eventId);
+        const userToRemove = { email, id };
+        await updateDoc(eventRef, {
+            bookedUsers: arrayRemove(userToRemove)
+        });
+        return NextResponse.json({ ...userToRemove }, { status: 200 });
+    } catch (err) {
+        console.log(err.message);
+        return NextResponse.json({ error: 'Error deleting booking' }, { status: 500 });
     }
-    const bookingRef = doc(db, 'testBooked');
-    await deleteDoc(bookingRef);
-    return NextResponse.json({ id: userId, message: 'Booking deleted successfully' }, { status: 200 });
-  } catch (err) {
-    return NextResponse.json({ error: 'Error deleting booking' }, { status: 500 });
-  }
 }
