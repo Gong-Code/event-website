@@ -22,10 +22,3 @@ export async function POST(request) {
 
 
 
-/*{
-    "eventId": "JJmfRvRLrSFJvTkhVpMj",
-    "bookedUsers": [
-        {"userId": "StPAx83oa3XvKCPxklAQgAPFmOC2", "email": "devrimakb1@gmail.com"}
-    ]
-
-} */
