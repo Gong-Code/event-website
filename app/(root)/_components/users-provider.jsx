@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from 'react';
 import { useEvents } from './events-provider';
 import { useAuth } from '../admin/_components/auth-provider';
 import { useParams } from 'next/navigation';
-import { bookEvent, undoBookedEvent } from '@/app/lib/event.db';
+import { bookEvent, deleteEventById, undoBookedEvent } from '@/app/lib/event.db';
 import toast from 'react-hot-toast';
 
 export const UsersContext = createContext();
@@ -98,6 +98,18 @@ const UsersContextProvider = ({ children }) => {
             });
     };
 
+    const removeEventFunction = (eventId) => {
+        deleteEventById('events', eventId)
+            .then(() => {
+                setEventList((prevState) =>
+                    prevState.filter((x) => x.id !== eventId)
+                );
+                        })
+            .catch(() => {
+                console.log('Failed to remove event, please try again.');
+            });
+    }
+
     const value = {
         onSearch,
         onSort,
@@ -111,6 +123,7 @@ const UsersContextProvider = ({ children }) => {
         numberOfBookedUsers,
         hasBooked,
         undoBookedEventFunction,
+        removeEventFunction
     };
 
     return (

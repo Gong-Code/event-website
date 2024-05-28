@@ -24,11 +24,23 @@ const LandingPage = () => {
         eventList,
         setEventList,
         setEventListOriginal,
+        removeEventFunction
     } = useUsers();
+
+    const checkDatesOnEvents = () => {
+        events.forEach((event) => {
+            const eventDate = new Date(event.date);
+            const currentDate = new Date();
+            if (eventDate < currentDate) {
+                removeEventFunction(event.id);
+            }
+        });
+    }
 
     useEffect(() => {
         setEventList(events)
         setEventListOriginal(events);
+        checkDatesOnEvents();
     }, [events]);
 
     if (loading) {
